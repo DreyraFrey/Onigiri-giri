@@ -35,6 +35,34 @@ const katakanaData = [
   { q: 'パ', a: 'pa', options: ['pa', 'pi', 'pu', 'pe'] }
 ];
 
+const kanjiData = [
+  { q: '人', a: 'person', options: ['person', 'year', 'day', 'big'] },
+  { q: '一', a: 'one', options: ['one', 'two', 'three', 'ten'] },
+  { q: '二', a: 'two', options: ['two', 'one', 'three', 'four'] },
+  { q: '三', a: 'three', options: ['three', 'two', 'four', 'five'] },
+  { q: '四', a: 'four', options: ['four', 'three', 'five', 'six'] },
+  { q: '五', a: 'five', options: ['five', 'four', 'six', 'seven'] },
+  { q: '六', a: 'six', options: ['six', 'five', 'seven', 'eight'] },
+  { q: '七', a: 'seven', options: ['seven', 'six', 'eight', 'nine'] },
+  { q: '八', a: 'eight', options: ['eight', 'seven', 'nine', 'ten'] },
+  { q: '九', a: 'nine', options: ['nine', 'eight', 'ten', 'one'] },
+  { q: '十', a: 'ten', options: ['ten', 'nine', 'hundred', 'thousand'] },
+  { q: '百', a: 'hundred', options: ['hundred', 'thousand', 'ten', 'year'] },
+  { q: '千', a: 'thousand', options: ['thousand', 'hundred', 'ten thousand', 'yen'] },
+  { q: '万', a: 'ten thousand', options: ['ten thousand', 'thousand', 'hundred', 'year'] },
+  { q: '円', a: 'yen', options: ['yen', 'year', 'day', 'person'] },
+  { q: '年', a: 'year', options: ['year', 'month', 'day', 'time'] },
+  { q: '月', a: 'month', options: ['month', 'year', 'day', 'week'] },
+  { q: '日', a: 'day', options: ['day', 'sun', 'time', 'now'] },
+  { q: '時', a: 'time', options: ['time', 'hour', 'minute', 'day'] },
+  { q: '今', a: 'now', options: ['now', 'before', 'after', 'every'] },
+  { q: '上', a: 'up', options: ['up', 'down', 'middle', 'outside'] },
+  { q: '下', a: 'down', options: ['down', 'up', 'left', 'right'] },
+  { q: '中', a: 'middle', options: ['middle', 'inside', 'outside', 'front'] },
+  { q: '学', a: 'study', options: ['study', 'life', 'meet', 'work'] },
+  { q: '大', a: 'big', options: ['big', 'small', 'many', 'few'] }
+];
+
 let current = 0;
 let score = 0;
 let shuffled = [];
@@ -47,6 +75,7 @@ function shuffle(array) {
 function getData(mode) {
   if (mode === 'katakana') return katakanaData;
   if (mode === 'mixed') return [...hiraganaData, ...katakanaData];
+  if (mode === 'kanji') return kanjiData;
   return hiraganaData;
 }
 
