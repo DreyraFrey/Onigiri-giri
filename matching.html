@@ -3,26 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Matching Game – Onigiri-giri</title>
+  <title>Kanji Memory Game – Onigiri-giri</title>
   <link rel="stylesheet" href="style.css">
   <link rel="manifest" href="manifest.json">
   <style>
     .game-board {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 0.75rem;
-      max-width: 700px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.6rem;
+      max-width: 500px;
       margin: 1rem auto;
     }
     .game-card {
       background: white;
       border: 2px solid #e85d04;
       border-radius: 10px;
-      min-height: 90px;
+      min-height: 70px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       font-weight: 500;
       cursor: pointer;
       user-select: none;
@@ -56,14 +56,26 @@
       margin: 0.5rem 0;
       min-height: 1.5em;
     }
+    @media (max-width: 600px) {
+      .game-board {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.45rem;
+        max-width: 100%;
+      }
+      .game-card {
+        min-height: 60px;
+        font-size: 1.05rem;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
     <h1>🍙 Onigiri-giri</h1>
-    <p>Matching Game</p>
+    <p>Kanji Memory Game</p>
+    <button class="menu-toggle" aria-label="Menu">☰</button>
   </header>
-  <nav>
+  <nav id="nav">
     <a href="index.html">Home</a>
     <a href="hiragana.html">Hiragana</a>
     <a href="katakana.html">Katakana</a>
@@ -83,6 +95,10 @@
   </main>
   <footer><p>Onigiri-giri</p></footer>
   <script>
+    document.querySelector('.menu-toggle').addEventListener('click', () => {
+      document.getElementById('nav').classList.toggle('open');
+    });
+
     const pairs = [
       { jp: '人', en: 'person' },
       { jp: '一', en: 'one' },

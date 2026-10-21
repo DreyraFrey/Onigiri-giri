@@ -11,9 +11,24 @@ header {
   color: white;
   padding: 1.2rem 1rem;
   text-align: center;
+  position: relative;
 }
 header h1 { margin: 0; font-size: 1.8rem; }
 header p { margin: 0.3rem 0 0; opacity: 0.9; }
+.menu-toggle {
+  display: none;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: 2px solid white;
+  color: white;
+  font-size: 1.4rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  cursor: pointer;
+}
 nav {
   display: flex;
   flex-wrap: wrap;
@@ -78,16 +93,19 @@ footer {
   font-size: 0.9rem;
 }
 @media (max-width: 600px) {
+  .menu-toggle { display: block; }
   nav {
-    gap: 0.35rem;
-    padding: 0.5rem;
+    display: none;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.8rem;
   }
+  nav.open { display: flex; }
   nav a {
-    padding: 0.5rem 0.7rem;
-    font-size: 0.9rem;
-    min-height: 42px;
+    justify-content: center;
+    width: 100%;
   }
+  header h1 { font-size: 1.5rem; }
   table { font-size: 0.95rem; }
   .kana { font-size: 1.4rem; }
-  header h1 { font-size: 1.5rem; }
 }
