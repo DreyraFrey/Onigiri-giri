@@ -22,8 +22,12 @@
   <main>
     <section class="card">
       <h2>Hiragana Quiz</h2>
-      <p>Simple prompt-based quiz for now. Better interactive version coming.</p>
-      <button id="startQuiz" style="padding:0.8rem 1.4rem; font-size:1.1rem; background:#e85d04; color:white; border:none; border-radius:8px; min-height:48px;">Start Quiz</button>
+      <div id="quizArea">
+        <p id="question">Click Start to begin</p>
+        <div id="options" style="display:flex; flex-direction:column; gap:0.6rem; margin:1rem 0;"></div>
+        <p id="score"></p>
+        <button id="startQuiz" style="padding:0.8rem 1.4rem; font-size:1.1rem; background:#e85d04; color:white; border:none; border-radius:8px; min-height:48px;">Start Quiz</button>
+      </div>
     </section>
   </main>
   <footer><p>Onigiri-giri</p></footer>
