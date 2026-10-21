@@ -38,7 +38,7 @@ const katakanaData = [
 let current = 0;
 let score = 0;
 let shuffled = [];
-let currentMode = 'hiragana';
+let currentMode = null;
 
 function shuffle(array) {
   return [...array].sort(() => Math.random() - 0.5);
@@ -55,13 +55,14 @@ function showQuestion() {
     document.getElementById('question').textContent = 'Done!';
     document.getElementById('options').innerHTML = '';
     document.getElementById('score').textContent = `Score: ${score} / ${shuffled.length}`;
-    document.getElementById('startQuiz').style.display = 'inline-block';
-    document.getElementById('startQuiz').textContent = 'Try Again';
+    const startBtn = document.getElementById('startQuiz');
+    startBtn.style.display = 'block';
+    startBtn.textContent = 'Try Again';
     return;
   }
 
   const item = shuffled[current];
-  document.getElementById('question').innerHTML = `What is <span style="font-size:2.2rem">${item.q}</span>?`;
+  document.getElementById('question').innerHTML = `What is <span style="font-size:2.4rem; display:block; margin:0.5rem 0;">${item.q}</span>?`;
   const optionsDiv = document.getElementById('options');
   optionsDiv.innerHTML = '';
 
@@ -69,7 +70,7 @@ function showQuestion() {
   opts.forEach(opt => {
     const btn = document.createElement('button');
     btn.textContent = opt;
-    btn.style.cssText = 'padding:0.8rem; font-size:1.1rem; border:1px solid #e85d04; border-radius:8px; background:white; min-height:48px;';
+    btn.style.cssText = 'padding:1rem; font-size:1.2rem; border:2px solid #e85d04; border-radius:10px; background:white; min-height:56px; width:100%; max-width:320px;';
     btn.onclick = () => {
       Array.from(optionsDiv.children).forEach(b => b.disabled = true);
       if (opt === item.a) {
@@ -79,7 +80,6 @@ function showQuestion() {
       } else {
         btn.style.background = '#f44336';
         btn.style.color = 'white';
-        // highlight correct
         Array.from(optionsDiv.children).forEach(b => {
           if (b.textContent === item.a) {
             b.style.background = '#4caf50';
@@ -90,7 +90,7 @@ function showQuestion() {
       setTimeout(() => {
         current++;
         showQuestion();
-      }, 700);
+      }, 800);
     };
     optionsDiv.appendChild(btn);
   });
@@ -99,6 +99,7 @@ function showQuestion() {
 }
 
 function startQuiz() {
+  if (!currentMode) return;
   shuffled = shuffle(getData(currentMode));
   current = 0;
   score = 0;
@@ -107,19 +108,28 @@ function startQuiz() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.mode-btn').forEach(btn => {
-    btn.style.cssText = 'padding:0.6rem 1rem; border:1px solid #e85d04; border-radius:8px; background:white; min-height:44px;';
+  const modeButtons = document.querySelectorAll('.mode-btn');
+  modeButtons.forEach(btn => {
+    btn.style.cssText = 'padding:1rem 1.4rem; font-size:1.15rem; border:2px solid #e85d04; border-radius:10px; background:white; min-height:56px; flex:1; min-width:140px;';
     btn.addEventListener('click', () => {
       currentMode = btn.dataset.mode;
-      document.querySelectorAll('.mode-btn').forEach(b => b.style.background = 'white');
-      btn.style.background = '#ffe0b2';
-      document.getElementById('question').textContent = `Ready for ${currentMode} quiz`;
-      document.getElementById('startQuiz').style.display = 'inline-block';
-      document.getElementById('startQuiz').textContent = 'Start';
+      modeButtons.forEach(b => {
+        b.style.background = 'white';
+        b.style.color = '#222';
+      });
+      btn.style.background = '#e85d04';
+      btn.style.color = 'white';
+      document.getElementById('question').textContent = `Ready for ${currentMode.charAt(0).toUpperCase() + currentMode.slice(1)} quiz`;
+      const startBtn = document.getElementById('startQuiz');
+      startBtn.style.display = 'block';
+      startBtn.textContent = 'Start';
       document.getElementById('options').innerHTML = '';
       document.getElementById('score').textContent = '';
     });
   });
 
-  document.getElementById('startQuiz').addEventListener('click', startQuiz);
+  const startBtn = document.getElementById('startQuiz');
+  if (startBtn) {
+    startBtn.addEventListener('click', startQuiz);
+  }
 });
