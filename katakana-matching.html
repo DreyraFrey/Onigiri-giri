@@ -85,8 +85,9 @@
   <header>
     <h1>🍙 Onigiri-giri</h1>
     <p>Katakana Matching Game</p>
+    <button class="menu-toggle" aria-label="Menu">☰</button>
   </header>
-  <nav>
+  <nav id="nav">
     <a href="index.html">Home</a>
     <a href="hiragana.html">Hiragana</a>
     <a href="katakana.html">Katakana</a>
@@ -106,6 +107,10 @@
   </main>
   <footer><p>Onigiri-giri</p></footer>
   <script>
+    document.querySelector('.menu-toggle').addEventListener('click', () => {
+      document.getElementById('nav').classList.toggle('open');
+    });
+
     const allPairs = [
       { h: 'ア', r: 'a' }, { h: 'イ', r: 'i' }, { h: 'ウ', r: 'u' }, { h: 'エ', r: 'e' }, { h: 'オ', r: 'o' },
       { h: 'カ', r: 'ka' }, { h: 'キ', r: 'ki' }, { h: 'ク', r: 'ku' }, { h: 'ケ', r: 'ke' }, { h: 'コ', r: 'ko' },
