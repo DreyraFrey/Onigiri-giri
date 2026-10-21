@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Slang – Onigiri-giri</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    .tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+    .tab-btn {
+      padding: 0.7rem 1.2rem;
+      border: 2px solid #e85d04;
+      border-radius: 8px;
+      background: white;
+      font-size: 1rem;
+      min-height: 48px;
+      cursor: pointer;
+    }
+    .tab-btn.active { background: #e85d04; color: white; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🍙 Onigiri-giri</h1>
+    <p>Slang & Dialects</p>
+  </header>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="hiragana.html">Hiragana</a>
+    <a href="katakana.html">Katakana</a>
+    <a href="kanji.html">Kanji</a>
+    <a href="vocab.html">Vocabulary</a>
+    <a href="slang.html">Slang</a>
+    <a href="quiz.html">Quiz</a>
+  </nav>
+  <main>
+    <section class="card">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="kansai">Kansai</button>
+        <button class="tab-btn" data-tab="hokkaido">Hokkaido</button>
+        <button class="tab-btn" data-tab="genz">Gen-Z</button>
+        <button class="tab-btn" data-tab="hololive">Hololive</button>
+      </div>
+
+      <!-- Kansai -->
+      <div id="kansai" class="tab-content active">
+        <h2>Kansai Dialect</h2>
+        <div class="scroll">
+          <table>
+            <tr><th>Kansai</th><th>Standard</th><th>Meaning</th></tr>
+            <tr><td class="kana">おおきに</td><td>大きに</td><td>very / a lot</td></tr>
+            <tr><td class="kana">あかん</td><td>そうですね</td><td>right? / I agree</td></tr>
+            <tr><td class="kana">ちゃう</td><td>違う</td><td>different / wrong</td></tr>
+            <tr><td class="kana">ええで</td><td>いいよで</td><td>okay / fine</td></tr>
+            <tr><td class="kana">なんぼ</td><td>何</td><td>what</td></tr>
+            <tr><td class="kana">おる</td><td>いる</td><td>to be / exist (animate)</td></tr>
+            <tr><td class="kana">やる</td><td>する</td><td>to do</td></tr>
+            <tr><td class="kana">めっちゃ</td><td>とても</td><td>very</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Hokkaido -->
+      <div id="hokkaido" class="tab-content">
+        <h2>Hokkaido Dialect</h2>
+        <div class="scroll">
+          <table>
+            <tr><th>Hokkaido</th><th>Standard</th><th>Meaning</th></tr>
+            <tr><td class="kana">なんぼ</td><td>何</td><td>what</td></tr>
+            <tr><td class="kana">しゃっちょ</td><td>そうだよ</td><td>yeah / that’s right</td></tr>
+            <tr><td class="kana">ちげっ</td><td>とても</td><td>very</td></tr>
+            <tr><td class="kana">おいしい</td><td>おいしい</td><td>delicious (often used)</td></tr>
+            <tr><td class="kana">しばれる</td><td>しばる</td><td>to freeze</td></tr>
+            <tr><td class="kana">ざんぎ</td><td>寒い</td><td>cold</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Gen-Z -->
+      <div id="genz" class="tab-content">
+        <h2>Gen-Z Slang</h2>
+        <div class="scroll">
+          <table>
+            <tr><th>Slang</th><th>Meaning</th><th>Note</th></tr>
+            <tr><td class="kana">ガジ</td><td>really / seriously</td><td>feminine form of マジ</td></tr>
+            <tr><td class="kana">マジ</td><td>really / seriously</td><td>common intensifier</td></tr>
+            <tr><td class="kana">ヤバイ</td><td>dangerous / awesome</td><td>can mean good or bad</td></tr>
+            <tr><td class="kana">エモイ</td><td>emotional / feels</td><td>from emotional</td></tr>
+            <tr><td class="kana">ソレナ</td><td>that’s it / exactly</td><td>agreement</td></tr>
+            <tr><td class="kana">クサ</td><td>lol / funny</td><td>from 草 (くさ)</td></tr>
+            <tr><td class="kana">おし</td><td>favorite</td><td>oshi</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Hololive -->
+      <div id="hololive" class="tab-content">
+        <h2>Hololive / VTuber Slang</h2>
+        <div class="scroll">
+          <table>
+            <tr><th>Term</th><th>Meaning</th><th>Note</th></tr>
+            <tr><td class="kana">おし</td><td>favorite VTuber</td><td>very common</td></tr>
+            <tr><td class="kana">クサ</td><td>lol</td><td>used a lot in chat</td></tr>
+            <tr><td class="kana">清素</td><td>pure / wholesome</td><td>seiso</td></tr>
+            <tr><td class="kana">ガチ恋</td><td>super serious crush</td><td>gachikoi</td></tr>
+            <tr><td class="kana">海外ニキ</td><td>overseas fan</td><td>kaigai niki</td></tr>
+            <tr><td class="kana">コメ</td><td>comment / chat</td><td>from comment</td></tr>
+            <tr><td class="kana">スパチャ</td><td>super chat</td><td>paid message</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer><p>Onigiri-giri</p></footer>
+  <script>
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.tab).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
