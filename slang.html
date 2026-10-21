@@ -6,21 +6,6 @@
   <title>Slang – Onigiri-giri</title>
   <link rel="stylesheet" href="style.css">
   <link rel="manifest" href="manifest.json">
-  <style>
-    .tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
-    .tab-btn {
-      padding: 0.7rem 1.2rem;
-      border: 2px solid #e85d04;
-      border-radius: 8px;
-      background: white;
-      font-size: 1rem;
-      min-height: 48px;
-      cursor: pointer;
-    }
-    .tab-btn.active { background: #e85d04; color: white; }
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
-  </style>
 </head>
 <body>
   <header>
@@ -45,7 +30,6 @@
         <button class="tab-btn" data-tab="hololive">Hololive</button>
       </div>
 
-      <!-- Kansai -->
       <div id="kansai" class="tab-content active">
         <h2>Kansai Dialect</h2>
         <div class="scroll">
@@ -63,7 +47,6 @@
         </div>
       </div>
 
-      <!-- Hokkaido -->
       <div id="hokkaido" class="tab-content">
         <h2>Hokkaido Dialect</h2>
         <div class="scroll">
@@ -71,14 +54,13 @@
             <tr><th>Hokkaido</th><th>Romaji</th><th>Standard</th><th>Meaning</th></tr>
             <tr><td class="kana">なんぼ</td><td>nanbo</td><td>いくら</td><td>how much</td></tr>
             <tr><td class="kana">しゃっちょ</td><td>shaccho</td><td>そうだよ</td><td>yeah / that’s right</td></tr>
-            <tr><td class="kana">ちげっ</td><td>chige</td><td>とても</td><td>very</td></tr>
+            <tr><td class="kana">ちげっ</td><td>chige</td><td>違う</td><td>different / wrong</td></tr>
             <tr><td class="kana">しばれる</td><td>shibareru</td><td>凍える</td><td>to freeze (very cold)</td></tr>
-            <tr><td class="kana">ざんぎ</td><td>zangi</td><td>からあげ雞</td><td>fried chicken</td></tr>
+            <tr><td class="kana">ざんぎ</td><td>zangi</td><td>からあげ</td><td>fried chicken</td></tr>
           </table>
         </div>
       </div>
 
-      <!-- Gen-Z -->
       <div id="genz" class="tab-content">
         <h2>Gen-Z Slang</h2>
         <div class="scroll">
@@ -95,15 +77,14 @@
         </div>
       </div>
 
-      <!-- Hololive -->
       <div id="hololive" class="tab-content">
         <h2>Hololive / VTuber Slang</h2>
         <div class="scroll">
           <table>
             <tr><th>Term</th><th>Romaji</th><th>Meaning</th><th>Note</th></tr>
-            <tr><td class="kana">おし</td><td>oshi</td><td>favorite VTuber</td><td>very common</td></tr>
+            <tr><td class="kana">推し</td><td>oshi</td><td>favorite VTuber</td><td>very common</td></tr>
             <tr><td class="kana">クサ</td><td>kusa</td><td>lol</td><td>used a lot in chat</td></tr>
-            <tr><td class="kana">清素</td><td>seiso</td><td>pure / wholesome</td><td>seiso</td></tr>
+            <tr><td class="kana">清楚</td><td>seiso</td><td>pure / wholesome</td><td>seiso</td></tr>
             <tr><td class="kana">ガチ恋</td><td>gachikoi</td><td>super serious crush</td><td>gachikoi</td></tr>
             <tr><td class="kana">海外ニキ</td><td>kaigai niki</td><td>overseas fan</td><td>kaigai niki</td></tr>
             <tr><td class="kana">コメ</td><td>kome</td><td>comment / chat</td><td>from comment</td></tr>
