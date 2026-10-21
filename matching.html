@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Matching Game – Onigiri-giri</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    .game-board {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.75rem;
+      max-width: 700px;
+      margin: 1rem auto;
+    }
+    .card {
+      background: white;
+      border: 2px solid #e85d04;
+      border-radius: 10px;
+      min-height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      font-weight: 500;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .card.flipped, .card.matched {
+      background: #fff3e0;
+      cursor: default;
+    }
+    .card.matched {
+      background: #e8f5e9;
+      border-color: #4caf50;
+    }
+    .controls {
+      text-align: center;
+      margin: 1rem 0;
+    }
+    .controls button {
+      padding: 0.8rem 1.5rem;
+      font-size: 1.1rem;
+      border: 2px solid #e85d04;
+      border-radius: 8px;
+      background: #e85d04;
+      color: white;
+      min-height: 48px;
+      cursor: pointer;
+    }
+    #status {
+      text-align: center;
+      font-size: 1.1rem;
+      margin: 0.5rem 0;
+      min-height: 1.5em;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🍙 Onigiri-giri</h1>
+    <p>Matching Game</p>
+  </header>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="hiragana.html">Hiragana</a>
+    <a href="katakana.html">Katakana</a>
+    <a href="kanji.html">Kanji</a>
+    <a href="vocab.html">Vocabulary</a>
+    <a href="slang.html">Slang</a>
+    <a href="quiz.html">Quiz</a>
+    <a href="matching.html">Matching</a>
+  </nav>
+  <main>
+    <section class="card">
+      <div class="controls">
+        <button id="startBtn">Start Game</button>
+      </div>
+      <div id="status">Match the Japanese with the English meaning.</div>
+      <div class="game-board" id="board"></div>
+    </section>
+  </main>
+  <footer><p>Onigiri-giri</p></footer>
+  <script>
+    const pairs = [
+      { jp: '人', en: 'person' },
+      { jp: '一', en: 'one' },
+      { jp: '二', en: 'two' },
+      { jp: '三', en: 'three' },
+      { jp: '年', en: 'year' },
+      { jp: '月', en: 'month' },
+      { jp: '日', en: 'day' },
+      { jp: '今', en: 'now' }
+    ];
+
+    let cards = [];
+    let flipped = [];
+    let matched = 0;
+    let lock = false;
+
+    function shuffle(arr) {
+      return [...arr].sort(() => Math.random() - 0.5);
+    }
+
+    function startGame() {
+      matched = 0;
+      flipped = [];
+      lock = false;
+      document.getElementById('status').textContent = 'Match the pairs!';
+      document.getElementById('startBtn').style.display = 'none';
+
+      const deck = [];
+      pairs.forEach(p => {
+        deck.push({ type: 'jp', value: p.jp, pair: p.en });
+        deck.push({ type: 'en', value: p.en, pair: p.jp });
+      });
+      cards = shuffle(deck);
+
+      const board = document.getElementById('board');
+      board.innerHTML = '';
+      cards.forEach((card, i) => {
+        const el = document.createElement('div');
+        el.className = 'card';
+        el.dataset.index = i;
+        el.textContent = '?';
+        el.addEventListener('click', () => flipCard(i));
+        board.appendChild(el);
+      });
+    }
+
+    function flipCard(i) {
+      if (lock || flipped.includes(i) || document.querySelectorAll('.card')[i].classList.contains('matched')) return;
+
+      const cardEls = document.querySelectorAll('.card');
+      cardEls[i].textContent = cards[i].value;
+      cardEls[i].classList.add('flipped');
+      flipped.push(i);
+
+      if (flipped.length === 2) {
+        lock = true;
+        const [a, b] = flipped;
+        const match = (cards[a].pair === cards[b].value);
+
+        setTimeout(() => {
+          if (match) {
+            cardEls[a].classList.add('matched');
+            cardEls[b].classList.add('matched');
+            matched++;
+            if (matched === pairs.length) {
+              document.getElementById('status').textContent = 'Done! All matched.';
+              document.getElementById('startBtn').style.display = 'inline-block';
+              document.getElementById('startBtn').textContent = 'Play Again';
+            }
+          } else {
+            cardEls[a].textContent = '?';
+            cardEls[b].textContent = '?';
+            cardEls[a].classList.remove('flipped');
+            cardEls[b].classList.remove('flipped');
+          }
+          flipped = [];
+          lock = false;
+        }, 800);
+      }
+    }
+
+    document.getElementById('startBtn').addEventListener('click', startGame);
+  </script>
+</body>
+</html>
