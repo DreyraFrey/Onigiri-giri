@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Katakana Matching – Onigiri-giri</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    .match-container {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin: 1.5rem 0;
+    }
+    .column {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      min-width: 140px;
+    }
+    .match-card {
+      background: white;
+      border: 2px solid #e85d04;
+      border-radius: 10px;
+      padding: 1rem;
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 500;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .match-card.selected {
+      background: #fff3e0;
+      border-color: #f48c06;
+    }
+    .match-card.matched {
+      background: #e8f5e9;
+      border-color: #4caf50;
+      cursor: default;
+      opacity: 0.6;
+    }
+    .controls {
+      text-align: center;
+      margin: 1rem 0;
+    }
+    .controls button {
+      padding: 0.8rem 1.5rem;
+      font-size: 1.1rem;
+      border: 2px solid #e85d04;
+      border-radius: 8px;
+      background: #e85d04;
+      color: white;
+      min-height: 48px;
+      cursor: pointer;
+    }
+    #status {
+      text-align: center;
+      font-size: 1.1rem;
+      margin: 0.5rem 0;
+      min-height: 1.5em;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🍙 Onigiri-giri</h1>
+    <p>Katakana Matching Game</p>
+  </header>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="hiragana.html">Hiragana</a>
+    <a href="katakana.html">Katakana</a>
+    <a href="kanji.html">Kanji</a>
+    <a href="vocab.html">Vocabulary</a>
+    <a href="slang.html">Slang</a>
+    <a href="quiz.html">Quiz</a>
+  </nav>
+  <main>
+    <section class="card">
+      <div class="controls">
+        <button id="startBtn">Start Game</button>
+      </div>
+      <div id="status">Match the katakana to the romaji.</div>
+      <div class="match-container" id="game"></div>
+    </section>
+  </main>
+  <footer><p>Onigiri-giri</p></footer>
+  <script>
+    const allPairs = [
+      { h: 'ア', r: 'a' }, { h: 'イ', r: 'i' }, { h: 'ウ', r: 'u' }, { h: 'エ', r: 'e' }, { h: 'オ', r: 'o' },
+      { h: 'カ', r: 'ka' }, { h: 'キ', r: 'ki' }, { h: 'ク', r: 'ku' }, { h: 'ケ', r: 'ke' }, { h: 'コ', r: 'ko' },
+      { h: 'サ', r: 'sa' }, { h: 'シ', r: 'shi' }, { h: 'ス', r: 'su' }, { h: 'セ', r: 'se' }, { h: 'ソ', r: 'so' },
+      { h: 'タ', r: 'ta' }, { h: 'チ', r: 'chi' }, { h: 'ツ', r: 'tsu' }, { h: 'テ', r: 'te' }, { h: 'ト', r: 'to' },
+      { h: 'ナ', r: 'na' }, { h: 'ニ', r: 'ni' }, { h: 'ヌ', r: 'nu' }, { h: 'ネ', r: 'ne' }, { h: 'ノ', r: 'no' },
+      { h: 'ハ', r: 'ha' }, { h: 'ヒ', r: 'hi' }, { h: 'フ', r: 'fu' }, { h: 'ヘ', r: 'he' }, { h: 'ホ', r: 'ho' },
+      { h: 'マ', r: 'ma' }, { h: 'ミ', r: 'mi' }, { h: 'ム', r: 'mu' }, { h: 'メ', r: 'me' }, { h: 'モ', r: 'mo' },
+      { h: 'ヤ', r: 'ya' }, { h: 'ユ', r: 'yu' }, { h: 'ヨ', r: 'yo' },
+      { h: 'ラ', r: 'ra' }, { h: 'リ', r: 'ri' }, { h: 'ル', r: 'ru' }, { h: 'レ', r: 're' }, { h: 'ロ', r: 'ro' },
+      { h: 'ワ', r: 'wa' }, { h: 'ヲ', r: 'wo' }, { h: 'ン', r: 'n' }
+    ];
+
+    let currentPairs = [];
+    let selected = null;
+    let matchedCount = 0;
+
+    function shuffle(arr) {
+      return [...arr].sort(() => Math.random() - 0.5);
+    }
+
+    function startGame() {
+      matchedCount = 0;
+      selected = null;
+      document.getElementById('status').textContent = 'Match the pairs!';
+      document.getElementById('startBtn').style.display = 'none';
+
+      currentPairs = shuffle(allPairs).slice(0, 5);
+      renderGame();
+    }
+
+    function renderGame() {
+      const game = document.getElementById('game');
+      game.innerHTML = '';
+
+      const leftCol = document.createElement('div');
+      leftCol.className = 'column';
+      const rightCol = document.createElement('div');
+      rightCol.className = 'column';
+
+      const hira = shuffle(currentPairs.map(p => p.h));
+      const roma = shuffle(currentPairs.map(p => p.r));
+
+      hira.forEach(h => {
+        const card = document.createElement('div');
+        card.className = 'match-card';
+        card.textContent = h;
+        card.dataset.type = 'h';
+        card.dataset.value = h;
+        card.addEventListener('click', () => selectCard(card));
+        leftCol.appendChild(card);
+      });
+
+      roma.forEach(r => {
+        const card = document.createElement('div');
+        card.className = 'match-card';
+        card.textContent = r;
+        card.dataset.type = 'r';
+        card.dataset.value = r;
+        card.addEventListener('click', () => selectCard(card));
+        rightCol.appendChild(card);
+      });
+
+      game.appendChild(leftCol);
+      game.appendChild(rightCol);
+    }
+
+    function selectCard(card) {
+      if (card.classList.contains('matched')) return;
+
+      if (selected === card) {
+        card.classList.remove('selected');
+        selected = null;
+        return;
+      }
+
+      if (selected && selected.dataset.type === card.dataset.type) {
+        selected.classList.remove('selected');
+        card.classList.add('selected');
+        selected = card;
+        return;
+      }
+
+      if (selected) {
+        const isMatch = (selected.dataset.type === 'h' && card.dataset.type === 'r' &&
+          currentPairs.some(p => p.h === selected.dataset.value && p.r === card.dataset.value)) ||
+          (selected.dataset.type === 'r' && card.dataset.type === 'h' &&
+          currentPairs.some(p => p.r === selected.dataset.value && p.h === card.dataset.value));
+
+        if (isMatch) {
+          selected.classList.add('matched');
+          card.classList.add('matched');
+          selected.classList.remove('selected');
+          matchedCount++;
+          selected = null;
+
+          if (matchedCount === 5) {
+            document.getElementById('status').textContent = 'Nice! Next set...';
+            setTimeout(() => {
+              currentPairs = shuffle(allPairs).slice(0, 5);
+              matchedCount = 0;
+              renderGame();
+              document.getElementById('status').textContent = 'Match the pairs!';
+            }, 700);
+          }
+        } else {
+          selected.classList.remove('selected');
+          card.classList.add('selected');
+          selected = card;
+        }
+      } else {
+        card.classList.add('selected');
+        selected = card;
+      }
+    }
+
+    document.getElementById('startBtn').addEventListener('click', startGame);
+  </script>
+</body>
+</html>
