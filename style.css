@@ -24,13 +24,13 @@ nav {
   justify-content: center;
 }
 nav a {
-  padding: 0.6rem 1rem;
+  padding: 0.7rem 1.1rem;
   text-decoration: none;
   color: #e85d04;
   border: 1px solid #e85d04;
   border-radius: 8px;
   font-weight: 500;
-  min-height: 44px;
+  min-height: 48px;
   display: inline-flex;
   align-items: center;
 }
