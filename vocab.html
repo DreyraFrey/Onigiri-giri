@@ -6,6 +6,21 @@
   <title>Vocabulary – Onigiri-giri</title>
   <link rel="stylesheet" href="style.css">
   <link rel="manifest" href="manifest.json">
+  <style>
+    .tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+    .tab-btn {
+      padding: 0.7rem 1.2rem;
+      border: 2px solid #e85d04;
+      border-radius: 8px;
+      background: white;
+      font-size: 1rem;
+      min-height: 48px;
+      cursor: pointer;
+    }
+    .tab-btn.active { background: #e85d04; color: white; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+  </style>
 </head>
 <body>
   <header>
@@ -21,99 +36,117 @@
     <a href="quiz.html">Quiz</a>
   </nav>
   <main>
-    <!-- Work -->
     <section class="card">
-      <h2>Work</h2>
-      <div class="scroll">
-        <table>
-          <tr><th>Japanese</th><th>Reading</th><th>Meaning</th></tr>
-          <tr><td class="kana">仕事</td><td>shigoto</td><td>work / job</td></tr>
-          <tr><td class="kana">会社</td><td>kaisha</td><td>company</td></tr>
-          <tr><td class="kana">社員</td><td>shain</td><td>employee</td></tr>
-          <tr><td class="kana">上司</td><td>jōshi</td><td>boss</td></tr>
-          <tr><td class="kana">会議</td><td>kaigi</td><td>meeting</td></tr>
-          <tr><td class="kana">メール</td><td>mēru</td><td>email</td></tr>
-          <tr><td class="kana">電話</td><td>denwa</td><td>phone</td></tr>
-          <tr><td class="kana">仕事をする</td><td>shigoto o suru</td><td>to work</td></tr>
-          <tr><td class="kana">休み</td><td>yasumi</td><td>break / day off</td></tr>
-          <tr><td class="kana">終わり</td><td>owari</td><td>end</td></tr>
-        </table>
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="work">Work</button>
+        <button class="tab-btn" data-tab="gaming">Gaming</button>
+        <button class="tab-btn" data-tab="school">School / University</button>
       </div>
-      <h3>Example sentences</h3>
-      <div class="scroll">
-        <table>
-          <tr><th>Japanese</th><th>Reading</th><th>English</th></tr>
-          <tr><td class="kana">仕事をします。</td><td>Shigoto o shimasu.</td><td>I work.</td></tr>
-          <tr><td class="kana">会社に行きます。</td><td>Kaisha ni ikimasu.</td><td>I go to the company.</td></tr>
-          <tr><td class="kana">会議があります。</td><td>Kaigi ga arimasu.</td><td>There is a meeting.</td></tr>
-          <tr><td class="kana">メールを書きます。</td><td>Mēru o kakimasu.</td><td>I write an email.</td></tr>
-          <tr><td class="kana">仕事が終わりました。</td><td>Shigoto ga owarimashita.</td><td>Work is finished.</td></tr>
-        </table>
-      </div>
-    </section>
 
-    <!-- Gaming -->
-    <section class="card">
-      <h2>Gaming</h2>
-      <div class="scroll">
-        <table>
-          <tr><th>Japanese</th><th>Reading</th><th>Meaning</th></tr>
-          <tr><td class="kana">ゲーム</td><td>gēmu</td><td>game</td></tr>
-          <tr><td class="kana">プレイ</td><td>purei</td><td>play</td></tr>
-          <tr><td class="kana">勝つ</td><td>katsu</td><td>to win</td></tr>
-          <tr><td class="kana">負ける</td><td>makeru</td><td>to lose</td></tr>
-          <tr><td class="kana">レベル</td><td>reberu</td><td>level</td></tr>
-          <tr><td class="kana">キャラ</td><td>kyara</td><td>character</td></tr>
-          <tr><td class="kana">アイテム</td><td>aitemu</td><td>item</td></tr>
-          <tr><td class="kana">ボス</td><td>bosu</td><td>boss</td></tr>
-          <tr><td class="kana">スキル</td><td>sukiru</td><td>skill</td></tr>
-          <tr><td class="kana">マルチ</td><td>maruchi</td><td>multiplayer</td></tr>
-        </table>
+      <!-- Work -->
+      <div id="work" class="tab-content active">
+        <h2>Work</h2>
+        <div class="scroll">
+          <table>
+            <tr><th>Japanese</th><th>Reading</th><th>Meaning</th></tr>
+            <tr><td class="kana">仕事</td><td>shigoto</td><td>work / job</td></tr>
+            <tr><td class="kana">会社</td><td>kaisha</td><td>company</td></tr>
+            <tr><td class="kana">社員</td><td>shain</td><td>employee</td></tr>
+            <tr><td class="kana">上司</td><td>jōshi</td><td>boss</td></tr>
+            <tr><td class="kana">会議</td><td>kaigi</td><td>meeting</td></tr>
+            <tr><td class="kana">メール</td><td>mēru</td><td>email</td></tr>
+            <tr><td class="kana">電話</td><td>denwa</td><td>phone</td></tr>
+            <tr><td class="kana">仕事をする</td><td>shigoto o suru</td><td>to work</td></tr>
+            <tr><td class="kana">休み</td><td>yasumi</td><td>break / day off</td></tr>
+            <tr><td class="kana">終わり</td><td>owari</td><td>end</td></tr>
+          </table>
+        </div>
+        <h3>Example sentences</h3>
+        <div class="scroll">
+          <table>
+            <tr><th>Japanese</th><th>Reading</th><th>English</th></tr>
+            <tr><td class="kana">仕事をします。</td><td>Shigoto o shimasu.</td><td>I work.</td></tr>
+            <tr><td class="kana">会社に行きます。</td><td>Kaisha ni ikimasu.</td><td>I go to the company.</td></tr>
+            <tr><td class="kana">会議があります。</td><td>Kaigi ga arimasu.</td><td>There is a meeting.</td></tr>
+            <tr><td class="kana">メールを書きます。</td><td>Mēru o kakimasu.</td><td>I write an email.</td></tr>
+            <tr><td class="kana">仕事が終わりました。</td><td>Shigoto ga owarimashita.</td><td>Work is finished.</td></tr>
+          </table>
+        </div>
       </div>
-      <h3>Example sentences</h3>
-      <div class="scroll">
-        <table>
-          <tr><th>Japanese</th><th>Reading</th><th>English</th></tr>
-          <tr><td class="kana">ゲームをします。</td><td>Gēmu o shimasu.</td><td>I play games.</td></tr>
-          <tr><td class="kana">勝ちました。</td><td>Kachimashita.</td><td>I won.</td></tr>
-          <tr><td class="kana">負けました。</td><td>Makemashita.</td><td>I lost.</td></tr>
-          <tr><td class="kana">レベルが上がりました。</td><td>Reberu ga agarimashita.</td><td>My level went up.</td></tr>
-          <tr><td class="kana">ボスを倒しました。</td><td>Bosu o taoshimashita.</td><td>I defeated the boss.</td></tr>
-        </table>
-      </div>
-    </section>
 
-    <!-- School / University -->
-    <section class="card">
-      <h2>School / University</h2>
-      <div class="scroll">
-        <table>
-          <tr><th>Japanese</th><th>Reading</th><th>Meaning</th></tr>
-          <tr><td class="kana">学校</td><td>gakkō</td><td>school</td></tr>
-          <tr><td class="kana">大学</td><td>daigaku</td><td>university</td></tr>
-          <tr><td class="kana">学生</td><td>gakusei</td><td>student</td></tr>
-          <tr><td class="kana">先生</td><td>sensei</td><td>teacher</td></tr>
-          <tr><td class="kana">授業</td><td>jugyō</td><td>class / lesson</td></tr>
-          <tr><td class="kana">宿題</td><td>shukudai</td><td>homework</td></tr>
-          <tr><td class="kana">試験</td><td>shiken</td><td>exam / test</td></tr>
-          <tr><td class="kana">図書館</td><td>toshokan</td><td>library</td></tr>
-          <tr><td class="kana">教科書</td><td>kyōkasho</td><td>textbook</td></tr>
-          <tr><td class="kana">友達</td><td>tomodachi</td><td>friend</td></tr>
-        </table>
+      <!-- Gaming -->
+      <div id="gaming" class="tab-content">
+        <h2>Gaming</h2>
+        <div class="scroll">
+          <table>
+            <tr><th>Japanese</th><th>Reading</th><th>Meaning</th></tr>
+            <tr><td class="kana">ゲーム</td><td>gēmu</td><td>game</td></tr>
+            <tr><td class="kana">プレイ</td><td>purei</td><td>play</td></tr>
+            <tr><td class="kana">勝つ</td><td>katsu</td><td>to win</td></tr>
+            <tr><td class="kana">負ける</td><td>makeru</td><td>to lose</td></tr>
+            <tr><td class="kana">レベル</td><td>reberu</td><td>level</td></tr>
+            <tr><td class="kana">キャラ</td><td>kyara</td><td>character</td></tr>
+            <tr><td class="kana">アイテム</td><td>aitemu</td><td>item</td></tr>
+            <tr><td class="kana">ボス</td><td>bosu</td><td>boss</td></tr>
+            <tr><td class="kana">スキル</td><td>sukiru</td><td>skill</td></tr>
+            <tr><td class="kana">マルチ</td><td>maruchi</td><td>multiplayer</td></tr>
+          </table>
+        </div>
+        <h3>Example sentences</h3>
+        <div class="scroll">
+          <table>
+            <tr><th>Japanese</th><th>Reading</th><th>English</th></tr>
+            <tr><td class="kana">ゲームをします。</td><td>Gēmu o shimasu.</td><td>I play games.</td></tr>
+            <tr><td class="kana">勝ちました。</td><td>Kachimashita.</td><td>I won.</td></tr>
+            <tr><td class="kana">負けました。</td><td>Makemashita.</td><td>I lost.</td></tr>
+            <tr><td class="kana">レベルが上がりました。</td><td>Reberu ga agarimashita.</td><td>My level went up.</td></tr>
+            <tr><td class="kana">ボスを倒しました。</td><td>Bosu o taoshimashita.</td><td>I defeated the boss.</td></tr>
+          </table>
+        </div>
       </div>
-      <h3>Example sentences</h3>
-      <div class="scroll">
-        <table>
-          <tr><th>Japanese</th><th>Reading</th><th>English</th></tr>
-          <tr><td class="kana">学校に行きます。</td><td>Gakkō ni ikimasu.</td><td>I go to school.</td></tr>
-          <tr><td class="kana">大学生です。</td><td>Daigakusei desu.</td><td>I am a university student.</td></tr>
-          <tr><td class="kana">授業があります。</td><td>Jugyō ga arimasu.</td><td>There is class.</td></tr>
-          <tr><td class="kana">宿題をします。</td><td>Shukudai o shimasu.</td><td>I do homework.</td></tr>
-          <tr><td class="kana">試験が難しいです。</td><td>Shiken ga muzukashii desu.</td><td>The exam is difficult.</td></tr>
-        </table>
+
+      <!-- School -->
+      <div id="school" class="tab-content">
+        <h2>School / University</h2>
+        <div class="scroll">
+          <table>
+            <tr><th>Japanese</th><th>Reading</th><th>Meaning</th></tr>
+            <tr><td class="kana">学校</td><td>gakkō</td><td>school</td></tr>
+            <tr><td class="kana">大学</td><td>daigaku</td><td>university</td></tr>
+            <tr><td class="kana">学生</td><td>gakusei</td><td>student</td></tr>
+            <tr><td class="kana">先生</td><td>sensei</td><td>teacher</td></tr>
+            <tr><td class="kana">授業</td><td>jugyō</td><td>class / lesson</td></tr>
+            <tr><td class="kana">宿題</td><td>shukudai</td><td>homework</td></tr>
+            <tr><td class="kana">試験</td><td>shiken</td><td>exam / test</td></tr>
+            <tr><td class="kana">図書館</td><td>toshokan</td><td>library</td></tr>
+            <tr><td class="kana">教科書</td><td>kyōkasho</td><td>textbook</td></tr>
+            <tr><td class="kana">友達</td><td>tomodachi</td><td>friend</td></tr>
+          </table>
+        </div>
+        <h3>Example sentences</h3>
+        <div class="scroll">
+          <table>
+            <tr><th>Japanese</th><th>Reading</th><th>English</th></tr>
+            <tr><td class="kana">学校に行きます。</td><td>Gakkō ni ikimasu.</td><td>I go to school.</td></tr>
+            <tr><td class="kana">大学生です。</td><td>Daigakusei desu.</td><td>I am a university student.</td></tr>
+            <tr><td class="kana">授業があります。</td><td>Jugyō ga arimasu.</td><td>There is class.</td></tr>
+            <tr><td class="kana">宿題をします。</td><td>Shukudai o shimasu.</td><td>I do homework.</td></tr>
+            <tr><td class="kana">試験が難しいです。</td><td>Shiken ga muzukashii desu.</td><td>The exam is difficult.</td></tr>
+          </table>
+        </div>
       </div>
     </section>
   </main>
   <footer><p>Onigiri-giri</p></footer>
+  <script>
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.tab).classList.add('active');
+      });
+    });
+  </script>
 </body>
 </html>
