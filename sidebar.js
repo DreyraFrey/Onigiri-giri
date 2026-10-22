@@ -1,4 +1,4 @@
-// Shared sidebar: progress + daily word
+// Shared sidebar: progress + daily word + studying tip
 (function() {
   // Progress
   const progress = JSON.parse(localStorage.getItem('og-progress') || '{}');
@@ -29,4 +29,17 @@
   set('daily-word', word.w);
   set('daily-romaji', word.r);
   set('daily-meaning', word.m);
+
+  // Studying tip (same all day, rotates daily)
+  const tips = [
+    "Start with the Hiragana chart, then try the matching game.",
+    "Review a few Kanji every day instead of cramming.",
+    "Read the example sentences out loud.",
+    "Use the Vocab Exam on Beginner if new words feel hard.",
+    "Practice a little every day — consistency beats long sessions.",
+    "Try the Slang tab for fun words you might hear online.",
+    "Match the reading to the kana, not the other way around."
+  ];
+  const tip = tips[seed % tips.length];
+  set('studying-tip', tip);
 })();
