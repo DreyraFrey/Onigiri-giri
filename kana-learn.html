@@ -121,6 +121,9 @@
       next();
     }
 
+    let phase = 'learn';
+    let currentItem = null;
+
     function next() {
       if (!queue.length) {
         document.getElementById('status').textContent = 'Group done!';
@@ -128,14 +131,25 @@
         document.getElementById('options').innerHTML = '';
         return;
       }
-      const item = queue.shift();
-      document.getElementById('prompt').textContent = item.k + '  ' + item.r;
-      document.getElementById('status').textContent = 'Which pair matches?';
+      currentItem = queue.shift();
+      phase = 'learn';
+      document.getElementById('prompt').textContent = currentItem.k + '  ' + currentItem.r;
+      document.getElementById('status').textContent = 'Look at the kana and sound';
+      const box = document.getElementById('options');
+      box.innerHTML = '';
+      const nextBtn = document.createElement('button');
+      nextBtn.className = 'game-link';
+      nextBtn.textContent = 'Next';
+      nextBtn.onclick = showQuiz;
+      box.appendChild(nextBtn);
+    }
 
-      // Build 5 options: 1 correct + 4 random from the same group
-      const others = currentGroup.filter(x => x.k !== item.k).sort(() => Math.random() - 0.5).slice(0, 4);
-      const opts = [...others, item].sort(() => Math.random() - 0.5);
-
+    function showQuiz() {
+      phase = 'quiz';
+      document.getElementById('prompt').textContent = currentItem.k;
+      document.getElementById('status').textContent = 'Which one matches?';
+      const others = currentGroup.filter(x => x.k !== currentItem.k).sort(() => Math.random() - 0.5).slice(0, 4);
+      const opts = [...others, currentItem].sort(() => Math.random() - 0.5);
       const box = document.getElementById('options');
       box.innerHTML = '';
       opts.forEach(o => {
@@ -143,14 +157,14 @@
         b.className = 'game-link';
         b.style.background = 'var(--surface-elevated)';
         b.style.color = 'var(--text)';
-        b.textContent = o.k + ' = ' + o.r;
+        b.textContent = o.k;
         b.onclick = () => {
-          if (o.k === item.k) {
+          if (o.k === currentItem.k) {
             b.style.background = 'var(--accent)';
             setTimeout(next, 500);
           } else {
             b.style.background = '#c0392b';
-            queue.push(item); // retry later
+            queue.push(currentItem);
             setTimeout(next, 600);
           }
         };
