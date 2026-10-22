@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Review – Onigiri-giri</title>
+  <link rel="stylesheet" href="style.css?v=6">
+  <link rel="manifest" href="manifest.json">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#15202b">
+</head>
+<body>
+  <header>
+    <h1><a href="index.html"><img class="site-logo" src="icon-header.png" alt="Onigiri-giri">Onigiri-giri</a></h1>
+    <p>Spaced Review</p>
+    <button class="menu-toggle" aria-label="Menu">☰</button>
+  </header>
+  <nav id="nav">
+    <a href="index.html">Home</a>
+    <a href="hiragana.html">Hiragana</a>
+    <a href="katakana.html">Katakana</a>
+    <a href="kanji.html">Kanji</a>
+    <a href="vocab.html">Vocabulary</a>
+    <a href="slang.html">Slang</a>
+    <a href="quiz.html">Quiz</a>
+    <a href="review.html" class="active">Review</a>
+  </nav>
+
+  <div class="layout">
+    <aside class="sidebar left-sidebar">
+      <div class="card">
+        <h3>Progress</h3>
+        <div class="progress-item"><span>Hiragana</span><span id="prog-hira">0/46</span></div>
+        <div class="progress-item"><span>Katakana</span><span id="prog-kata">0/46</span></div>
+        <div class="progress-item"><span>Kanji</span><span id="prog-kanji">0/200</span></div>
+        <div class="progress-item"><span>Vocab</span><span id="prog-vocab">0</span></div>
+      </div>
+      <div class="card">
+        <h3>Quick Practice</h3>
+        <a href="hiragana-matching.html" class="sidebar-link">Hiragana Matching</a>
+        <a href="katakana-matching.html" class="sidebar-link">Katakana Matching</a>
+        <a href="matching.html" class="sidebar-link">Kanji Memory</a>
+        <a href="review.html" class="sidebar-link">Review</a>
+      </div>
+    </aside>
+
+    <main>
+      <section class="card" id="select">
+        <h2>Review</h2>
+        <p>Items you've practiced. Wrong answers come back sooner. Correct ones return later in the session and on future days.</p>
+        <p id="due-count">Checking due items...</p>
+        <button class="game-link" id="startReview" style="display:none;">Start Review</button>
+        <p id="no-due" style="display:none; color: var(--text-secondary);">Nothing due right now. Practice some quizzes or matching games first.</p>
+      </section>
+
+      <section class="card" id="reviewArea" style="display:none;">
+        <p id="progress">0 / 0</p>
+        <p id="prompt" style="font-size:1.6rem; margin:1rem 0;">—</p>
+        <div id="options" style="display:flex; flex-direction:column; gap:0.6rem;"></div>
+        <button id="again" class="game-link" style="background:#c0392b; margin-top:0.5rem;">Again</button>
+        <button id="good" class="game-link" style="margin-top:0.5rem;">Good</button>
+      </section>
+    </main>
+
+    <aside class="sidebar right-sidebar">
+      <div class="card">
+        <h3>Daily Word</h3>
+        <div class="daily-word" id="daily-word">仕事</div>
+        <div class="daily-romaji" id="daily-romaji">shigoto</div>
+        <div class="daily-meaning" id="daily-meaning">work / job</div>
+      </div>
+      <div class="card">
+        <h3>Studying Tips</h3>
+        <p id="studying-tip">Review a little every day.</p>
+      </div>
+    </aside>
+  </div>
+
+  <footer>
+    <p>Onigiri-giri · Free Japanese Learning site</p>
+  </footer>
+  <script src="review.js"></script>
+  <script src="sidebar.js?v=3"></script>
+  <script>
+    document.querySelector('.menu-toggle').addEventListener('click', () => {
+      document.getElementById('nav').classList.toggle('open');
+    });
+
+    // Simple demo pool — real items come from practice
+    const pool = {
+      hira: [
+        { id: 'hira-あ', q: 'あ', a: 'a', opts: ['a','i','u','e'] },
+        { id: 'hira-か', q: 'か', a: 'ka', opts: ['ka','ki','ku','ke'] },
+        { id: 'hira-さ', q: 'さ', a: 'sa', opts: ['sa','shi','su','se'] }
+      ],
+      kanji: [
+        { id: 'kanji-人', q: '人', a: 'person', opts: ['person','year','day','big'] },
+        { id: 'kanji-日', q: '日', a: 'day', opts: ['day','month','year','time'] }
+      ]
+    };
+
+    function getDueItems() {
+      const due = [];
+      ['hira','kata','kanji'].forEach(type => {
+        const ids = window.ogSRS.due(type, 10);
+        ids.forEach(id => {
+          const found = (pool[type] || []).find(p => p.id === id);
+          if (found) due.push({ ...found, type });
+        });
+      });
+      return due;
+    }
+
+    let session = null;
+    let current = null;
+    let total = 0;
+    let done = 0;
+
+    function showDue() {
+      const due = getDueItems();
+      document.getElementById('due-count').textContent = due.length + ' items due';
+      document.getElementById('startReview').style.display = due.length ? 'inline-flex' : 'none';
+      document.getElementById('no-due').style.display = due.length ? 'none' : 'block';
+    }
+
+    function start() {
+      const due = getDueItems();
+      if (!due.length) return;
+      session = new window.ogSRS.SessionQueue(due.map(d => d.id));
+      total = due.length;
+      done = 0;
+      document.getElementById('select').style.display = 'none';
+      document.getElementById('reviewArea').style.display = 'block';
+      next();
+    }
+
+    function next() {
+      const id = session.next();
+      if (!id) {
+        document.getElementById('reviewArea').style.display = 'none';
+        document.getElementById('select').style.display = 'block';
+        showDue();
+        return;
+      }
+      current = null;
+      for (const type of ['hira','kata','kanji']) {
+        const found = (pool[type] || []).find(p => p.id === id);
+        if (found) { current = { ...found, type }; break; }
+      }
+      if (!current) { next(); return; }
+      document.getElementById('progress').textContent = (done + 1) + ' / ' + total;
+      document.getElementById('prompt').textContent = current.q;
+      const opts = document.getElementById('options');
+      opts.innerHTML = '';
+      current.opts.forEach(o => {
+        const b = document.createElement('button');
+        b.className = 'game-link';
+        b.style.background = 'var(--surface-elevated)';
+        b.style.color = 'var(--text)';
+        b.textContent = o;
+        b.onclick = () => answer(o === current.a);
+        opts.appendChild(b);
+      });
+    }
+
+    function answer(correct) {
+      window.ogSRS.record(current.type, current.id, correct);
+      session.answered(current.id, correct);
+      done++;
+      setTimeout(next, 400);
+    }
+
+    document.getElementById('startReview').onclick = start;
+    document.getElementById('again').onclick = () => answer(false);
+    document.getElementById('good').onclick = () => answer(true);
+
+    showDue();
+  </script>
+</body>
+</html>
