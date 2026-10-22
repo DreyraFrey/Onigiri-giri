@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Onigiri-giri – Japanese N5–N4</title>
-  <link rel="stylesheet" href="style.css?v=4">
+  <link rel="stylesheet" href="style.css?v=5">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAAAIADvAgAAFgAAAIlQTkcNChoKAAAADUlIRFIAAAAQAAAAEAgGAAAAH/P/YQAAArZJREFUeJyFU0tIVGEYPd9//7nNSyV1fJRF0VTQwhb2QgijWtbSFm3bGLWJFkGboU0EQUQFQY9Nm8ihRW2CIBSJKEEoBC3JSnJybub4GOfeufd/fC0mw6LHWX0ffOdwDnwH+Au4F87qvf+3/Z9ggAAgeJbdwk+aDvAJNAIA5yD+S+R+OBCAudF2ST/cXOXnO1lfa/Zmj+Don5z9qpiDQ8dgwvPNN4UR59itl1psiZw6pyXdkXjwaY+7g/Iwq538HAZykHQBOrqeOeVm6/p0JlnlQIEnxqTx3TDe5CYSzXSXAYEx0EpMAgBmCCLY8NG2TplIDXPjJocn3wMFj7BsgO1biTxP04uiO1MUZzsGK1e4Fw7lYWpK/b0CmTzpaPdLyaIrmiopKs4JrN9AiBRoqsgkYqyml7H4BdU49M6GZ+FH5EBiMNfj0LG8MZNNZ2Smrct+LoVuZU7Esu0UK3ziWLDI8Hz4U5qwts6mk0jPL8urBHB+DFSLcLul1fj8zomn0v4H4rk1uwRpBVHwmPyQ9GzEqfYAjYdcLD3/Yv23JiZdPpgZqgxIADBlfdzJZhswOhbeG+6LPZ7ch6SzAC2IiCMOlKLNhXFcb77PrgNb3x3jqMonMYSaAOrj+1H0LHSC3s2WMacmELDPkdYwVqGsQq6qRSxPCyQ3Ggd7OyBeFLq4A4maQDmysJFAqarL4SJVwhLBRFDWgFlBmwhWLYEbLdx1QmPiqxNOh2u+traTZIDUeOWysbHDrqKGSrCASpSEsAqaLQMaodakZYCkAPBBS+UpLH2ji+tHZnwJAO6t4NVkp9yTSanTXP3WXYlEO4xJW7AkWIrY6oWgGnx8zaUWyaOeL+7seLP0NAcIWikJXYBd+cpWdKYApFQi7gKAQ6y1b4N5jJSB2t3vHHAOgnsg/9m2H2VaXajvGiJsnXiIdrgAAAAASUVORK5CYII=">
   <meta name="color-scheme" content="dark">
@@ -27,23 +27,55 @@
     <a href="quiz.html">Quiz</a>
   </nav>
 
-  <main>
-    <section class="card">
-      <h2>Welcome</h2>
-      <p>Simple charts, vocabulary, slang, and mini-practice for N5–N4. Made to work well on phones too.</p>
-      <ul>
-        <li>Hiragana & Katakana tables</li>
-        <li>100 common Kanji</li>
-        <li>Vocabulary topics (Work, Gaming, School, Food, Shopping)</li>
-        <li>Slang (Kansai, Hokkaido, Gen-Z, Hololive)</li>
-        <li>Quizzes and Vocab Exam</li>
-      </ul>
-      <a href="hiragana-matching.html" class="game-link">Hiragana Matching Game</a>
-      <a href="katakana-matching.html" class="game-link">Katakana Matching Game</a>
-      <a href="matching.html" class="game-link">Kanji Memory Game</a>
-      <a href="vocab-exam.html" class="game-link">Vocab Exam</a>
-    </section>
-  </main>
+  <div class="layout">
+    <aside class="sidebar left-sidebar">
+      <div class="card">
+        <h3>Progress</h3>
+        <div class="progress-item"><span>Hiragana</span><span id="prog-hira">0/46</span></div>
+        <div class="progress-item"><span>Katakana</span><span id="prog-kata">0/46</span></div>
+        <div class="progress-item"><span>Kanji</span><span id="prog-kanji">0/100</span></div>
+        <div class="progress-item"><span>Vocab</span><span id="prog-vocab">0</span></div>
+      </div>
+      <div class="card">
+        <h3>Quick Practice</h3>
+        <a href="hiragana-matching.html" class="sidebar-link">Hiragana Matching</a>
+        <a href="katakana-matching.html" class="sidebar-link">Katakana Matching</a>
+        <a href="matching.html" class="sidebar-link">Kanji Memory</a>
+        <a href="vocab-exam.html" class="sidebar-link">Vocab Exam</a>
+      </div>
+    </aside>
+
+    <main>
+      <section class="card">
+        <h2>Welcome</h2>
+        <p>Simple charts, vocabulary, slang, and mini-practice for N5–N4. Made to work well on phones too.</p>
+        <ul>
+          <li>Hiragana & Katakana tables</li>
+          <li>100 common Kanji</li>
+          <li>Vocabulary topics (Work, Gaming, School, Food, Shopping)</li>
+          <li>Slang (Kansai, Hokkaido, Gen-Z, Hololive)</li>
+          <li>Quizzes and Vocab Exam</li>
+        </ul>
+        <a href="hiragana-matching.html" class="game-link">Hiragana Matching Game</a>
+        <a href="katakana-matching.html" class="game-link">Katakana Matching Game</a>
+        <a href="matching.html" class="game-link">Kanji Memory Game</a>
+        <a href="vocab-exam.html" class="game-link">Vocab Exam</a>
+      </section>
+    </main>
+
+    <aside class="sidebar right-sidebar">
+      <div class="card">
+        <h3>Daily Word</h3>
+        <div class="daily-word" id="daily-word">仕事</div>
+        <div class="daily-romaji" id="daily-romaji">shigoto</div>
+        <div class="daily-meaning" id="daily-meaning">work / job</div>
+      </div>
+      <div class="card">
+        <h3>Currently Studying</h3>
+        <p id="studying-tip">Start with the Hiragana chart and try the matching game.</p>
+      </div>
+    </aside>
+  </div>
 
   <footer>
     <p>Onigiri-giri · Free static site</p>
@@ -52,6 +84,30 @@
     document.querySelector('.menu-toggle').addEventListener('click', () => {
       document.getElementById('nav').classList.toggle('open');
     });
+
+    // Simple progress from localStorage (placeholder counts)
+    const progress = JSON.parse(localStorage.getItem('og-progress') || '{}');
+    document.getElementById('prog-hira').textContent = (progress.hira || 0) + '/46';
+    document.getElementById('prog-kata').textContent = (progress.kata || 0) + '/46';
+    document.getElementById('prog-kanji').textContent = (progress.kanji || 0) + '/100';
+    document.getElementById('prog-vocab').textContent = progress.vocab || 0;
+
+    // Daily word (seeded by date so it stays the same all day)
+    const words = [
+      { w: '仕事', r: 'shigoto', m: 'work / job' },
+      { w: '学校', r: 'gakkō', m: 'school' },
+      { w: 'ゲーム', r: 'gēmu', m: 'game' },
+      { w: '食べる', r: 'taberu', m: 'to eat' },
+      { w: '買う', r: 'kau', m: 'to buy' },
+      { w: 'ヤバイ', r: 'yabai', m: 'awesome / dangerous' },
+      { w: 'おおきに', r: 'ōkini', m: 'thank you (Kansai)' }
+    ];
+    const today = new Date().toDateString();
+    const seed = today.split('').reduce((a, c) => a + c.charCodeAt(0), 0);
+    const word = words[seed % words.length];
+    document.getElementById('daily-word').textContent = word.w;
+    document.getElementById('daily-romaji').textContent = word.r;
+    document.getElementById('daily-meaning').textContent = word.m;
   </script>
 </body>
 </html>
