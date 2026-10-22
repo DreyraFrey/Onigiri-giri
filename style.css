@@ -1,111 +1,140 @@
-* { box-sizing: border-box; }
+/* Onigiri-giri styles */
+:root {
+  --orange: #e85d04;
+  --bg: #fff8f0;
+}
 body {
-  margin: 0;
   font-family: system-ui, -apple-system, sans-serif;
-  background: #fff8f0;
+  margin: 0;
+  background: var(--bg);
   color: #222;
-  line-height: 1.5;
 }
 header {
-  background: #e85d04;
+  background: var(--orange);
   color: white;
-  padding: 1.2rem 1rem;
+  padding: 1rem;
   text-align: center;
   position: relative;
 }
-header h1 { margin: 0; font-size: 1.8rem; }
-header p { margin: 0.3rem 0 0; opacity: 0.9; }
+header h1 {
+  margin: 0;
+  font-size: 1.6rem;
+}
+header p {
+  margin: 0.3rem 0 0;
+  opacity: 0.9;
+}
+.site-logo {
+  height: 36px;
+  vertical-align: middle;
+  margin-right: 8px;
+  border-radius: 6px;
+}
+header h1 a {
+  color: inherit;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+nav {
+  background: white;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.6rem;
+  border-bottom: 1px solid #eee;
+}
+nav a {
+  padding: 0.6rem 1rem;
+  text-decoration: none;
+  color: #333;
+  border-radius: 6px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+nav a:hover, nav a.active {
+  background: #fff3e0;
+  color: var(--orange);
+}
 .menu-toggle {
   display: none;
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background: transparent;
-  border: 2px solid white;
+  background: none;
+  border: none;
   color: white;
-  font-size: 1.4rem;
-  width: 44px;
-  height: 44px;
-  border-radius: 8px;
+  font-size: 1.6rem;
   cursor: pointer;
 }
-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  padding: 0.6rem;
-  background: #fff;
-  border-bottom: 1px solid #eee;
-  justify-content: center;
+@media (max-width: 600px) {
+  nav {
+    display: none;
+    flex-direction: column;
+  }
+  nav.open {
+    display: flex;
+  }
+  .menu-toggle {
+    display: block;
+  }
 }
-nav a {
-  padding: 0.6rem 0.9rem;
-  text-decoration: none;
-  color: #e85d04;
-  border: 1px solid #e85d04;
-  border-radius: 8px;
-  font-weight: 500;
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-  font-size: 0.95rem;
+main {
+  padding: 1rem;
+  max-width: 900px;
+  margin: 0 auto;
 }
-nav a:hover, nav a:active { background: #e85d04; color: white; }
-main { padding: 1rem; max-width: 900px; margin: 0 auto; }
 .card {
   background: white;
   border-radius: 12px;
   padding: 1.2rem;
   margin-bottom: 1rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.scroll {
+  overflow-x: auto;
 }
 table {
   width: 100%;
   border-collapse: collapse;
-  margin: 1rem 0;
-  font-size: 1.05rem;
 }
 th, td {
-  border: 1px solid #ddd;
-  padding: 0.6rem;
-  text-align: center;
+  padding: 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
 }
-th { background: #fff3e0; }
-.kana { font-size: 1.6rem; font-weight: 500; }
-.scroll { overflow-x: auto; }
-.tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
-.tab-btn {
-  padding: 0.7rem 1.2rem;
-  border: 2px solid #e85d04;
-  border-radius: 8px;
-  background: white;
-  font-size: 1rem;
-  min-height: 48px;
-  cursor: pointer;
+.kana {
+  font-size: 1.4rem;
+  font-weight: 500;
 }
-.tab-btn.active { background: #e85d04; color: white; }
-.tab-content { display: none; }
-.tab-content.active { display: block; }
 footer {
   text-align: center;
-  padding: 1.5rem;
-  color: #666;
+  padding: 1rem;
+  color: #888;
   font-size: 0.9rem;
 }
-@media (max-width: 600px) {
-  .menu-toggle { display: block; }
-  nav {
-    display: none;
-    flex-direction: column;
-    gap: 0.5rem;
-    padding: 0.8rem;
-  }
-  nav.open { display: flex; }
-  nav a {
-    justify-content: center;
-    width: 100%;
-  }
-  header h1 { font-size: 1.5rem; }
-  table { font-size: 0.95rem; }
-  .kana { font-size: 1.4rem; }
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+.tab-btn {
+  padding: 0.6rem 1rem;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.tab-btn.active {
+  background: var(--orange);
+  color: white;
+  border-color: var(--orange);
+}
+.tab-content {
+  display: none;
+}
+.tab-content.active {
+  display: block;
 }
