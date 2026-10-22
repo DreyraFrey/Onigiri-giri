@@ -3,8 +3,8 @@
   "short_name": "Onigiri-giri",
   "start_url": "/Onigiri-giri/",
   "display": "standalone",
-  "background_color": "#fff8f0",
-  "theme_color": "#e85d04",
+  "background_color": "#15202b",
+  "theme_color": "#15202b",
   "description": "Japanese N5–N4 learning site",
   "icons": [
     {
