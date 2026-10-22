@@ -41,7 +41,7 @@
     <main>
       <section class="card" id="select">
         <h2>Learn Kana</h2>
-        <p>See the kana and its sound, then pick the matching pair from 5 options. Grouped by vowel.</p>
+        <p>See the kana and its sound, then pick the matching pair from 5 options. Grouped by vowel, or practice all.</p>
         <div style="margin:1rem 0;">
           <button class="tab-btn" data-script="hira">Hiragana</button>
           <button class="tab-btn" data-script="kata">Katakana</button>
@@ -74,6 +74,7 @@
   <footer>
     <p>Onigiri-giri · Free Japanese Learning site</p>
   </footer>
+  <script src="review.js"></script>
   <script src="sidebar.js?v=3"></script>
   <script>
     document.querySelector('.menu-toggle').addEventListener('click', () => {
@@ -104,17 +105,24 @@
     function showVowels() {
       const box = document.getElementById('vowel-btns');
       box.innerHTML = '';
-      ['a','i','u','e','o'].forEach(v => {
+      ['a','i','u','e','o','all'].forEach(v => {
         const b = document.createElement('button');
         b.className = 'tab-btn';
-        b.textContent = v.toUpperCase();
+        b.textContent = v === 'all' ? 'All' : v.toUpperCase();
         b.onclick = () => startGroup(v);
         box.appendChild(b);
       });
     }
 
     function startGroup(v) {
-      currentGroup = groups[script][v];
+      if (v === 'all') {
+        currentGroup = [];
+        ['a','i','u','e','o'].forEach(vow => {
+          currentGroup = currentGroup.concat(groups[script][vow]);
+        });
+      } else {
+        currentGroup = groups[script][v];
+      }
       queue = [...currentGroup].sort(() => Math.random() - 0.5);
       document.getElementById('select').style.display = 'none';
       document.getElementById('game').style.display = 'block';
@@ -159,7 +167,12 @@
         b.style.color = 'var(--text)';
         b.textContent = o.k;
         b.onclick = () => {
-          if (o.k === currentItem.k) {
+          const correct = o.k === currentItem.k;
+          if (window.ogSRS) {
+            const type = script === 'hira' ? 'hira' : 'kata';
+            window.ogSRS.record(type, type + '-' + currentItem.k, correct);
+          }
+          if (correct) {
             b.style.background = 'var(--accent)';
             setTimeout(next, 500);
           } else {
