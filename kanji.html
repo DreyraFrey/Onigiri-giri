@@ -10,9 +10,10 @@
 <body>
   <header>
     <h1>🍙 Onigiri-giri</h1>
-    <p>50 Common Kanji (N5–N4)</p>
+    <p>100 Common Kanji (N5–N4)</p>
+    <button class="menu-toggle" aria-label="Menu">☰</button>
   </header>
-  <nav>
+  <nav id="nav">
     <a href="index.html">Home</a>
     <a href="hiragana.html">Hiragana</a>
     <a href="katakana.html">Katakana</a>
@@ -23,7 +24,7 @@
   </nav>
   <main>
     <section class="card">
-      <h2>50 Most Useful Kanji</h2>
+      <h2>100 Most Useful Kanji</h2>
       <p>Common N5–N4 characters. Readings and meanings.</p>
       <div class="scroll">
         <table>
@@ -77,10 +78,70 @@
           <tr><td class="kana">少</td><td>shou / sukunai</td><td>few</td></tr>
           <tr><td class="kana">高</td><td>kou / takai</td><td>high / tall</td></tr>
           <tr><td class="kana">安</td><td>an / yasui</td><td>cheap / safe</td></tr>
+          <tr><td class="kana">木</td><td>moku / ki</td><td>tree / wood</td></tr>
+          <tr><td class="kana">火</td><td>ka / hi</td><td>fire</td></tr>
+          <tr><td class="kana">水</td><td>sui / mizu</td><td>water</td></tr>
+          <tr><td class="kana">土</td><td>do / tsuchi</td><td>earth / soil</td></tr>
+          <tr><td class="kana">金</td><td>kin / kane</td><td>gold / money</td></tr>
+          <tr><td class="kana">食</td><td>shoku / taberu</td><td>eat / food</td></tr>
+          <tr><td class="kana">飲</td><td>in / nomu</td><td>drink</td></tr>
+          <tr><td class="kana">見</td><td>ken / miru</td><td>see / look</td></tr>
+          <tr><td class="kana">行</td><td>kou / iku</td><td>go</td></tr>
+          <tr><td class="kana">来</td><td>rai / kuru</td><td>come</td></tr>
+          <tr><td class="kana">言</td><td>gen / iu</td><td>say / word</td></tr>
+          <tr><td class="kana">読</td><td>doku / yomu</td><td>read</td></tr>
+          <tr><td class="kana">書</td><td>sho / kaku</td><td>write</td></tr>
+          <tr><td class="kana">聞</td><td>bun / kiku</td><td>hear / ask</td></tr>
+          <tr><td class="kana">話</td><td>wa / hanasu</td><td>speak / talk</td></tr>
+          <tr><td class="kana">会</td><td>kai / au</td><td>meet</td></tr>
+          <tr><td class="kana">出</td><td>shutsu / deru</td><td>exit / leave</td></tr>
+          <tr><td class="kana">入</td><td>nyuu / hairu</td><td>enter</td></tr>
+          <tr><td class="kana">帰</td><td>ki / kaeru</td><td>return</td></tr>
+          <tr><td class="kana">休</td><td>kyuu / yasumu</td><td>rest / day off</td></tr>
+          <tr><td class="kana">始</td><td>shi / hajimaru</td><td>begin</td></tr>
+          <tr><td class="kana">終</td><td>shuu / owaru</td><td>end</td></tr>
+          <tr><td class="kana">開</td><td>kai / hiraku</td><td>open</td></tr>
+          <tr><td class="kana">閉</td><td>hei / tojiru</td><td>close</td></tr>
+          <tr><td class="kana">買</td><td>bai / kau</td><td>buy</td></tr>
+          <tr><td class="kana">売</td><td>bai / uru</td><td>sell</td></tr>
+          <tr><td class="kana">使</td><td>shi / tsukau</td><td>use</td></tr>
+          <tr><td class="kana">作</td><td>saku / tsukuru</td><td>make</td></tr>
+          <tr><td class="kana">食</td><td>shoku / taberu</td><td>eat</td></tr>
+          <tr><td class="kana">飲</td><td>in / nomu</td><td>drink</td></tr>
+          <tr><td class="kana">住</td><td>juu / sumu</td><td>live / reside</td></tr>
+          <tr><td class="kana">家</td><td>ka / ie</td><td>house / family</td></tr>
+          <tr><td class="kana">友</td><td>yuu / tomo</td><td>friend</td></tr>
+          <tr><td class="kana">父</td><td>fu / chichi</td><td>father</td></tr>
+          <tr><td class="kana">母</td><td>bo / haha</td><td>mother</td></tr>
+          <tr><td class="kana">子</td><td>shi / ko</td><td>child</td></tr>
+          <tr><td class="kana">男</td><td>dan / otoko</td><td>man / male</td></tr>
+          <tr><td class="kana">女</td><td>jo / onna</td><td>woman / female</td></tr>
+          <tr><td class="kana">兄</td><td>kei / ani</td><td>older brother</td></tr>
+          <tr><td class="kana">姉</td><td>shi / ane</td><td>older sister</td></tr>
+          <tr><td class="kana">弟</td><td>tei / otouto</td><td>younger brother</td></tr>
+          <tr><td class="kana">妹</td><td>mai / imouto</td><td>younger sister</td></tr>
+          <tr><td class="kana">天</td><td>ten / ame</td><td>heaven / sky</td></tr>
+          <tr><td class="kana">気</td><td>ki</td><td>spirit / weather</td></tr>
+          <tr><td class="kana">雨</td><td>u / ame</td><td>rain</td></tr>
+          <tr><td class="kana">雪</td><td>setsu / yuki</td><td>snow</td></tr>
+          <tr><td class="kana">風</td><td>fuu / kaze</td><td>wind</td></tr>
+          <tr><td class="kana">花</td><td>ka / hana</td><td>flower</td></tr>
+          <tr><td class="kana">山</td><td>san / yama</td><td>mountain</td></tr>
+          <tr><td class="kana">川</td><td>sen / kawa</td><td>river</td></tr>
+          <tr><td class="kana">海</td><td>kai / umi</td><td>sea</td></tr>
+          <tr><td class="kana">町</td><td>chou / machi</td><td>town</td></tr>
+          <tr><td class="kana">村</td><td>son / mura</td><td>village</td></tr>
+          <tr><td class="kana">国</td><td>koku / kuni</td><td>country</td></tr>
+          <tr><td class="kana">語</td><td>go / katari</td><td>language / word</td></tr>
         </table>
       </div>
     </section>
   </main>
   <footer><p>Onigiri-giri</p></footer>
+  <script>
+    document.querySelector('.menu-toggle').addEventListener('click', () => {
+      document.getElementById('nav').classList.toggle('open');
+    });
+  </script>
 </body>
 </html>
