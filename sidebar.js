@@ -1,15 +1,38 @@
 // Shared sidebar: progress + daily word + studying tip
 (function() {
-  // Progress
-  const progress = JSON.parse(localStorage.getItem('og-progress') || '{}');
-  const set = (id, val) => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = val;
+  const KEY = 'og-progress';
+
+  function getProgress() {
+    return JSON.parse(localStorage.getItem(KEY) || '{}');
+  }
+
+  function saveProgress(p) {
+    localStorage.setItem(KEY, JSON.stringify(p));
+  }
+
+  function updateDisplay() {
+    const p = getProgress();
+    const set = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = val;
+    };
+    set('prog-hira', (p.hira || 0) + '/46');
+    set('prog-kata', (p.kata || 0) + '/46');
+    set('prog-kanji', (p.kanji || 0) + '/100');
+    set('prog-vocab', p.vocab || 0);
+  }
+
+  // Public API for games
+  window.ogProgress = {
+    add(type, amount = 1) {
+      const p = getProgress();
+      p[type] = (p[type] || 0) + amount;
+      saveProgress(p);
+      updateDisplay();
+    }
   };
-  set('prog-hira', (progress.hira || 0) + '/46');
-  set('prog-kata', (progress.kata || 0) + '/46');
-  set('prog-kanji', (progress.kanji || 0) + '/100');
-  set('prog-vocab', progress.vocab || 0);
+
+  updateDisplay();
 
   // Daily word (same all day)
   const words = [
@@ -26,11 +49,15 @@
   const today = new Date().toDateString();
   const seed = today.split('').reduce((a, c) => a + c.charCodeAt(0), 0);
   const word = words[seed % words.length];
+  const set = (id, val) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val;
+  };
   set('daily-word', word.w);
   set('daily-romaji', word.r);
   set('daily-meaning', word.m);
 
-  // Studying tip (same all day, rotates daily)
+  // Studying tip (same all day)
   const tips = [
     "Start with the Hiragana chart, then try the matching game.",
     "Review a few Kanji every day instead of cramming.",
@@ -40,6 +67,5 @@
     "Try the Slang tab for fun words you might hear online.",
     "Match the reading to the kana, not the other way around."
   ];
-  const tip = tips[seed % tips.length];
-  set('studying-tip', tip);
+  set('studying-tip', tips[seed % tips.length]);
 })();
