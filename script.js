@@ -104,6 +104,10 @@ function showQuestion() {
       Array.from(optionsDiv.children).forEach(b => b.disabled = true);
       if (opt === item.a) {
         score++;
+    if (window.ogSRS && currentMode) {
+      const type = currentMode === "mixed" ? "hira" : currentMode;
+      window.ogSRS.record(type, type + "-" + shuffled[current].q, true);
+    }
         btn.style.background = '#4caf50';
         btn.style.color = 'white';
       } else {
