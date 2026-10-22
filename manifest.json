@@ -8,12 +8,12 @@
   "description": "Japanese N5–N4 learning site",
   "icons": [
     {
-      "src": "https://via.placeholder.com/192x192/e85d04/ffffff?text=O",
+      "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH6AgZDR4k0n6eXAAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAABnRFWHRUaXRsZQAAQ29weXJpZ2h0IChjKSAyMDI2IEdyb2sgU3R1ZGlvAAAAAElFTkSuQmCC",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "https://via.placeholder.com/512x512/e85d04/ffffff?text=O",
+      "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH6AgZDR4k0n6eXAAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAABnRFWHRUaXRsZQAAQ29weXJpZ2h0IChjKSAyMDI2IEdyb2sgU3R1ZGlvAAAAAElFTkSuQmCC",
       "sizes": "512x512",
       "type": "image/png"
     }
