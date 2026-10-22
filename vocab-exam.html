@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vocab Exam – Onigiri-giri</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    .diff-btn {
+      display: inline-block;
+      margin: 0.5rem;
+      padding: 0.9rem 1.4rem;
+      border: 2px solid #e85d04;
+      border-radius: 8px;
+      background: white;
+      color: #e85d04;
+      font-size: 1.05rem;
+      min-height: 48px;
+      cursor: pointer;
+    }
+    .diff-btn.active { background: #e85d04; color: white; }
+    .question {
+      font-size: 1.4rem;
+      text-align: center;
+      margin: 1.5rem 0;
+      min-height: 3em;
+    }
+    .options { display: flex; flex-direction: column; gap: 0.6rem; max-width: 400px; margin: 0 auto; }
+    .option {
+      padding: 0.9rem;
+      border: 2px solid #e85d04;
+      border-radius: 8px;
+      background: white;
+      font-size: 1.05rem;
+      min-height: 48px;
+      cursor: pointer;
+      text-align: center;
+    }
+    .option:hover { background: #fff3e0; }
+    .option.correct { background: #e8f5e9; border-color: #4caf50; }
+    .option.wrong { background: #ffebee; border-color: #f44336; }
+    #results { display: none; }
+    .wrong-item { margin: 0.5rem 0; padding: 0.6rem; background: #fff8f0; border-radius: 6px; }
+    ruby { font-size: 1.1em; }
+    rt { font-size: 0.55em; color: #666; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🍙 Onigiri-giri</h1>
+    <p>Vocab Exam</p>
+    <button class="menu-toggle" aria-label="Menu">☰</button>
+  </header>
+  <nav id="nav">
+    <a href="index.html">Home</a>
+    <a href="hiragana.html">Hiragana</a>
+    <a href="katakana.html">Katakana</a>
+    <a href="kanji.html">Kanji</a>
+    <a href="vocab.html">Vocabulary</a>
+    <a href="slang.html">Slang</a>
+    <a href="quiz.html">Quiz</a>
+  </nav>
+  <main>
+    <section class="card" id="select">
+      <h2>Choose difficulty</h2>
+      <button class="diff-btn" data-diff="beginner">Beginner</button>
+      <button class="diff-btn" data-diff="adept">Adept</button>
+      <button class="diff-btn" data-diff="expert">Expert</button>
+      <p style="margin-top:1rem; color:#666;">Beginner: mostly kana + furigana<br>Adept: more kanji + furigana<br>Expert: N5–low N4, no furigana</p>
+    </section>
+
+    <section class="card" id="exam" style="display:none;">
+      <div id="progress"></div>
+      <div class="question" id="question"></div>
+      <div class="options" id="options"></div>
+    </section>
+
+    <section class="card" id="results">
+      <h2>Results</h2>
+      <p id="score"></p>
+      <div id="wrong-list"></div>
+      <button class="diff-btn" id="retry" style="margin-top:1rem;">Try again</button>
+    </section>
+  </main>
+  <footer><p>Onigiri-giri</p></footer>
+  <script>
+    document.querySelector('.menu-toggle').addEventListener('click', () => {
+      document.getElementById('nav').classList.toggle('open');
+    });
+
+    const banks = {
+      beginner: [
+        { jp: 'あなた', en: 'you', ruby: null },
+        { jp: 'わたし', en: 'I / me', ruby: null },
+        { jp: 'これ', en: 'this', ruby: null },
+        { jp: 'それ', en: 'that', ruby: null },
+        { jp: 'いいえ', en: 'no', ruby: null },
+        { jp: 'はい', en: 'yes', ruby: null },
+        { jp: '<ruby>人<rt>ひと</rt></ruby>', en: 'person', ruby: true },
+        { jp: '<ruby>今<rt>いま</rt></ruby>', en: 'now', ruby: true },
+        { jp: 'おなか', en: 'inside', ruby: null },
+        { jp: 'まつ', en: 'to wait', ruby: null }
+      ],
+      adept: [
+        { jp: '<ruby>仕事<rt>しごと</rt></ruby>', en: 'work / job', ruby: true },
+        { jp: '<ruby>会社<rt>かいしゃ</rt></ruby>', en: 'company', ruby: true },
+        { jp: '<ruby>学校<rt>がっこう</rt></ruby>', en: 'school', ruby: true },
+        { jp: '<ruby>先生<rt>せんせい</rt></ruby>', en: 'teacher', ruby: true },
+        { jp: '<ruby>友達<rt>ともだち</rt></ruby>', en: 'friend', ruby: true },
+        { jp: '<ruby>電話<rt>でんわ</rt></ruby>', en: 'phone', ruby: true },
+        { jp: 'ゲーム', en: 'game', ruby: null },
+        { jp: '<ruby>休み<rt>やすみ</rt></ruby>', en: 'break / day off', ruby: true },
+        { jp: '<ruby>会議<rt>かいぎ</rt></ruby>', en: 'meeting', ruby: true },
+        { jp: '<ruby>学生<rt>がくせい</rt></ruby>', en: 'student', ruby: true }
+      ],
+      expert: [
+        { jp: '仕事', en: 'work / job', ruby: false },
+        { jp: '会社', en: 'company', ruby: false },
+        { jp: '学校', en: 'school', ruby: false },
+        { jp: '大学', en: 'university', ruby: false },
+        { jp: '先生', en: 'teacher', ruby: false },
+        { jp: '友達', en: 'friend', ruby: false },
+        { jp: '電話', en: 'phone', ruby: false },
+        { jp: '会議', en: 'meeting', ruby: false },
+        { jp: '学生', en: 'student', ruby: false },
+        { jp: '宿題', en: 'homework', ruby: false }
+      ]
+    };
+
+    let current = [];
+    let index = 0;
+    let score = 0;
+    let wrongs = [];
+    let answered = false;
+
+    function startExam(diff) {
+      current = [...banks[diff]].sort(() => Math.random() - 0.5);
+      index = 0;
+      score = 0;
+      wrongs = [];
+      document.getElementById('select').style.display = 'none';
+      document.getElementById('exam').style.display = 'block';
+      document.getElementById('results').style.display = 'none';
+      showQuestion();
+    }
+
+    function showQuestion() {
+      if (index >= current.length) {
+        showResults();
+        return;
+      }
+      answered = false;
+      const q = current[index];
+      document.getElementById('progress').textContent = (index + 1) + ' / ' + current.length;
+      document.getElementById('question').innerHTML = q.jp;
+
+      const correct = q.en;
+      const pool = [...new Set(current.map(x => x.en))];
+      const opts = [correct];
+      while (opts.length < 4 && pool.length > 0) {
+        const r = pool.splice(Math.floor(Math.random() * pool.length), 1)[0];
+        if (r !== correct) opts.push(r);
+      }
+      opts.sort(() => Math.random() - 0.5);
+
+      const box = document.getElementById('options');
+      box.innerHTML = '';
+      opts.forEach(o => {
+        const btn = document.createElement('button');
+        btn.className = 'option';
+        btn.textContent = o;
+        btn.addEventListener('click', () => choose(o, correct, q));
+        box.appendChild(btn);
+      });
+    }
+
+    function choose(picked, correct, q) {
+      if (answered) return;
+      answered = true;
+      const buttons = document.querySelectorAll('.option');
+      buttons.forEach(b => {
+        if (b.textContent === correct) b.classList.add('correct');
+        if (b.textContent === picked && picked !== correct) b.classList.add('wrong');
+      });
+      if (picked === correct) score++;
+      else wrongs.push(q);
+      setTimeout(() => {
+        index++;
+        showQuestion();
+      }, 700);
+    }
+
+    function showResults() {
+      document.getElementById('exam').style.display = 'none';
+      document.getElementById('results').style.display = 'block';
+      document.getElementById('score').textContent = score + ' / ' + current.length + ' correct';
+      const list = document.getElementById('wrong-list');
+      list.innerHTML = '';
+      if (wrongs.length === 0) {
+        list.innerHTML = '<p>Perfect!</p>';
+      } else {
+        wrongs.forEach(w => {
+          const div = document.createElement('div');
+          div.className = 'wrong-item';
+          div.innerHTML = '<strong>' + w.jp + '</strong> → ' + w.en;
+          list.appendChild(div);
+        });
+      }
+    }
+
+    document.querySelectorAll('.diff-btn[data-diff]').forEach(btn => {
+      btn.addEventListener('click', () => startExam(btn.dataset.diff));
+    });
+    document.getElementById('retry').addEventListener('click', () => {
+      document.getElementById('results').style.display = 'none';
+      document.getElementById('select').style.display = 'block';
+    });
+  </script>
+</body>
+</html>
