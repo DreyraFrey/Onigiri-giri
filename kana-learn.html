@@ -53,7 +53,10 @@
         <p id="status">Choose the matching pair</p>
         <div id="prompt" style="font-size:2.5rem; text-align:center; margin:1rem 0;">—</div>
         <div id="options" style="display:flex; flex-direction:column; gap:0.6rem;"></div>
-        <button id="back" class="game-link" style="margin-top:1rem; background:var(--surface-elevated); color:var(--text);">Back</button>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:1rem;">
+          <button id="back" class="game-link" style="background:var(--surface-elevated); color:var(--text); min-width:100px;">Back</button>
+          <div id="next-slot"></div>
+        </div>
       </section>
     </main>
 
@@ -145,15 +148,14 @@
       document.getElementById('status').textContent = 'Look at the kana and sound';
       const box = document.getElementById('options');
       box.innerHTML = '';
+      const nextSlot = document.getElementById('next-slot');
+      nextSlot.innerHTML = '';
       const nextBtn = document.createElement('button');
       nextBtn.className = 'game-link';
       nextBtn.textContent = 'Next';
       nextBtn.style.minWidth = '100px';
-      nextBtn.style.maxWidth = '140px';
-      nextBtn.style.margin = '0 auto';
-      nextBtn.style.display = 'block';
       nextBtn.onclick = showQuiz;
-      box.appendChild(nextBtn);
+      nextSlot.appendChild(nextBtn);
     }
 
     function showQuiz() {
@@ -164,6 +166,7 @@
       const opts = [...others, currentItem].sort(() => Math.random() - 0.5);
       const box = document.getElementById('options');
       box.innerHTML = '';
+      document.getElementById('next-slot').innerHTML = '';
       box.style.display = 'grid';
       box.style.gridTemplateColumns = 'repeat(auto-fit, minmax(80px, 1fr))';
       box.style.gap = '0.75rem';
