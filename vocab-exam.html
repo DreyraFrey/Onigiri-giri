@@ -14,8 +14,8 @@
       padding: 0.9rem 1.4rem;
       border: 2px solid #e85d04;
       border-radius: 8px;
-      background: white;
-      color: #e85d04;
+      background: var(--surface-elevated);
+      color: var(--text);
       font-size: 1.05rem;
       min-height: 48px;
       cursor: pointer;
@@ -32,19 +32,19 @@
       padding: 0.9rem;
       border: 2px solid #e85d04;
       border-radius: 8px;
-      background: white;
+      background: var(--surface-elevated);
       font-size: 1.05rem;
       min-height: 48px;
       cursor: pointer;
       text-align: center;
     }
-    .option:hover { background: #fff3e0; }
-    .option.correct { background: #e8f5e9; border-color: #4caf50; }
-    .option.wrong { background: #ffebee; border-color: #f44336; }
+    .option:hover { background: var(--accent-soft); }
+    .option.correct { background: rgba(76, 175, 80, 0.2); border-color: #4caf50; }
+    .option.wrong { background: rgba(244, 67, 54, 0.2); border-color: #f44336; }
     #results { display: none; }
-    .wrong-item { margin: 0.5rem 0; padding: 0.6rem; background: #fff8f0; border-radius: 6px; }
+    .wrong-item { margin: 0.5rem 0; padding: 0.6rem; background: var(--surface); border-radius: 6px; }
     ruby { font-size: 1.1em; }
-    rt { font-size: 0.55em; color: #666; }
+    rt { font-size: 0.55em; color: var(--text-secondary); }
   </style>
 </head>
 <body>
