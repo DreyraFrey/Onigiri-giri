@@ -22,7 +22,6 @@
     set('prog-vocab', p.vocab || 0);
   }
 
-  // Public API for games
   window.ogProgress = {
     add(type, amount = 1) {
       const p = getProgress();
@@ -34,17 +33,20 @@
 
   updateDisplay();
 
-  // Daily word (same all day)
+  // Daily word — only proper N5–N4 vocabulary (no slang)
   const words = [
     { w: '仕事', r: 'shigoto', m: 'work / job' },
     { w: '学校', r: 'gakkō', m: 'school' },
     { w: 'ゲーム', r: 'gēmu', m: 'game' },
     { w: '食べる', r: 'taberu', m: 'to eat' },
     { w: '買う', r: 'kau', m: 'to buy' },
-    { w: 'ヤバイ', r: 'yabai', m: 'awesome / dangerous' },
-    { w: 'おおきに', r: 'ōkini', m: 'thank you (Kansai)' },
-    { w: '推し', r: 'oshi', m: 'favorite (VTuber)' },
-    { w: '草', r: 'kusa', m: 'lol' }
+    { w: '飲む', r: 'nomu', m: 'to drink' },
+    { w: '行く', r: 'iku', m: 'to go' },
+    { w: '見る', r: 'miru', m: 'to see / watch' },
+    { w: '話す', r: 'hanasu', m: 'to speak' },
+    { w: '本', r: 'hon', m: 'book' },
+    { w: '水', r: 'mizu', m: 'water' },
+    { w: 'ご飯', r: 'gohan', m: 'rice / meal' }
   ];
   const today = new Date().toDateString();
   const seed = today.split('').reduce((a, c) => a + c.charCodeAt(0), 0);
@@ -57,15 +59,14 @@
   set('daily-romaji', word.r);
   set('daily-meaning', word.m);
 
-  // Studying tip (same all day)
   const tips = [
     "Start with the Hiragana chart, then try the matching game.",
     "Review a few Kanji every day instead of cramming.",
     "Read the example sentences out loud.",
     "Use the Vocab Exam on Beginner if new words feel hard.",
     "Practice a little every day — consistency beats long sessions.",
-    "Try the Slang tab for fun words you might hear online.",
-    "Match the reading to the kana, not the other way around."
+    "Match the reading to the kana, not the other way around.",
+    "Look at the example sentences to see how words are used."
   ];
   set('studying-tip', tips[seed % tips.length]);
 })();
