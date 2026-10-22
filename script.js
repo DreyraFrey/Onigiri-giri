@@ -99,7 +99,7 @@ function showQuestion() {
   opts.forEach(opt => {
     const btn = document.createElement('button');
     btn.textContent = opt;
-    btn.style.cssText = 'padding:1rem; font-size:1.2rem; border:2px solid #e85d04; border-radius:10px; background:var(--surface-elevated); min-height:56px; width:100%; max-width:320px;';
+    btn.style.cssText = 'padding:1rem; font-size:1.2rem; border:2px solid #e85d04; border-radius:10px; background:var(--surface-elevated); color:var(--text); min-height:56px; width:100%; max-width:320px;';
     btn.onclick = () => {
       Array.from(optionsDiv.children).forEach(b => b.disabled = true);
       if (opt === item.a) {
@@ -143,7 +143,7 @@ function startQuiz() {
 document.addEventListener('DOMContentLoaded', () => {
   const modeButtons = document.querySelectorAll('.mode-btn');
   modeButtons.forEach(btn => {
-    btn.style.cssText = 'padding:1rem 1.4rem; font-size:1.15rem; border:2px solid #e85d04; border-radius:10px; background:var(--surface-elevated); min-height:56px; flex:1; min-width:140px;';
+    btn.style.cssText = 'padding:1rem 1.4rem; font-size:1.15rem; border:2px solid #e85d04; border-radius:10px; background:var(--surface-elevated); color:var(--text); min-height:56px; flex:1; min-width:140px;';
     btn.addEventListener('click', () => {
       currentMode = btn.dataset.mode;
       modeButtons.forEach(b => {
