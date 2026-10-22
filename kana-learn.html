@@ -51,7 +51,10 @@
 
       <section class="card" id="game" style="display:none;">
         <p id="status">Choose the matching pair</p>
-        <div id="prompt" style="font-size:2.5rem; text-align:center; margin:1rem 0;">—</div>
+        <div style="display:flex; align-items:center; justify-content:center; gap:1rem; margin:1rem 0;">
+          <div id="prompt" style="font-size:2.5rem;">—</div>
+          <button id="speak" class="game-link" style="min-width:48px; min-height:48px; font-size:1.3rem; padding:0.4rem 0.6rem; background:var(--surface-elevated); color:var(--text);">🔊</button>
+        </div>
         <div id="options" style="display:flex; flex-direction:column; gap:0.6rem;"></div>
         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:1rem;">
           <button id="back" class="game-link" style="background:var(--surface-elevated); color:var(--text); min-width:100px;">Back</button>
@@ -146,6 +149,7 @@
       phase = 'learn';
       document.getElementById('prompt').textContent = currentItem.k + '  ' + currentItem.r;
       document.getElementById('status').textContent = 'Look at the kana and sound';
+      setTimeout(() => speak(currentItem.r), 300);
       const box = document.getElementById('options');
       box.innerHTML = '';
       const nextSlot = document.getElementById('next-slot');
@@ -214,6 +218,23 @@
     };
 
     // Default
+
+    function speak(text) {
+      if (!window.speechSynthesis) return;
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'ja-JP';
+      u.rate = 0.9;
+      const voices = window.speechSynthesis.getVoices();
+      const ja = voices.find(v => v.lang.startsWith('ja'));
+      if (ja) u.voice = ja;
+      window.speechSynthesis.speak(u);
+    }
+
+    document.getElementById('speak').onclick = () => {
+      if (currentItem) speak(currentItem.r);
+    };
+
     document.querySelector('[data-script="hira"]').classList.add('active');
     showVowels();
   </script>
