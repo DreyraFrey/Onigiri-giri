@@ -15,11 +15,14 @@
 
 * { box-sizing: border-box; }
 
+html, body {
+  background: var(--bg);
+  color: var(--text);
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   margin: 0;
-  background: var(--bg);
-  color: var(--text);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
@@ -103,15 +106,18 @@ nav a.active {
   display: none;
   background: none;
   border: none;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   cursor: pointer;
-  padding: 0.4rem;
+  padding: 0.5rem;
   color: var(--text);
+  min-width: 44px;
+  min-height: 44px;
 }
 
 @media (max-width: 700px) {
   header {
     padding: 0.6rem 0.75rem;
+    position: sticky;
   }
   nav {
     display: none;
@@ -124,16 +130,20 @@ nav a.active {
     flex-direction: column;
     padding: 0.5rem;
     gap: 0.25rem;
+    z-index: 99;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   }
   nav.open {
-    display: flex;
+    display: flex !important;
   }
   nav a {
     border-radius: var(--radius-sm);
     padding: 0.75rem 1rem;
   }
   .menu-toggle {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
