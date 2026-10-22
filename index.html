@@ -33,7 +33,7 @@
         <h3>Progress</h3>
         <div class="progress-item"><span>Hiragana</span><span id="prog-hira">0/46</span></div>
         <div class="progress-item"><span>Katakana</span><span id="prog-kata">0/46</span></div>
-        <div class="progress-item"><span>Kanji</span><span id="prog-kanji">0/100</span></div>
+        <div class="progress-item"><span>Kanji</span><span id="prog-kanji">0/200</span></div>
         <div class="progress-item"><span>Vocab</span><span id="prog-vocab">0</span></div>
       </div>
       <div class="card">
@@ -47,15 +47,20 @@
 
     <main>
       <section class="card">
-        <h2>Welcome</h2>
-        <p>Simple charts, vocabulary, slang, and mini-practice for N5–N4. Made to work well on phones too.</p>
+        <h2>Welcome to Onigiri-giri</h2>
+        <p>A free Japanese learning site focused on N5–N4. Practice the writing systems, vocabulary, and common kanji with charts, quizzes, and mini-games.</p>
         <ul>
-          <li>Hiragana & Katakana tables</li>
-          <li>100 common Kanji</li>
-          <li>Vocabulary topics (Work, Gaming, School, Food, Shopping)</li>
-          <li>Slang (Kansai, Hokkaido, Gen-Z, Hololive)</li>
-          <li>Quizzes and Vocab Exam</li>
+          <li><strong>Hiragana & Katakana</strong> — full charts and matching games</li>
+          <li><strong>200 common Kanji</strong> — readings, meanings, and a memory game</li>
+          <li><strong>Vocabulary</strong> — topics like Work, School, Food, Shopping, and Gaming, with example sentences</li>
+          <li><strong>Slang</strong> — Kansai, Hokkaido, Gen-Z, and Hololive (just for fun)</li>
+          <li><strong>Quizzes & Vocab Exam</strong> — test yourself at different levels</li>
         </ul>
+      </section>
+
+      <section class="card">
+        <h2>Practice</h2>
+        <p>Jump straight into a game or the exam.</p>
         <a href="hiragana-matching.html" class="game-link">Hiragana Matching Game</a>
         <a href="katakana-matching.html" class="game-link">Katakana Matching Game</a>
         <a href="matching.html" class="game-link">Kanji Memory Game</a>
@@ -84,30 +89,6 @@
     document.querySelector('.menu-toggle').addEventListener('click', () => {
       document.getElementById('nav').classList.toggle('open');
     });
-
-    // Simple progress from localStorage (placeholder counts)
-    const progress = JSON.parse(localStorage.getItem('og-progress') || '{}');
-    document.getElementById('prog-hira').textContent = (progress.hira || 0) + '/46';
-    document.getElementById('prog-kata').textContent = (progress.kata || 0) + '/46';
-    document.getElementById('prog-kanji').textContent = (progress.kanji || 0) + '/100';
-    document.getElementById('prog-vocab').textContent = progress.vocab || 0;
-
-    // Daily word (seeded by date so it stays the same all day)
-    const words = [
-      { w: '仕事', r: 'shigoto', m: 'work / job' },
-      { w: '学校', r: 'gakkō', m: 'school' },
-      { w: 'ゲーム', r: 'gēmu', m: 'game' },
-      { w: '食べる', r: 'taberu', m: 'to eat' },
-      { w: '買う', r: 'kau', m: 'to buy' },
-      { w: 'ヤバイ', r: 'yabai', m: 'awesome / dangerous' },
-      { w: 'おおきに', r: 'ōkini', m: 'thank you (Kansai)' }
-    ];
-    const today = new Date().toDateString();
-    const seed = today.split('').reduce((a, c) => a + c.charCodeAt(0), 0);
-    const word = words[seed % words.length];
-    document.getElementById('daily-word').textContent = word.w;
-    document.getElementById('daily-romaji').textContent = word.r;
-    document.getElementById('daily-meaning').textContent = word.m;
   </script>
   <script src="sidebar.js?v=3"></script>
 </body>
