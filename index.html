@@ -6,6 +6,7 @@
   <title>Onigiri-giri – Japanese N5–N4</title>
   <link rel="stylesheet" href="style.css">
   <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAAAIADvAgAAFgAAAIlQTkcNChoKAAAADUlIRFIAAAAQAAAAEAgGAAAAH/P/YQAAAAFzUkdCAK7OHOkAAAAEZ0FNQQAAsY8L/GEFAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH6AgZDR4k0n6eXAAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAABnRFWHRUaXRsZQAAQ29weXJpZ2h0IChjKSAyMDI2IEdyb2sgU3R1ZGlvAAAAAElFTkSuQmCC">
   <meta name="theme-color" content="#e85d04">
   <style>
     .game-link {
@@ -22,11 +23,23 @@
       min-height: 48px;
     }
     .game-link:hover { opacity: 0.9; }
+    .site-logo {
+      height: 36px;
+      vertical-align: middle;
+      margin-right: 8px;
+      border-radius: 6px;
+    }
+    header h1 a {
+      color: inherit;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>🍙 Onigiri-giri</h1>
+    <h1><a href="index.html"><img class="site-logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAKYklEQVR4nO2YW4xd11nHf99a+1zmGo8vYztOUo+JU5dQF0hLaAmd" alt="Onigiri-giri">Onigiri-giri</a></h1>
     <p>Japanese N5→N4 – bite-sized practice</p>
     <button class="menu-toggle" aria-label="Menu">☰</button>
   </header>
@@ -47,10 +60,10 @@
       <p>Simple charts, vocabulary, slang, and mini-practice for N5–N4. Made to work well on phones too.</p>
       <ul>
         <li>Hiragana & Katakana tables</li>
-        <li>50 common Kanji</li>
-        <li>Vocabulary topics (Work, Gaming, School)</li>
+        <li>100 common Kanji</li>
+        <li>Vocabulary topics (Work, Gaming, School, Food, Shopping)</li>
         <li>Slang (Kansai, Hokkaido, Gen-Z, Hololive)</li>
-        <li>Quizzes (kana + kanji)</li>
+        <li>Quizzes and Vocab Exam</li>
       </ul>
       <a href="hiragana-matching.html" class="game-link">Hiragana Matching Game</a>
       <a href="katakana-matching.html" class="game-link">Katakana Matching Game</a>
