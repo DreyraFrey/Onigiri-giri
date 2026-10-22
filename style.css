@@ -11,6 +11,7 @@
   --accent-soft: rgba(232, 93, 4, 0.15);
   --radius: 12px;
   --radius-sm: 8px;
+  --header-height: 56px;
 }
 
 * { box-sizing: border-box; }
@@ -38,6 +39,7 @@ header {
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
+  height: var(--header-height);
 }
 
 header h1 {
@@ -117,12 +119,11 @@ nav a.active {
 @media (max-width: 700px) {
   header {
     padding: 0.6rem 0.75rem;
-    position: sticky;
   }
   nav {
     display: none;
-    position: absolute;
-    top: 100%;
+    position: fixed;
+    top: var(--header-height);
     left: 0;
     right: 0;
     background: var(--surface);
@@ -132,9 +133,11 @@ nav a.active {
     gap: 0.25rem;
     z-index: 99;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transform-origin: top;
+    animation: fanDown 0.2s ease-out;
   }
   nav.open {
-    display: flex !important;
+    display: flex;
   }
   nav a {
     border-radius: var(--radius-sm);
@@ -144,6 +147,17 @@ nav a.active {
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+}
+
+@keyframes fanDown {
+  from {
+    opacity: 0;
+    transform: scaleY(0.8) translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1) translateY(0);
   }
 }
 
