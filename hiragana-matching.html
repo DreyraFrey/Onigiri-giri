@@ -236,6 +236,7 @@
           card.classList.add('matched');
           selected.classList.remove('selected');
           matchedCount++;
+          if (window.ogSRS) window.ogSRS.record('hiragana', 'hiragana-' + card.dataset.value, true);
           selected = null;
 
           if (matchedCount === 5) {
