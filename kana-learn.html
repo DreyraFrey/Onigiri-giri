@@ -149,7 +149,7 @@
       phase = 'learn';
       document.getElementById('prompt').textContent = currentItem.k + '  ' + currentItem.r;
       document.getElementById('status').textContent = 'Look at the kana and sound';
-      setTimeout(() => speak(currentItem.r), 300);
+      if (hasJapaneseVoice()) setTimeout(() => speak(currentItem.r), 300);
       const box = document.getElementById('options');
       box.innerHTML = '';
       const nextSlot = document.getElementById('next-slot');
@@ -219,8 +219,23 @@
 
     // Default
 
+    function hasJapaneseVoice() {
+      if (!window.speechSynthesis) return false;
+      const voices = window.speechSynthesis.getVoices();
+      return voices.some(v => v.lang.startsWith('ja'));
+    }
+
+    function updateSpeakButton() {
+      const btn = document.getElementById('speak');
+      if (hasJapaneseVoice()) {
+        btn.style.display = '';
+      } else {
+        btn.style.display = 'none';
+      }
+    }
+
     function speak(text) {
-      if (!window.speechSynthesis) return;
+      if (!hasJapaneseVoice()) return;
       window.speechSynthesis.cancel();
       const u = new SpeechSynthesisUtterance(text);
       u.lang = 'ja-JP';
@@ -234,6 +249,12 @@
     document.getElementById('speak').onclick = () => {
       if (currentItem) speak(currentItem.r);
     };
+
+    // Voices load asynchronously on some browsers
+    if (window.speechSynthesis) {
+      window.speechSynthesis.onvoiceschanged = updateSpeakButton;
+      updateSpeakButton();
+    }
 
     document.querySelector('[data-script="hira"]').classList.add('active');
     showVowels();
