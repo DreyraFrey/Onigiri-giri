@@ -238,6 +238,7 @@
           selected = null;
 
           if (matchedCount === 5) {
+            if (window.ogProgress) window.ogProgress.add('hira', 1);
             document.getElementById('status').textContent = 'Nice! Next set...';
             setTimeout(() => {
               currentPairs = shuffle(allPairs).slice(0, 5);
