@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Learn Kana – Onigiri-giri</title>
+  <link rel="stylesheet" href="style.css?v=6">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="icon-header.png">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#15202b">
+</head>
+<body>
+  <header>
+    <h1><a href="index.html"><img class="site-logo" src="icon-header.png" alt="Onigiri-giri">Onigiri-giri</a></h1>
+    <p>Learn Kana</p>
+    <button class="menu-toggle" aria-label="Menu">☰</button>
+  </header>
+  <nav id="nav">
+    <a href="index.html">Home</a>
+    <a href="hiragana.html">Hiragana</a>
+    <a href="katakana.html">Katakana</a>
+    <a href="kanji.html">Kanji</a>
+    <a href="vocab.html">Vocabulary</a>
+    <a href="slang.html">Slang</a>
+    <a href="quiz.html">Quiz</a>
+    <a href="review.html">Review</a>
+  </nav>
+
+  <div class="layout">
+    <aside class="sidebar left-sidebar">
+      <div class="card">
+        <h3>Progress</h3>
+        <div class="progress-item"><span>Hiragana</span><span id="prog-hira">0/46</span></div>
+        <div class="progress-item"><span>Katakana</span><span id="prog-kata">0/46</span></div>
+        <div class="progress-item"><span>Kanji</span><span id="prog-kanji">0/200</span></div>
+        <div class="progress-item"><span>Vocab</span><span id="prog-vocab">0</span></div>
+      </div>
+    </aside>
+
+    <main>
+      <section class="card" id="select">
+        <h2>Learn Kana</h2>
+        <p>See the kana and its sound, then pick the matching pair from 5 options. Grouped by vowel.</p>
+        <div style="margin:1rem 0;">
+          <button class="tab-btn" data-script="hira">Hiragana</button>
+          <button class="tab-btn" data-script="kata">Katakana</button>
+        </div>
+        <div id="vowel-btns" style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.5rem;"></div>
+      </section>
+
+      <section class="card" id="game" style="display:none;">
+        <p id="status">Choose the matching pair</p>
+        <div id="prompt" style="font-size:2.5rem; text-align:center; margin:1rem 0;">—</div>
+        <div id="options" style="display:flex; flex-direction:column; gap:0.6rem;"></div>
+        <button id="back" class="game-link" style="margin-top:1rem; background:var(--surface-elevated); color:var(--text);">Back</button>
+      </section>
+    </main>
+
+    <aside class="sidebar right-sidebar">
+      <div class="card">
+        <h3>Daily Word</h3>
+        <div class="daily-word" id="daily-word">仕事</div>
+        <div class="daily-romaji" id="daily-romaji">shigoto</div>
+        <div class="daily-meaning" id="daily-meaning">work / job</div>
+      </div>
+      <div class="card">
+        <h3>Studying Tips</h3>
+        <p id="studying-tip">Learn a vowel group, then practice it.</p>
+      </div>
+    </aside>
+  </div>
+
+  <footer>
+    <p>Onigiri-giri · Free Japanese Learning site</p>
+  </footer>
+  <script src="sidebar.js?v=3"></script>
+  <script>
+    document.querySelector('.menu-toggle').addEventListener('click', () => {
+      document.getElementById('nav').classList.toggle('open');
+    });
+
+    const groups = {
+      hira: {
+        a: [{k:'あ',r:'a'},{k:'か',r:'ka'},{k:'さ',r:'sa'},{k:'た',r:'ta'},{k:'な',r:'na'},{k:'は',r:'ha'},{k:'ま',r:'ma'},{k:'や',r:'ya'},{k:'ら',r:'ra'},{k:'わ',r:'wa'},{k:'ん',r:'n'}],
+        i: [{k:'い',r:'i'},{k:'き',r:'ki'},{k:'し',r:'shi'},{k:'ち',r:'chi'},{k:'に',r:'ni'},{k:'ひ',r:'hi'},{k:'み',r:'mi'},{k:'り',r:'ri'}],
+        u: [{k:'う',r:'u'},{k:'く',r:'ku'},{k:'す',r:'su'},{k:'つ',r:'tsu'},{k:'ぬ',r:'nu'},{k:'ふ',r:'fu'},{k:'む',r:'mu'},{k:'ゆ',r:'yu'},{k:'る',r:'ru'}],
+        e: [{k:'え',r:'e'},{k:'け',r:'ke'},{k:'せ',r:'se'},{k:'て',r:'te'},{k:'ね',r:'ne'},{k:'へ',r:'he'},{k:'め',r:'me'},{k:'れ',r:'re'}],
+        o: [{k:'お',r:'o'},{k:'こ',r:'ko'},{k:'そ',r:'so'},{k:'と',r:'to'},{k:'の',r:'no'},{k:'ほ',r:'ho'},{k:'も',r:'mo'},{k:'よ',r:'yo'},{k:'ろ',r:'ro'},{k:'を',r:'wo'}]
+      },
+      kata: {
+        a: [{k:'ア',r:'a'},{k:'カ',r:'ka'},{k:'サ',r:'sa'},{k:'タ',r:'ta'},{k:'ナ',r:'na'},{k:'ハ',r:'ha'},{k:'マ',r:'ma'},{k:'ヤ',r:'ya'},{k:'ラ',r:'ra'},{k:'ワ',r:'wa'},{k:'ン',r:'n'}],
+        i: [{k:'イ',r:'i'},{k:'キ',r:'ki'},{k:'シ',r:'shi'},{k:'チ',r:'chi'},{k:'ニ',r:'ni'},{k:'ヒ',r:'hi'},{k:'ミ',r:'mi'},{k:'リ',r:'ri'}],
+        u: [{k:'ウ',r:'u'},{k:'ク',r:'ku'},{k:'ス',r:'su'},{k:'ツ',r:'tsu'},{k:'ヌ',r:'nu'},{k:'フ',r:'fu'},{k:'ム',r:'mu'},{k:'ユ',r:'yu'},{k:'ル',r:'ru'}],
+        e: [{k:'エ',r:'e'},{k:'ケ',r:'ke'},{k:'セ',r:'se'},{k:'テ',r:'te'},{k:'ネ',r:'ne'},{k:'ヘ',r:'he'},{k:'メ',r:'me'},{k:'レ',r:'re'}],
+        o: [{k:'オ',r:'o'},{k:'コ',r:'ko'},{k:'ソ',r:'so'},{k:'ト',r:'to'},{k:'ノ',r:'no'},{k:'ホ',r:'ho'},{k:'モ',r:'mo'},{k:'ヨ',r:'yo'},{k:'ロ',r:'ro'},{k:'ヲ',r:'wo'}]
+      }
+    };
+
+    let script = 'hira';
+    let currentGroup = null;
+    let queue = [];
+
+    function showVowels() {
+      const box = document.getElementById('vowel-btns');
+      box.innerHTML = '';
+      ['a','i','u','e','o'].forEach(v => {
+        const b = document.createElement('button');
+        b.className = 'tab-btn';
+        b.textContent = v.toUpperCase();
+        b.onclick = () => startGroup(v);
+        box.appendChild(b);
+      });
+    }
+
+    function startGroup(v) {
+      currentGroup = groups[script][v];
+      queue = [...currentGroup].sort(() => Math.random() - 0.5);
+      document.getElementById('select').style.display = 'none';
+      document.getElementById('game').style.display = 'block';
+      next();
+    }
+
+    function next() {
+      if (!queue.length) {
+        document.getElementById('status').textContent = 'Group done!';
+        document.getElementById('prompt').textContent = '✓';
+        document.getElementById('options').innerHTML = '';
+        return;
+      }
+      const item = queue.shift();
+      document.getElementById('prompt').textContent = item.k + '  ' + item.r;
+      document.getElementById('status').textContent = 'Which pair matches?';
+
+      // Build 5 options: 1 correct + 4 random from the same group
+      const others = currentGroup.filter(x => x.k !== item.k).sort(() => Math.random() - 0.5).slice(0, 4);
+      const opts = [...others, item].sort(() => Math.random() - 0.5);
+
+      const box = document.getElementById('options');
+      box.innerHTML = '';
+      opts.forEach(o => {
+        const b = document.createElement('button');
+        b.className = 'game-link';
+        b.style.background = 'var(--surface-elevated)';
+        b.style.color = 'var(--text)';
+        b.textContent = o.k + ' = ' + o.r;
+        b.onclick = () => {
+          if (o.k === item.k) {
+            b.style.background = 'var(--accent)';
+            setTimeout(next, 500);
+          } else {
+            b.style.background = '#c0392b';
+            queue.push(item); // retry later
+            setTimeout(next, 600);
+          }
+        };
+        box.appendChild(b);
+      });
+    }
+
+    document.querySelectorAll('[data-script]').forEach(btn => {
+      btn.onclick = () => {
+        script = btn.dataset.script;
+        document.querySelectorAll('[data-script]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        showVowels();
+      };
+    });
+
+    document.getElementById('back').onclick = () => {
+      document.getElementById('game').style.display = 'none';
+      document.getElementById('select').style.display = 'block';
+    };
+
+    // Default
+    document.querySelector('[data-script="hira"]').classList.add('active');
+    showVowels();
+  </script>
+</body>
+</html>
