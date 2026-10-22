@@ -255,6 +255,7 @@
       document.getElementById('exam').style.display = 'none';
       document.getElementById('results').style.display = 'block';
       document.getElementById('score').textContent = score + ' / ' + current.length + ' correct';
+      if (window.ogProgress) window.ogProgress.add('vocab', Math.round(score / current.length * 5));
       const list = document.getElementById('wrong-list');
       list.innerHTML = '';
       if (wrongs.length === 0) {
