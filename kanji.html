@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Kanji – Onigiri-giri</title>
-  <link rel="stylesheet" href="style.css?v=4">
+  <link rel="stylesheet" href="style.css?v=5">
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
@@ -22,7 +22,24 @@
     <a href="slang.html">Slang</a>
     <a href="quiz.html">Quiz</a>
   </nav>
-  <main>
+  <div class="layout">
+    <aside class="sidebar left-sidebar">
+      <div class="card">
+        <h3>Progress</h3>
+        <div class="progress-item"><span>Hiragana</span><span id="prog-hira">0/46</span></div>
+        <div class="progress-item"><span>Katakana</span><span id="prog-kata">0/46</span></div>
+        <div class="progress-item"><span>Kanji</span><span id="prog-kanji">0/100</span></div>
+        <div class="progress-item"><span>Vocab</span><span id="prog-vocab">0</span></div>
+      </div>
+      <div class="card">
+        <h3>Quick Practice</h3>
+        <a href="hiragana-matching.html" class="sidebar-link">Hiragana Matching</a>
+        <a href="katakana-matching.html" class="sidebar-link">Katakana Matching</a>
+        <a href="matching.html" class="sidebar-link">Kanji Memory</a>
+        <a href="vocab-exam.html" class="sidebar-link">Vocab Exam</a>
+      </div>
+    </aside>
+    <main>
     <section class="card">
       <h2>100 Most Useful Kanji</h2>
       <p>Common N5–N4 characters. Readings and meanings.</p>
@@ -137,6 +154,19 @@
       </div>
     </section>
   </main>
+    <aside class="sidebar right-sidebar">
+      <div class="card">
+        <h3>Daily Word</h3>
+        <div class="daily-word" id="daily-word">仕事</div>
+        <div class="daily-romaji" id="daily-romaji">shigoto</div>
+        <div class="daily-meaning" id="daily-meaning">work / job</div>
+      </div>
+      <div class="card">
+        <h3>Currently Studying</h3>
+        <p id="studying-tip">Keep practicing a little every day.</p>
+      </div>
+    </aside>
+  </div>
   <footer><p>Onigiri-giri</p></footer>
   <script>
     document.querySelector('.menu-toggle').addEventListener('click', () => {
