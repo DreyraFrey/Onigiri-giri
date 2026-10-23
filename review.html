@@ -49,7 +49,10 @@
       <section class="card" id="select">
         <h2>Review</h2>
         <p>Items you've practiced. Wrong answers come back sooner. Correct ones return later in the session and on future days.</p>
-        <p id="due-count">Checking due items...</p>
+        <div id="due-area" style="display:flex; align-items:center; gap:1rem;">
+          <img id="think-mascot" src="mascot-think.png" alt="Thinking" style="width:80px; height:auto; display:none;">
+          <p id="due-count" style="margin:0;">Checking due items...</p>
+        </div>
         <button class="game-link" id="startReview" style="display:none;">Start Review</button>
         <p id="no-due" style="display:none; color: var(--text-secondary);">Nothing due right now. Practice some quizzes or matching games first.</p>
       </section>
@@ -143,6 +146,7 @@
       document.getElementById('due-count').textContent = due.length + ' items due';
       document.getElementById('startReview').style.display = due.length ? 'inline-flex' : 'none';
       document.getElementById('no-due').style.display = due.length ? 'none' : 'block';
+      document.getElementById('think-mascot').style.display = due.length ? 'block' : 'none';
     }
 
     function start() {
