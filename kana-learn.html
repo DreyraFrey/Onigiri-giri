@@ -141,7 +141,7 @@
     function next() {
       if (!queue.length) {
         document.getElementById('status').textContent = 'Group done!';
-        document.getElementById('prompt').textContent = '✓';
+        document.getElementById('prompt').innerHTML = '<img src="mascot-leap.png" alt="Nice!" style="width:120px; height:auto;">';
         document.getElementById('options').innerHTML = '';
         return;
       }
