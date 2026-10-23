@@ -39,9 +39,7 @@
       text-align: center;
     }
     .option:hover { background: var(--accent-soft); }
-    .option.correct { background: rgba(76, 175, 80, 0.2); border-color: #4caf50; }
-    .option.wrong { background: rgba(244, 67, 54, 0.2); border-color: #f44336; }
-    #results { display: none; }
+        #results { display: none; }
     .wrong-item { margin: 0.5rem 0; padding: 0.6rem; background: var(--surface); border-radius: 6px; }
     ruby { font-size: 1.1em; }
     rt { font-size: 0.55em; color: var(--text-secondary); }
@@ -264,17 +262,12 @@
     function choose(picked, correct, q) {
       if (answered) return;
       answered = true;
-      const buttons = document.querySelectorAll('.option');
-      buttons.forEach(b => {
-        if (b.textContent === correct) b.classList.add('correct');
-        if (b.textContent === picked && picked !== correct) b.classList.add('wrong');
-      });
       if (picked === correct) score++;
       else wrongs.push(q);
       setTimeout(() => {
         index++;
         showQuestion();
-      }, 700);
+      }, 300);
     }
 
     function showResults() {
