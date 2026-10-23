@@ -237,10 +237,11 @@
           card.classList.add('matched');
           selected.classList.remove('selected');
           matchedCount++;
-          if (window.ogSRS) window.ogSRS.record('katakana', 'katakana-' + card.dataset.value, true);
+          if (window.ogSRS) window.ogSRS.record('kata', 'katakana-' + card.dataset.value, true);
           selected = null;
 
-          if (matchedCount === 5) {
+          if (matchedCount >= 5) {
+            document.querySelectorAll('.match-card').forEach(c => c.classList.remove('matched','selected'));
             if (window.ogProgress) window.ogProgress.add('kata', 1);
             document.getElementById('status').textContent = 'Nice! Next set...';
             setTimeout(() => {
@@ -248,7 +249,7 @@
               matchedCount = 0;
               renderGame();
               document.getElementById('status').textContent = 'Match the pairs!';
-            }, 700);
+            }, 900);
           }
         } else {
           selected.classList.remove('selected');
