@@ -82,6 +82,7 @@ function getData(mode) {
 function showQuestion() {
   if (current >= shuffled.length) {
     document.getElementById('question').textContent = 'Done!';
+    if (window.ogStreak) window.ogStreak.mark();
     document.getElementById('options').innerHTML = '';
     document.getElementById('score').textContent = `Score: ${score} / ${shuffled.length}`;
     const startBtn = document.getElementById('startQuiz');
