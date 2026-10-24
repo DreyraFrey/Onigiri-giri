@@ -148,6 +148,7 @@
     function next() {
       if (!queue.length) {
         document.getElementById('status').textContent = 'Group done!';
+        if (window.ogStreak) window.ogStreak.mark();
         document.getElementById('speak').style.display = 'none';
         document.getElementById('prompt').innerHTML = '<img src="mascot-leap.png" alt="Nice!" style="width:120px; height:auto;">';
         document.getElementById('options').innerHTML = '';
