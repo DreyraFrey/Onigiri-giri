@@ -198,6 +198,7 @@
             matched++;
             if (matched === pairs.length) {
               document.getElementById('status').textContent = 'Done! All matched.';
+              if (window.ogStreak) window.ogStreak.mark();
               document.getElementById('startBtn').style.display = 'inline-block';
               document.getElementById('startBtn').textContent = 'Play Again';
             }
