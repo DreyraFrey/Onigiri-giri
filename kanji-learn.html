@@ -96,17 +96,17 @@
     });
 
     const kanji1 = [
-      {k:'人', m:'person'}, {k:'一', m:'one'}, {k:'二', m:'two'}, {k:'三', m:'three'}, {k:'四', m:'four'},
-      {k:'五', m:'five'}, {k:'六', m:'six'}, {k:'七', m:'seven'}, {k:'八', m:'eight'}, {k:'九', m:'nine'},
-      {k:'十', m:'ten'}, {k:'百', m:'hundred'}, {k:'千', m:'thousand'}, {k:'万', m:'ten thousand'}, {k:'円', m:'yen'},
-      {k:'年', m:'year'}, {k:'月', m:'month'}, {k:'日', m:'day'}, {k:'時', m:'time'}, {k:'分', m:'minute'},
-      {k:'今', m:'now'}, {k:'先', m:'before'}, {k:'週', m:'week'}, {k:'毎', m:'every'}, {k:'何', m:'what'},
-      {k:'上', m:'up'}, {k:'下', m:'down'}, {k:'中', m:'middle'}, {k:'外', m:'outside'}, {k:'左', m:'left'},
+      {k:'人', m:'person', r:'ひと'}, {k:'一', m:'one', r:'いち'}, {k:'二', m:'two', r:'に'}, {k:'三', m:'three', r:'さん'}, {k:'四', m:'four', r:'よん'},
+      {k:'五', m:'five', r:'ご'}, {k:'六', m:'six', r:'ろく'}, {k:'七', m:'seven', r:'なな'}, {k:'八', m:'eight', r:'はち'}, {k:'九', m:'nine', r:'きゅう'},
+      {k:'十', m:'ten', r:'じゅう'}, {k:'百', m:'hundred'}, {k:'千', m:'thousand'}, {k:'万', m:'ten thousand'}, {k:'円', m:'yen'},
+      {k:'年', m:'year', r:'ねん'}, {k:'月', m:'month', r:'つき'}, {k:'日', m:'day', r:'ひ'}, {k:'時', m:'time', r:'とき'}, {k:'分', m:'minute'},
+      {k:'今', m:'now', r:'いま'}, {k:'先', m:'before'}, {k:'週', m:'week'}, {k:'毎', m:'every'}, {k:'何', m:'what'},
+      {k:'上', m:'up', r:'うえ'}, {k:'下', m:'down', r:'した'}, {k:'中', m:'middle', r:'なか'}, {k:'外', m:'outside'}, {k:'左', m:'left'},
       {k:'右', m:'right'}, {k:'前', m:'front'}, {k:'後', m:'after'}, {k:'東', m:'east'}, {k:'西', m:'west'},
-      {k:'南', m:'south'}, {k:'北', m:'north'}, {k:'学', m:'study'}, {k:'生', m:'life'}, {k:'会', m:'meet'}
+      {k:'南', m:'south'}, {k:'北', m:'north'}, {k:'学', m:'study', r:'がく'}, {k:'生', m:'life'}, {k:'会', m:'meet'}
     ];
     const kanji2 = [
-      {k:'大', m:'big'}, {k:'小', m:'small'}, {k:'高', m:'high'}, {k:'安', m:'cheap'}, {k:'新', m:'new'},
+      {k:'大', m:'big', r:'おお'}, {k:'小', m:'small', r:'ちい'}, {k:'高', m:'high'}, {k:'安', m:'cheap'}, {k:'新', m:'new'},
       {k:'古', m:'old'}, {k:'長', m:'long'}, {k:'短', m:'short'}, {k:'多', m:'many'}, {k:'少', m:'few'},
       {k:'強', m:'strong'}, {k:'弱', m:'weak'}, {k:'早', m:'early'}, {k:'遅', m:'late'}, {k:'近', m:'near'},
       {k:'遠', m:'far'}, {k:'白', m:'white'}, {k:'黒', m:'black'}, {k:'赤', m:'red'}, {k:'青', m:'blue'},
@@ -139,7 +139,7 @@
         return;
       }
       currentItem = queue.shift();
-      document.getElementById('prompt').innerHTML = '<span style="font-size:2.2rem;">' + currentItem.k + '</span><br>' + currentItem.m;
+      document.getElementById('prompt').innerHTML = '<ruby style="font-size:2.2rem;">' + currentItem.k + '<rt style="font-size:0.4em;">' + (currentItem.r || '') + '</rt></ruby><br>' + currentItem.m;
       document.getElementById('status').textContent = 'Look at the kanji and meaning';
       const box = document.getElementById('options');
       box.innerHTML = '';
