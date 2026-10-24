@@ -18,7 +18,7 @@
     };
     set('prog-hira', (p.hira || 0) + '/46');
     set('prog-kata', (p.kata || 0) + '/46');
-    set('prog-kanji', (p.kanji || 0) + '/300');
+    set('prog-kanji', (p.kanji || 0) + '/500');
     set('prog-vocab', p.vocab || 0);
     set('m-hira', (p.hira || 0));
     set('m-kata', (p.kata || 0));
