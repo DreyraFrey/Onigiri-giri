@@ -137,6 +137,7 @@
     function next() {
       if (!queue.length) {
         document.getElementById('status').textContent = 'Set done!';
+        if (window.ogStreak) window.ogStreak.mark();
         document.getElementById('prompt').textContent = '✓';
         document.getElementById('options').innerHTML = '';
         document.getElementById('next-slot').innerHTML = '';
