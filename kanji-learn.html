@@ -124,7 +124,7 @@
       if (set === '1') currentSet = kanji1;
       else if (set === '2') currentSet = kanji2;
       else currentSet = [...kanji1, ...kanji2];
-      queue = [...currentSet].sort(() => Math.random() - 0.5);
+      queue = [...currentSet].sort(() => Math.random() - 0.5).slice(0, 15);
       document.getElementById('select').style.display = 'none';
       document.getElementById('game').style.display = 'block';
       next();
@@ -139,8 +139,8 @@
         return;
       }
       currentItem = queue.shift();
-      document.getElementById('prompt').innerHTML = '<span style="font-size:2.2rem;">' + currentItem.k + '</span><br><span style="font-size:1.2rem;">' + currentItem.m + '</span>';
-      document.getElementById('status').textContent = 'Look at the kanji and meaning';
+      document.getElementById('prompt').textContent = currentItem.m;
+      document.getElementById('status').textContent = 'Look at the meaning';
       const box = document.getElementById('options');
       box.innerHTML = '';
       const nextSlot = document.getElementById('next-slot');
