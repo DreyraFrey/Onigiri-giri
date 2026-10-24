@@ -429,7 +429,7 @@ li {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -55%);
+  transform: translate(-50%, -60%);
   width: 0;
   height: 0;
   border-left: 26px solid transparent;
