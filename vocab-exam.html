@@ -161,12 +161,12 @@
         { jp: '<ruby>見る<rt>みる</rt></ruby>', en: 'to see / look' }
       ],
       expert: [
-        { jp: '仕事', en: 'work / job' },
+        { jp: '仕事', en: 'work / job', sentence: '今日は仕事が忙しいです。' },
         { jp: '会社', en: 'company' },
-        { jp: '学校', en: 'school' },
+        { jp: '学校', en: 'school', sentence: '学校に行きます。' },
         { jp: '大学', en: 'university' },
         { jp: '先生', en: 'teacher' },
-        { jp: '友達', en: 'friend' },
+        { jp: '友達', en: 'friend', sentence: '友達と遊びます。' },
         { jp: '電話', en: 'phone' },
         { jp: '会議', en: 'meeting' },
         { jp: '学生', en: 'student' },
@@ -181,14 +181,14 @@
         { jp: '朝', en: 'morning' },
         { jp: '昼', en: 'noon / daytime' },
         { jp: '夜', en: 'night' },
-        { jp: '食べる', en: 'to eat' },
+        { jp: '食べる', en: 'to eat', sentence: 'ご飯を食べます。' },
         { jp: '飲む', en: 'to drink' },
         { jp: '見る', en: 'to see / look' },
         { jp: '言う', en: 'to say' },
         { jp: '行く', en: 'to go' },
         { jp: '来る', en: 'to come' },
         { jp: '帰る', en: 'to return / go home' },
-        { jp: '買う', en: 'to buy' },
+        { jp: '買う', en: 'to buy', sentence: '本を買いました。' },
         { jp: '売る', en: 'to sell' },
         { jp: '書く', en: 'to write' },
         { jp: '読む', en: 'to read' },
@@ -238,7 +238,7 @@
       answered = false;
       const q = current[index];
       document.getElementById('progress').textContent = (index + 1) + ' / ' + current.length;
-      document.getElementById('question').innerHTML = q.jp;
+      document.getElementById('question').innerHTML = q.sentence ? q.sentence + '<br><span style="font-size:0.85em;color:var(--text-secondary);">(' + q.jp + ')</span>' : q.jp;
 
       const correct = q.en;
       const pool = [...new Set(current.map(x => x.en))];
