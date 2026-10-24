@@ -18,8 +18,11 @@
     };
     set('prog-hira', (p.hira || 0) + '/46');
     set('prog-kata', (p.kata || 0) + '/46');
-    set('prog-kanji', (p.kanji || 0) + '/100');
+    set('prog-kanji', (p.kanji || 0) + '/200');
     set('prog-vocab', p.vocab || 0);
+    set('m-hira', (p.hira || 0));
+    set('m-kata', (p.kata || 0));
+    set('m-kanji', (p.kanji || 0));
   }
 
   window.ogProgress = {
@@ -92,6 +95,8 @@
     if (el) {
       const today = new Date().toDateString();
       el.textContent = s.days + ' day' + (s.days !== 1 ? 's' : '') + (s.last === today ? ' ✓' : '');
+      const m = document.getElementById('m-streak');
+      if (m) m.textContent = s.days;
     }
   }
   window.ogStreak = { mark: markPracticed };
