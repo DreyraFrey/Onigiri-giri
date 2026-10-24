@@ -11,7 +11,7 @@
   --accent-soft: rgba(232, 93, 4, 0.15);
   --radius: 12px;
   --radius-sm: 8px;
-  --header-height: 56px;
+  --header-height: 64px;
 }
 
 * { box-sizing: border-box; }
@@ -417,9 +417,9 @@ li {
   color: white;
   border: none;
   border-radius: 50%;
-  width: 56px;
-  height: 56px;
-  font-size: 1.6rem;
+  width: 64px;
+  height: 64px;
+  font-size: 2.2rem; font-weight: 700;
   cursor: pointer;
   opacity: 0;
   pointer-events: none;
