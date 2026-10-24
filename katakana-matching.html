@@ -41,6 +41,7 @@
       background: var(--accent-soft);
       border-color: #f48c06;
     }
+    .match-card.wrong { background: rgba(244, 67, 54, 0.3); border-color: #f44336; }
     .match-card.matched {
       background: rgba(76, 175, 80, 0.25); color: var(--text);
       border-color: #4caf50;
@@ -252,9 +253,18 @@
             }, 900);
           }
         } else {
-          selected.classList.remove('selected');
-          card.classList.add('selected');
-          selected = card;
+          // Wrong match - record and flash
+          if (window.ogSRS) {
+            const id = 'katakana-' + (selected.dataset.type === 'h' ? selected.dataset.value : card.dataset.value);
+            window.ogSRS.record('katakana', id, false);
+          }
+          selected.classList.add('wrong');
+          card.classList.add('wrong');
+          setTimeout(() => {
+            selected.classList.remove('wrong', 'selected');
+            card.classList.remove('wrong');
+            selected = null;
+          }, 400);
         }
       } else {
         card.classList.add('selected');
