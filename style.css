@@ -429,10 +429,10 @@ li {
   display: block;
   width: 0;
   height: 0;
-  margin: 18px auto 0;
-  border-left: 14px solid transparent;
-  border-right: 14px solid transparent;
-  border-bottom: 22px solid white;
+  margin: 14px auto 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 28px solid white;
 }
 .back-top.show { opacity: 1; pointer-events: auto; }
 
