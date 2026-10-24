@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reading Exam – Onigiri-giri</title>
+  <link rel="stylesheet" href="style.css?v=9">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="icon-header.png">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#15202b">
+  <style>
+    .diff-btn {
+      display: inline-block;
+      margin: 0.5rem;
+      padding: 0.9rem 1.4rem;
+      border: 2px solid #e85d04;
+      border-radius: 8px;
+      background: var(--surface-elevated); color: var(--text);
+      font-size: 1.05rem;
+      min-height: 48px;
+      cursor: pointer;
+    }
+    .diff-btn.active { background: #e85d04; color: white; }
+    .question { font-size: 1.3rem; text-align: center; margin: 1.5rem 0; min-height: 3em; line-height: 1.6; }
+    .options { display: flex; flex-direction: column; gap: 0.6rem; max-width: 420px; margin: 0 auto; }
+    .option {
+      padding: 0.9rem;
+      border: 2px solid #e85d04;
+      border-radius: 8px;
+      background: var(--surface-elevated); color: var(--text);
+      font-size: 1.05rem;
+      min-height: 48px;
+      cursor: pointer;
+      text-align: center;
+    }
+    .option:hover { background: var(--accent-soft); }
+    #results { display: none; }
+    .wrong-item { margin: 0.5rem 0; padding: 0.6rem; background: var(--surface); border-radius: 6px; }
+    ruby { font-size: 1.05em; }
+    rt { font-size: 0.5em; color: var(--text-secondary); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><a href="index.html"><img class="site-logo" src="icon-header.png" alt="Onigiri-giri">Onigiri-giri</a></h1>
+    <p>Reading Exam</p>
+    <button class="menu-toggle" aria-label="Menu">☰</button>
+  </header>
+  <div class="mobile-progress">
+    <span>あ <b id="m-hira">0</b></span>
+    <span>ア <b id="m-kata">0</b></span>
+    <span>漢 <b id="m-kanji">0</b></span>
+    <span>🔥 <b id="m-streak">0</b></span>
+  </div>
+  <nav id="nav">
+    <a href="index.html">Home</a>
+    <a href="hiragana.html">Hiragana</a>
+    <a href="katakana.html">Katakana</a>
+    <a href="kanji.html">Kanji</a>
+    <a href="vocab.html">Vocabulary</a>
+    <a href="slang.html">Slang</a>
+    <a href="review.html">Review</a>
+  </nav>
+  <div class="layout">
+    <aside class="sidebar left-sidebar">
+      <div class="card">
+        <h3>Progress</h3>
+        <div class="progress-item"><span>Hiragana</span><span id="prog-hira">0/46</span></div>
+        <div class="progress-item"><span>Katakana</span><span id="prog-kata">0/46</span></div>
+        <div class="progress-item"><span>Kanji</span><span id="prog-kanji">0/200</span></div>
+        <div class="progress-item"><span>Vocab</span><span id="prog-vocab">0</span></div>
+        <div class="progress-item"><span>Streak</span><span id="streak">0 days</span></div>
+      </div>
+      <div class="card">
+        <h3>Quick Practice</h3>
+        <a href="hiragana-matching.html" class="sidebar-link">Hiragana Matching</a>
+        <a href="katakana-matching.html" class="sidebar-link">Katakana Matching</a>
+        <a href="matching.html" class="sidebar-link">Kanji Memory</a>
+        <a href="quiz.html" class="sidebar-link">Quiz</a>
+      </div>
+    </aside>
+    <main>
+      <section class="card" id="select">
+        <h2>Reading Exam</h2>
+        <p>Read the sentence and pick the correct meaning.</p>
+        <div style="text-align:center; margin:1rem 0;">
+          <button class="diff-btn" data-diff="beginner">Beginner</button>
+          <button class="diff-btn" data-diff="adept">Adept</button>
+          <button class="diff-btn" data-diff="expert">Expert</button>
+        </div>
+      </section>
+      <section class="card" id="exam" style="display:none;">
+        <p id="progress">1 / 10</p>
+        <div class="question" id="question"></div>
+        <div class="options" id="options"></div>
+      </section>
+      <section class="card" id="results">
+        <h2>Results</h2>
+        <p id="score"></p>
+        <div id="wrong-list"></div>
+        <button class="diff-btn" id="retry" style="margin-top:1rem;">Try again</button>
+      </section>
+    </main>
+    <aside class="sidebar right-sidebar">
+      <div class="card">
+        <h3>Daily Word</h3>
+        <div class="daily-word" id="daily-word">仕事</div>
+        <div class="daily-romaji" id="daily-romaji">shigoto</div>
+        <div class="daily-meaning" id="daily-meaning">work / job</div>
+      </div>
+      <div class="card">
+        <h3>Studying Tips</h3>
+        <p id="studying-tip">Read the whole sentence before answering.</p>
+      </div>
+    </aside>
+  </div>
+  <footer><p>Onigiri-giri · Free Japanese Learning site</p></footer>
+  <script src="sidebar.js?v=4"></script>
+  <script>
+    document.querySelector('.menu-toggle').addEventListener('click', () => {
+      document.getElementById('nav').classList.toggle('open');
+    });
+
+    const banks = {
+      beginner: [
+        { jp: '<ruby>私<rt>わたし</rt></ruby>は<ruby>学生<rt>がくせい</rt></ruby>です。', en: 'I am a student.', opts: ['I am a student.','I am a teacher.','I am at school.','I am working.'] },
+        { jp: '<ruby>今日<rt>きょう</rt></ruby>は<ruby>暑い<rt>あつい</rt></ruby>です。', en: 'It is hot today.', opts: ['It is hot today.','It is cold today.','It is raining.','It is morning.'] },
+        { jp: '<ruby>友達<rt>ともだち</rt></ruby>と<ruby>遊び<rt>あそび</rt></ruby>ます。', en: 'I hang out with friends.', opts: ['I hang out with friends.','I study with friends.','I call a friend.','I meet a teacher.'] },
+        { jp: '<ruby>ご飯<rt>ごはん</rt></ruby>を<ruby>食<rt>た</rt></ruby>べます。', en: 'I eat a meal.', opts: ['I eat a meal.','I drink water.','I buy food.','I cook dinner.'] },
+        { jp: '<ruby>学校<rt>がっこう</rt></ruby>に<ruby>行<rt>い</rt></ruby>きます。', en: 'I go to school.', opts: ['I go to school.','I go home.','I go to work.','I go shopping.'] },
+        { jp: '<ruby>本<rt>ほん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>みます。', en: 'I read a book.', opts: ['I read a book.','I write a letter.','I buy a book.','I see a movie.'] },
+        { jp: '<ruby>水<rt>みず</rt></ruby>を<ruby>飲<rt>の</rt></ruby>みます。', en: 'I drink water.', opts: ['I drink water.','I drink tea.','I eat food.','I buy water.'] },
+        { jp: '<ruby>電車<rt>でんしゃ</rt></ruby>で<ruby>行<rt>い</rt></ruby>きます。', en: 'I go by train.', opts: ['I go by train.','I go by bus.','I go by car.','I walk.'] },
+        { jp: '<ruby>明日<rt>あした</rt></ruby>は<ruby>雨<rt>あめ</rt></ruby>です。', en: 'It will rain tomorrow.', opts: ['It will rain tomorrow.','It is sunny.','It snowed yesterday.','It is cold.'] },
+        { jp: '<ruby>名前<rt>なまえ</rt></ruby>は<ruby>何<rt>なん</rt></ruby>ですか。', en: 'What is your name?', opts: ['What is your name?','Where are you from?','How old are you?','What do you do?'] }
+      ],
+      adept: [
+        { jp: '仕事が終わったら、友達と飲みに行きます。', en: 'After work I go drinking with friends.', opts: ['After work I go drinking with friends.','I work with my friends.','I finish work early.','I call my friends after work.'] },
+        { jp: 'この本はとても面白いです。', en: 'This book is very interesting.', opts: ['This book is very interesting.','This book is expensive.','I bought this book.','I am reading a book.'] },
+        { jp: '駅まで歩いて十分です。', en: 'It takes ten minutes to walk to the station.', opts: ['It takes ten minutes to walk to the station.','The station is far.','I take the train.','I arrive at ten.'] },
+        { jp: '昨日は忙しくて、何もできませんでした。', en: 'I was busy yesterday and could not do anything.', opts: ['I was busy yesterday and could not do anything.','I finished everything yesterday.','Yesterday was free.','I worked all day.'] },
+        { jp: '新しい服を買いたいです。', en: 'I want to buy new clothes.', opts: ['I want to buy new clothes.','I bought new clothes.','These clothes are new.','I need clothes.'] }
+      ],
+      expert: [
+        { jp: '会議の前に資料を確認しておいてください。', en: 'Please check the materials before the meeting.', opts: ['Please check the materials before the meeting.','The meeting is about materials.','Please bring the materials.','The meeting starts soon.'] },
+        { jp: '雨が降りそうなので、傘を持って行った方がいいですよ。', en: 'It looks like it will rain, so you should take an umbrella.', opts: ['It looks like it will rain, so you should take an umbrella.','It is raining now.','I forgot my umbrella.','The weather is nice.'] },
+        { jp: 'この問題は難しくて、まだ解決していません。', en: 'This problem is difficult and has not been solved yet.', opts: ['This problem is difficult and has not been solved yet.','The problem is easy.','I solved the problem.','There is no problem.'] },
+        { jp: '来週の予定がまだ決まっていないので、後で連絡します。', en: 'Next week\'s schedule is not decided yet, so I will contact you later.', opts: ['Next week\'s schedule is not decided yet, so I will contact you later.','I am free next week.','The schedule is fixed.','I will call you tomorrow.'] },
+        { jp: '彼女は毎日日本語を勉強しています。', en: 'She studies Japanese every day.', opts: ['She studies Japanese every day.','She speaks Japanese well.','She is Japanese.','She teaches Japanese.'] }
+      ]
+    };
+
+    // Expand adept and expert with more items (reuse with variations for length)
+    const adeptExtra = [
+      { jp: '図書館で本を借りました。', en: 'I borrowed a book at the library.', opts: ['I borrowed a book at the library.','I bought a book.','I returned a book.','I read at the library.'] },
+      { jp: '明日テストがあるので、今夜勉強します。', en: 'I have a test tomorrow, so I will study tonight.', opts: ['I have a test tomorrow, so I will study tonight.','The test is easy.','I studied yesterday.','I am free tonight.'] },
+      { jp: 'このレストランは安くて美味しいです。', en: 'This restaurant is cheap and delicious.', opts: ['This restaurant is cheap and delicious.','This restaurant is expensive.','I ate here before.','The food is bad.'] }
+    ];
+    banks.adept = banks.adept.concat(adeptExtra);
+
+    const expertExtra = [
+      { jp: '彼は来月日本に出張する予定です。', en: 'He is scheduled to go on a business trip to Japan next month.', opts: ['He is scheduled to go on a business trip to Japan next month.','He lives in Japan.','He visited Japan last month.','He is studying in Japan.'] },
+      { jp: 'このアプリは無料で使えます。', en: 'This app can be used for free.', opts: ['This app can be used for free.','This app is expensive.','I bought this app.','The app is broken.'] },
+      { jp: '電車が遅れたので、会議に間に合いませんでした。', en: 'The train was late, so I did not make it to the meeting.', opts: ['The train was late, so I did not make it to the meeting.','I arrived early.','The meeting was cancelled.','I took a taxi.'] }
+    ];
+    banks.expert = banks.expert.concat(expertExtra);
+
+    const lengths = { beginner: 10, adept: 25, expert: 50 };
+
+    let current = [];
+    let index = 0;
+    let score = 0;
+    let wrongs = [];
+    let answered = false;
+
+    function start(diff) {
+      const pool = [...banks[diff]];
+      current = [];
+      while (current.length < lengths[diff]) {
+        current = current.concat(pool);
+      }
+      current = current.slice(0, lengths[diff]).sort(() => Math.random() - 0.5);
+      index = 0;
+      score = 0;
+      wrongs = [];
+      document.getElementById('select').style.display = 'none';
+      document.getElementById('exam').style.display = 'block';
+      document.getElementById('results').style.display = 'none';
+      showQuestion();
+    }
+
+    function showQuestion() {
+      if (index >= current.length) { showResults(); return; }
+      answered = false;
+      const q = current[index];
+      document.getElementById('progress').textContent = (index + 1) + ' / ' + current.length;
+      document.getElementById('question').innerHTML = q.jp;
+      const box = document.getElementById('options');
+      box.innerHTML = '';
+      q.opts.sort(() => Math.random() - 0.5).forEach(o => {
+        const btn = document.createElement('button');
+        btn.className = 'option';
+        btn.textContent = o;
+        btn.onclick = () => choose(o, q.en, q);
+        box.appendChild(btn);
+      });
+    }
+
+    function choose(picked, correct, q) {
+      if (answered) return;
+      answered = true;
+      if (picked === correct) score++;
+      else wrongs.push(q);
+      setTimeout(() => { index++; showQuestion(); }, 300);
+    }
+
+    function showResults() {
+      if (window.ogStreak) window.ogStreak.mark();
+      document.getElementById('exam').style.display = 'none';
+      document.getElementById('results').style.display = 'block';
+      document.getElementById('score').textContent = score + ' / ' + current.length + ' correct';
+      const list = document.getElementById('wrong-list');
+      list.innerHTML = '';
+      if (wrongs.length === 0) {
+        list.innerHTML = '<p>Perfect!</p>';
+      } else {
+        wrongs.forEach(w => {
+          const div = document.createElement('div');
+          div.className = 'wrong-item';
+          div.innerHTML = w.jp + ' → ' + w.en;
+          list.appendChild(div);
+        });
+      }
+    }
+
+    document.querySelectorAll('.diff-btn').forEach(btn => {
+      btn.onclick = () => {
+        document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        start(btn.dataset.diff);
+      };
+    });
+    document.getElementById('retry').onclick = () => {
+      document.getElementById('results').style.display = 'none';
+      document.getElementById('select').style.display = 'block';
+    };
+  </script>
+</body>
+</html>
