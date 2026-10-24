@@ -132,7 +132,7 @@
       } else {
         currentGroup = groups[script][v];
       }
-      queue = [...currentGroup].sort(() => Math.random() - 0.5);
+      queue = [...currentGroup].sort(() => Math.random() - 0.5).slice(0, 15);
       document.getElementById('select').style.display = 'none';
       document.getElementById('game').style.display = 'block';
       next();
