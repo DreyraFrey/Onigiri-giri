@@ -69,4 +69,32 @@
     "Look at the example sentences to see how words are used."
   ];
   set('studying-tip', tips[seed % tips.length]);
+
+  // Daily streak
+  const STREAK_KEY = 'og-streak';
+  function getStreak() {
+    return JSON.parse(localStorage.getItem(STREAK_KEY) || '{"days":0,"last":""}');
+  }
+  function markPracticed() {
+    const s = getStreak();
+    const today = new Date().toDateString();
+    if (s.last !== today) {
+      const yesterday = new Date(Date.now() - 86400000).toDateString();
+      s.days = (s.last === yesterday) ? s.days + 1 : 1;
+      s.last = today;
+      localStorage.setItem(STREAK_KEY, JSON.stringify(s));
+    }
+    updateStreakDisplay();
+  }
+  function updateStreakDisplay() {
+    const s = getStreak();
+    const el = document.getElementById('streak');
+    if (el) {
+      const today = new Date().toDateString();
+      el.textContent = s.days + ' day' + (s.days !== 1 ? 's' : '') + (s.last === today ? ' ✓' : '');
+    }
+  }
+  window.ogStreak = { mark: markPracticed };
+  updateStreakDisplay();
+
 })();
