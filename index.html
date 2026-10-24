@@ -112,6 +112,7 @@
     </aside>
   </div>
 
+  <button class="back-top" id="backTop" aria-label="Back to top">↑</button>
   <footer>
     <p>Onigiri-giri · Free Japanese Learning site</p>
   </footer>
@@ -122,5 +123,10 @@
   </script>
   <script src="sidebar.js?v=4"></script>
   <script src="review.js"></script>
+<script>
+const bt=document.getElementById("backTop");
+window.addEventListener("scroll",()=>bt.classList.toggle("show",window.scrollY>300));
+bt.onclick=()=>window.scrollTo({top:0,behavior:"smooth"});
+</script>
 </body>
 </html>
