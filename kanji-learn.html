@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Learn Kanji – Onigiri-giri</title>
+  <link rel="stylesheet" href="style.css?v=8">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="icon-header.png">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#15202b">
+</head>
+<body>
+  <header>
+    <h1><a href="index.html"><img class="site-logo" src="icon-header.png" alt="Onigiri-giri">Onigiri-giri</a></h1>
+    <p>Learn Kanji</p>
+    <button class="menu-toggle" aria-label="Menu">☰</button>
+  </header>
+  <nav id="nav">
+    <a href="index.html">Home</a>
+    <a href="hiragana.html">Hiragana</a>
+    <a href="katakana.html">Katakana</a>
+    <a href="kanji.html">Kanji</a>
+    <a href="vocab.html">Vocabulary</a>
+    <a href="slang.html">Slang</a>
+    <a href="quiz.html">Quiz</a>
+    <a href="review.html">Review</a>
+  </nav>
+
+  <div class="layout">
+    <aside class="sidebar left-sidebar">
+      <div class="card">
+        <h3>Progress</h3>
+        <div class="progress-item"><span>Hiragana</span><span id="prog-hira">0/46</span></div>
+        <div class="progress-item"><span>Katakana</span><span id="prog-kata">0/46</span></div>
+        <div class="progress-item"><span>Kanji</span><span id="prog-kanji">0/200</span></div>
+        <div class="progress-item"><span>Vocab</span><span id="prog-vocab">0</span></div>
+      </div>
+      <div class="card">
+        <h3>Quick Practice</h3>
+        <a href="hiragana-matching.html" class="sidebar-link">Hiragana Matching</a>
+        <a href="katakana-matching.html" class="sidebar-link">Katakana Matching</a>
+        <a href="matching.html" class="sidebar-link">Kanji Memory</a>
+        <a href="vocab-exam.html" class="sidebar-link">Vocab Exam</a>
+      </div>
+    </aside>
+
+    <main>
+      <section class="card" id="select">
+        <h2>Learn Kanji</h2>
+        <p>See the meaning, then pick the matching kanji from 5 options.</p>
+        <div style="margin:1rem 0;">
+          <button class="tab-btn" data-set="1">1–100</button>
+          <button class="tab-btn" data-set="2">101–200</button>
+          <button class="tab-btn" data-set="all">All</button>
+        </div>
+      </section>
+
+      <section class="card" id="game" style="display:none;">
+        <p id="status">Which kanji matches?</p>
+        <div style="display:flex; align-items:center; justify-content:center; gap:1rem; margin:1rem 0;">
+          <div id="prompt" style="font-size:1.6rem;">—</div>
+        </div>
+        <div id="options" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(80px,1fr)); gap:0.75rem;"></div>
+        <div style="display:flex; justify-content:space-between; margin-top:1rem;">
+          <button id="back" class="game-link" style="background:var(--surface-elevated); color:var(--text); min-width:100px;">Back</button>
+          <div id="next-slot"></div>
+        </div>
+      </section>
+    </main>
+
+    <aside class="sidebar right-sidebar">
+      <div class="card">
+        <h3>Daily Word</h3>
+        <div class="daily-word" id="daily-word">仕事</div>
+        <div class="daily-romaji" id="daily-romaji">shigoto</div>
+        <div class="daily-meaning" id="daily-meaning">work / job</div>
+      </div>
+      <div class="card">
+        <h3>Studying Tips</h3>
+        <p id="studying-tip">Learn a few kanji, then review them.</p>
+      </div>
+    </aside>
+  </div>
+
+  <footer>
+    <p>Onigiri-giri · Free Japanese Learning site</p>
+  </footer>
+  <script src="review.js"></script>
+  <script src="sidebar.js?v=4"></script>
+  <script>
+    document.querySelector('.menu-toggle').addEventListener('click', () => {
+      document.getElementById('nav').classList.toggle('open');
+    });
+
+    const kanji1 = [
+      {k:'人', m:'person'}, {k:'一', m:'one'}, {k:'二', m:'two'}, {k:'三', m:'three'}, {k:'四', m:'four'},
+      {k:'五', m:'five'}, {k:'六', m:'six'}, {k:'七', m:'seven'}, {k:'八', m:'eight'}, {k:'九', m:'nine'},
+      {k:'十', m:'ten'}, {k:'百', m:'hundred'}, {k:'千', m:'thousand'}, {k:'万', m:'ten thousand'}, {k:'円', m:'yen'},
+      {k:'年', m:'year'}, {k:'月', m:'month'}, {k:'日', m:'day'}, {k:'時', m:'time'}, {k:'分', m:'minute'},
+      {k:'今', m:'now'}, {k:'先', m:'before'}, {k:'週', m:'week'}, {k:'毎', m:'every'}, {k:'何', m:'what'},
+      {k:'上', m:'up'}, {k:'下', m:'down'}, {k:'中', m:'middle'}, {k:'外', m:'outside'}, {k:'左', m:'left'},
+      {k:'右', m:'right'}, {k:'前', m:'front'}, {k:'後', m:'after'}, {k:'東', m:'east'}, {k:'西', m:'west'},
+      {k:'南', m:'south'}, {k:'北', m:'north'}, {k:'学', m:'study'}, {k:'生', m:'life'}, {k:'会', m:'meet'}
+    ];
+    const kanji2 = [
+      {k:'大', m:'big'}, {k:'小', m:'small'}, {k:'高', m:'high'}, {k:'安', m:'cheap'}, {k:'新', m:'new'},
+      {k:'古', m:'old'}, {k:'長', m:'long'}, {k:'短', m:'short'}, {k:'多', m:'many'}, {k:'少', m:'few'},
+      {k:'強', m:'strong'}, {k:'弱', m:'weak'}, {k:'早', m:'early'}, {k:'遅', m:'late'}, {k:'近', m:'near'},
+      {k:'遠', m:'far'}, {k:'白', m:'white'}, {k:'黒', m:'black'}, {k:'赤', m:'red'}, {k:'青', m:'blue'},
+      {k:'色', m:'color'}, {k:'物', m:'thing'}, {k:'事', m:'matter'}, {k:'者', m:'person'}, {k:'方', m:'way'},
+      {k:'所', m:'place'}, {k:'場', m:'place'}, {k:'国', m:'country'}, {k:'町', m:'town'}, {k:'市', m:'city'},
+      {k:'駅', m:'station'}, {k:'道', m:'road'}, {k:'車', m:'car'}, {k:'電', m:'electricity'}, {k:'話', m:'talk'},
+      {k:'文', m:'sentence'}, {k:'字', m:'character'}, {k:'名', m:'name'}, {k:'後', m:'after'}, {k:'間', m:'between'}
+    ];
+
+    let currentSet = [];
+    let queue = [];
+    let currentItem = null;
+
+    function start(set) {
+      if (set === '1') currentSet = kanji1;
+      else if (set === '2') currentSet = kanji2;
+      else currentSet = [...kanji1, ...kanji2];
+      queue = [...currentSet].sort(() => Math.random() - 0.5);
+      document.getElementById('select').style.display = 'none';
+      document.getElementById('game').style.display = 'block';
+      next();
+    }
+
+    function next() {
+      if (!queue.length) {
+        document.getElementById('status').textContent = 'Set done!';
+        document.getElementById('prompt').textContent = '✓';
+        document.getElementById('options').innerHTML = '';
+        document.getElementById('next-slot').innerHTML = '';
+        return;
+      }
+      currentItem = queue.shift();
+      document.getElementById('prompt').textContent = currentItem.m;
+      document.getElementById('status').textContent = 'Which kanji matches?';
+      const others = currentSet.filter(x => x.k !== currentItem.k).sort(() => Math.random() - 0.5).slice(0, 4);
+      const opts = [...others, currentItem].sort(() => Math.random() - 0.5);
+      const box = document.getElementById('options');
+      box.innerHTML = '';
+      opts.forEach(o => {
+        const b = document.createElement('button');
+        b.className = 'game-link';
+        b.style.background = 'var(--surface-elevated)';
+        b.style.color = 'var(--text)';
+        b.style.fontSize = '1.8rem';
+        b.style.minHeight = '72px';
+        b.textContent = o.k;
+        b.onclick = () => {
+          const correct = o.k === currentItem.k;
+          if (window.ogSRS) window.ogSRS.record('kanji', 'kanji-' + currentItem.k, correct);
+          if (correct) {
+            b.style.background = 'var(--accent)';
+            setTimeout(next, 400);
+          } else {
+            b.style.background = '#c0392b';
+            queue.push(currentItem);
+            setTimeout(next, 500);
+          }
+        };
+        box.appendChild(b);
+      });
+    }
+
+    document.querySelectorAll('[data-set]').forEach(btn => {
+      btn.onclick = () => start(btn.dataset.set);
+    });
+    document.getElementById('back').onclick = () => {
+      document.getElementById('game').style.display = 'none';
+      document.getElementById('select').style.display = 'block';
+    };
+  </script>
+</body>
+</html>
