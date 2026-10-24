@@ -139,8 +139,8 @@
         return;
       }
       currentItem = queue.shift();
-      document.getElementById('prompt').textContent = currentItem.m;
-      document.getElementById('status').textContent = 'Look at the meaning';
+      document.getElementById('prompt').innerHTML = '<span style="font-size:2.2rem;">' + currentItem.k + '</span><br>' + currentItem.m;
+      document.getElementById('status').textContent = 'Look at the kanji and meaning';
       const box = document.getElementById('options');
       box.innerHTML = '';
       const nextSlot = document.getElementById('next-slot');
@@ -154,8 +154,8 @@
     }
 
     function showQuiz() {
-      document.getElementById('prompt').textContent = currentItem.k;
-      document.getElementById('status').textContent = 'Which meaning matches?';
+      document.getElementById('prompt').textContent = currentItem.m;
+      document.getElementById('status').textContent = 'Which kanji matches?';
       document.getElementById('next-slot').innerHTML = '';
       const others = currentSet.filter(x => x.k !== currentItem.k).sort(() => Math.random() - 0.5).slice(0, 4);
       const opts = [...others, currentItem].sort(() => Math.random() - 0.5);
@@ -166,9 +166,9 @@
         b.className = 'game-link';
         b.style.background = 'var(--surface-elevated)';
         b.style.color = 'var(--text)';
-        b.style.fontSize = '1.1rem';
-        b.style.minHeight = '56px';
-        b.textContent = o.m;
+        b.style.fontSize = '1.8rem';
+        b.style.minHeight = '72px';
+        b.textContent = o.k;
         b.onclick = () => {
           const correct = o.k === currentItem.k;
           if (window.ogSRS) window.ogSRS.record('kanji', 'kanji-' + currentItem.k, correct);
