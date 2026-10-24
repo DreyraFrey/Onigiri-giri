@@ -124,49 +124,51 @@
 
     const banks = {
       beginner: [
-        { jp: '<ruby>私<rt>わたし</rt></ruby>は<ruby>学生<rt>がくせい</rt></ruby>です。', en: 'I am a student.', opts: ['I am a student.','I am a teacher.','I am at school.','I am working.'] },
+        { jp: '<ruby>私<rt>わたし</rt></ruby>は<ruby>学生<rt>がくせい</rt></ruby>です。', en: 'I am a student.', opts: ['I am a student.','I am a teacher.','I work here.','I am free.'] },
         { jp: '<ruby>今日<rt>きょう</rt></ruby>は<ruby>暑い<rt>あつい</rt></ruby>です。', en: 'It is hot today.', opts: ['It is hot today.','It is cold today.','It is raining.','It is morning.'] },
-        { jp: '<ruby>友達<rt>ともだち</rt></ruby>と<ruby>遊び<rt>あそび</rt></ruby>ます。', en: 'I hang out with friends.', opts: ['I hang out with friends.','I study with friends.','I call a friend.','I meet a teacher.'] },
-        { jp: '<ruby>ご飯<rt>ごはん</rt></ruby>を<ruby>食<rt>た</rt></ruby>べます。', en: 'I eat a meal.', opts: ['I eat a meal.','I drink water.','I buy food.','I cook dinner.'] },
-        { jp: '<ruby>学校<rt>がっこう</rt></ruby>に<ruby>行<rt>い</rt></ruby>きます。', en: 'I go to school.', opts: ['I go to school.','I go home.','I go to work.','I go shopping.'] },
-        { jp: '<ruby>本<rt>ほん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>みます。', en: 'I read a book.', opts: ['I read a book.','I write a letter.','I buy a book.','I see a movie.'] },
-        { jp: '<ruby>水<rt>みず</rt></ruby>を<ruby>飲<rt>の</rt></ruby>みます。', en: 'I drink water.', opts: ['I drink water.','I drink tea.','I eat food.','I buy water.'] },
-        { jp: '<ruby>電車<rt>でんしゃ</rt></ruby>で<ruby>行<rt>い</rt></ruby>きます。', en: 'I go by train.', opts: ['I go by train.','I go by bus.','I go by car.','I walk.'] },
-        { jp: '<ruby>明日<rt>あした</rt></ruby>は<ruby>雨<rt>あめ</rt></ruby>です。', en: 'It will rain tomorrow.', opts: ['It will rain tomorrow.','It is sunny.','It snowed yesterday.','It is cold.'] },
-        { jp: '<ruby>名前<rt>なまえ</rt></ruby>は<ruby>何<rt>なん</rt></ruby>ですか。', en: 'What is your name?', opts: ['What is your name?','Where are you from?','How old are you?','What do you do?'] }
+        { jp: '<ruby>友達<rt>ともだち</rt></ruby>と<ruby>遊び<rt>あそび</rt></ruby>ます。', en: 'I hang out with friends.', opts: ['I hang out with friends.','I study alone.','I call my mom.','I go home.'] },
+        { jp: '<ruby>ご飯<rt>ごはん</rt></ruby>を<ruby>食<rt>た</rt></ruby>べます。', en: 'I eat a meal.', opts: ['I eat a meal.','I drink water.','I buy food.','I cook now.'] },
+        { jp: '<ruby>学校<rt>がっこう</rt></ruby>に<ruby>行<rt>い</rt></ruby>きます。', en: 'I go to school.', opts: ['I go to school.','I go home.','I go to work.','I stay here.'] },
+        { jp: '<ruby>本<rt>ほん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>みます。', en: 'I read a book.', opts: ['I read a book.','I write a note.','I buy a book.','I see a film.'] },
+        { jp: '<ruby>水<rt>みず</rt></ruby>を<ruby>飲<rt>の</rt></ruby>みます。', en: 'I drink water.', opts: ['I drink water.','I drink tea.','I eat rice.','I buy milk.'] },
+        { jp: '<ruby>電車<rt>でんしゃ</rt></ruby>で<ruby>行<rt>い</rt></ruby>きます。', en: 'I go by train.', opts: ['I go by train.','I go by bus.','I walk there.','I drive a car.'] },
+        { jp: '<ruby>明日<rt>あした</rt></ruby>は<ruby>雨<rt>あめ</rt></ruby>です。', en: 'It will rain tomorrow.', opts: ['It will rain tomorrow.','It is sunny now.','It snowed today.','It is cold.'] },
+        { jp: '<ruby>名前<rt>なまえ</rt></ruby>は<ruby>何<rt>なん</rt></ruby>ですか。', en: 'What is your name?', opts: ['What is your name?','Where are you from?','How old are you?','What do you do?'] },
+        { jp: '<ruby>朝<rt>あさ</rt></ruby>ごはんを<ruby>食<rt>た</rt></ruby>べました。', en: 'I ate breakfast.', opts: ['I ate breakfast.','I skipped lunch.','I drank coffee.','I woke up late.'] },
+        { jp: '<ruby>図書館<rt>としょかん</rt></ruby>で<ruby>勉強<rt>べんきょう</rt></ruby>します。', en: 'I study at the library.', opts: ['I study at the library.','I work at the store.','I sleep at home.','I play outside.'] },
+        { jp: '<ruby>新しい<rt>あたらしい</rt></ruby><ruby>靴<rt>くつ</rt></ruby>を<ruby>買<rt>か</rt></ruby>いました。', en: 'I bought new shoes.', opts: ['I bought new shoes.','I lost my bag.','I sold a book.','I found a pen.'] },
+        { jp: '<ruby>週末<rt>しゅうまつ</rt></ruby>は<ruby>暇<rt>ひま</rt></ruby>です。', en: 'I am free on the weekend.', opts: ['I am free on the weekend.','I work on Sunday.','I am busy now.','I sleep all day.'] },
+        { jp: '<ruby>駅<rt>えき</rt></ruby>まで<ruby>歩<rt>ある</rt></ruby>いて<ruby>行<rt>い</rt></ruby>きます。', en: 'I walk to the station.', opts: ['I walk to the station.','I run to school.','I drive to work.','I take the bus.'] }
       ],
       adept: [
-        { jp: '仕事が終わったら、友達と飲みに行きます。', en: 'After work I go drinking with friends.', opts: ['After work I go drinking with friends.','I work with my friends.','I finish work early.','I call my friends after work.'] },
-        { jp: 'この本はとても面白いです。', en: 'This book is very interesting.', opts: ['This book is very interesting.','This book is expensive.','I bought this book.','I am reading a book.'] },
-        { jp: '駅まで歩いて十分です。', en: 'It takes ten minutes to walk to the station.', opts: ['It takes ten minutes to walk to the station.','The station is far.','I take the train.','I arrive at ten.'] },
-        { jp: '昨日は忙しくて、何もできませんでした。', en: 'I was busy yesterday and could not do anything.', opts: ['I was busy yesterday and could not do anything.','I finished everything yesterday.','Yesterday was free.','I worked all day.'] },
-        { jp: '新しい服を買いたいです。', en: 'I want to buy new clothes.', opts: ['I want to buy new clothes.','I bought new clothes.','These clothes are new.','I need clothes.'] }
+        { jp: '仕事が終わったら、友達と飲みに行きます。', en: 'After work I go drinking with friends.', opts: ['After work I go drinking with friends.','I work late with my friends.','I finish early every day.','I call friends after work.'] },
+        { jp: 'この本はとても面白いです。', en: 'This book is very interesting.', opts: ['This book is very interesting.','This book is too expensive.','I bought this yesterday.','I am reading it now.'] },
+        { jp: '駅まで歩いて十分です。', en: 'It takes ten minutes to walk to the station.', opts: ['It takes ten minutes to walk to the station.','The station is very far.','I take the train daily.','I arrive around ten.'] },
+        { jp: '昨日は忙しくて、何もできませんでした。', en: 'I was busy yesterday and could not do anything.', opts: ['I was busy yesterday and could not do anything.','I finished all my work.','Yesterday was very free.','I worked until late.'] },
+        { jp: '新しい服を買いたいです。', en: 'I want to buy new clothes.', opts: ['I want to buy new clothes.','I already bought clothes.','These clothes are old.','I need new shoes.'] },
+        { jp: '図書館で本を借りました。', en: 'I borrowed a book at the library.', opts: ['I borrowed a book at the library.','I bought a new book.','I returned the book.','I read at the cafe.'] },
+        { jp: '明日テストがあるので、今夜勉強します。', en: 'I have a test tomorrow, so I will study tonight.', opts: ['I have a test tomorrow, so I will study tonight.','The test was easy.','I studied last night.','I am free tonight.'] },
+        { jp: 'このレストランは安くて美味しいです。', en: 'This restaurant is cheap and delicious.', opts: ['This restaurant is cheap and delicious.','This place is expensive.','I ate here before.','The food was bad.'] },
+        { jp: '雨が降っているので、家にいます。', en: 'It is raining, so I am staying home.', opts: ['It is raining, so I am staying home.','The sun is shining.','I went outside.','I forgot my umbrella.'] },
+        { jp: '彼は日本語が上手です。', en: 'He is good at Japanese.', opts: ['He is good at Japanese.','He is learning English.','He lives in Japan.','He teaches math.'] },
+        { jp: '会議は三時から始まります。', en: 'The meeting starts at three.', opts: ['The meeting starts at three.','The meeting is over.','We meet every day.','I am late today.'] },
+        { jp: 'この問題は少し難しいです。', en: 'This problem is a little difficult.', opts: ['This problem is a little difficult.','This is very easy.','I solved it already.','There is no problem.'] }
       ],
       expert: [
-        { jp: '会議の前に資料を確認しておいてください。', en: 'Please check the materials before the meeting.', opts: ['Please check the materials before the meeting.','The meeting is about materials.','Please bring the materials.','The meeting starts soon.'] },
-        { jp: '雨が降りそうなので、傘を持って行った方がいいですよ。', en: 'It looks like it will rain, so you should take an umbrella.', opts: ['It looks like it will rain, so you should take an umbrella.','It is raining now.','I forgot my umbrella.','The weather is nice.'] },
-        { jp: 'この問題は難しくて、まだ解決していません。', en: 'This problem is difficult and has not been solved yet.', opts: ['This problem is difficult and has not been solved yet.','The problem is easy.','I solved the problem.','There is no problem.'] },
-        { jp: '来週の予定がまだ決まっていないので、後で連絡します。', en: 'Next week\'s schedule is not decided yet, so I will contact you later.', opts: ['Next week\'s schedule is not decided yet, so I will contact you later.','I am free next week.','The schedule is fixed.','I will call you tomorrow.'] },
-        { jp: '彼女は毎日日本語を勉強しています。', en: 'She studies Japanese every day.', opts: ['She studies Japanese every day.','She speaks Japanese well.','She is Japanese.','She teaches Japanese.'] }
+        { jp: '会議の前に資料を確認しておいてください。', en: 'Please check the materials before the meeting.', opts: ['Please check the materials before the meeting.','The meeting is about the materials.','Please bring your notes.','The meeting starts soon.'] },
+        { jp: '雨が降りそうなので、傘を持って行った方がいいですよ。', en: 'It looks like it will rain, so you should take an umbrella.', opts: ['It looks like it will rain, so you should take an umbrella.','It is raining hard right now.','I forgot my umbrella today.','The weather is nice.'] },
+        { jp: 'この問題は難しくて、まだ解決していません。', en: 'This problem is difficult and has not been solved yet.', opts: ['This problem is difficult and has not been solved yet.','The problem was easy to fix.','I already solved the issue.','There is nothing wrong.'] },
+        { jp: '来週の予定がまだ決まっていないので、後で連絡します。', en: 'Next week\'s schedule is not decided yet, so I will contact you later.', opts: ['Next week\'s schedule is not decided yet, so I will contact you later.','I am free all next week.','The schedule is already set.','I will call you tomorrow.'] },
+        { jp: '彼女は毎日日本語を勉強しています。', en: 'She studies Japanese every day.', opts: ['She studies Japanese every day.','She speaks Japanese fluently.','She is from Japan.','She teaches Japanese.'] },
+        { jp: '彼は来月日本に出張する予定です。', en: 'He is scheduled to go on a business trip to Japan next month.', opts: ['He is scheduled to go on a business trip to Japan next month.','He lives in Tokyo.','He visited Japan last year.','He is studying abroad.'] },
+        { jp: 'このアプリは無料で使えます。', en: 'This app can be used for free.', opts: ['This app can be used for free.','This app costs money.','I bought the full version.','The app is not working.'] },
+        { jp: '電車が遅れたので、会議に間に合いませんでした。', en: 'The train was late, so I did not make it to the meeting.', opts: ['The train was late, so I did not make it to the meeting.','I arrived early today.','The meeting was cancelled.','I took a taxi instead.'] },
+        { jp: '資料が足りないので、もう一度確認してください。', en: 'The materials are incomplete, so please check again.', opts: ['The materials are incomplete, so please check again.','Everything is ready.','I already checked twice.','The meeting is done.'] },
+        { jp: '来年の春に新しいプロジェクトが始まります。', en: 'A new project will start next spring.', opts: ['A new project will start next spring.','The project ended last year.','We finished it already.','There is no project.'] }
       ]
     };
 
-    // Expand adept and expert with more items (reuse with variations for length)
-    const adeptExtra = [
-      { jp: '図書館で本を借りました。', en: 'I borrowed a book at the library.', opts: ['I borrowed a book at the library.','I bought a book.','I returned a book.','I read at the library.'] },
-      { jp: '明日テストがあるので、今夜勉強します。', en: 'I have a test tomorrow, so I will study tonight.', opts: ['I have a test tomorrow, so I will study tonight.','The test is easy.','I studied yesterday.','I am free tonight.'] },
-      { jp: 'このレストランは安くて美味しいです。', en: 'This restaurant is cheap and delicious.', opts: ['This restaurant is cheap and delicious.','This restaurant is expensive.','I ate here before.','The food is bad.'] }
-    ];
-    banks.adept = banks.adept.concat(adeptExtra);
-
-    const expertExtra = [
-      { jp: '彼は来月日本に出張する予定です。', en: 'He is scheduled to go on a business trip to Japan next month.', opts: ['He is scheduled to go on a business trip to Japan next month.','He lives in Japan.','He visited Japan last month.','He is studying in Japan.'] },
-      { jp: 'このアプリは無料で使えます。', en: 'This app can be used for free.', opts: ['This app can be used for free.','This app is expensive.','I bought this app.','The app is broken.'] },
-      { jp: '電車が遅れたので、会議に間に合いませんでした。', en: 'The train was late, so I did not make it to the meeting.', opts: ['The train was late, so I did not make it to the meeting.','I arrived early.','The meeting was cancelled.','I took a taxi.'] }
-    ];
-    banks.expert = banks.expert.concat(expertExtra);
-
-    const lengths = { beginner: 10, adept: 25, expert: 50 };
+    const lengths = { beginner: 10, adept: 12, expert: 10 };
 
     let current = [];
     let index = 0;
