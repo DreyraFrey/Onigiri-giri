@@ -278,6 +278,7 @@
     }
 
     function showResults() {
+      if (window.ogStreak) window.ogStreak.mark();
       document.getElementById('exam').style.display = 'none';
       document.getElementById('results').style.display = 'block';
       document.getElementById('score').textContent = score + ' / ' + current.length + ' correct';
