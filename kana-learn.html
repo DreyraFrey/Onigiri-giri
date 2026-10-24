@@ -144,6 +144,7 @@
     function next() {
       if (!queue.length) {
         document.getElementById('status').textContent = 'Group done!';
+        document.getElementById('speak').style.display = 'none';
         document.getElementById('prompt').innerHTML = '<img src="mascot-leap.png" alt="Nice!" style="width:120px; height:auto;">';
         document.getElementById('options').innerHTML = '';
         return;
@@ -152,6 +153,7 @@
       phase = 'learn';
       document.getElementById('prompt').textContent = currentItem.k + '  ' + currentItem.r;
       document.getElementById('status').textContent = 'Look at the kana and sound';
+      if (hasJapaneseVoice()) document.getElementById('speak').style.display = '';
       if (hasJapaneseVoice()) setTimeout(() => speak(currentItem.k), 300);
       const box = document.getElementById('options');
       box.innerHTML = '';
