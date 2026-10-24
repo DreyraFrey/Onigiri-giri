@@ -388,3 +388,22 @@ li {
 .card ul li:last-child {
   border-bottom: none;
 }
+
+/* Mobile progress bar */
+.mobile-progress {
+  display: none;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0.4rem 0.75rem;
+  font-size: 0.8rem;
+  justify-content: space-around;
+  gap: 0.5rem;
+}
+.mobile-progress span {
+  color: var(--text-secondary);
+}
+@media (max-width: 700px) {
+  .mobile-progress {
+    display: flex;
+  }
+}
