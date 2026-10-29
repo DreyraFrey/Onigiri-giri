@@ -226,7 +226,8 @@
     let answered = false;
 
     function startExam(diff) {
-      current = [...banks[diff]].sort(() => Math.random() - 0.5);
+      const lengths = { beginner: 10, adept: 25, expert: 50 };
+      current = [...banks[diff]].sort(() => Math.random() - 0.5).slice(0, lengths[diff]);
       index = 0;
       score = 0;
       wrongs = [];
