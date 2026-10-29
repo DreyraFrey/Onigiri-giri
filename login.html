@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login – Onigiri-giri</title>
+  <link rel="stylesheet" href="style.css?v=10">
+  <link rel="icon" type="image/png" href="icon-header.png">
+  <meta name="color-scheme" content="dark">
+  <style>
+    .auth-box { max-width: 360px; margin: 2rem auto; }
+    .auth-box input { width: 100%; padding: 0.8rem; margin: 0.4rem 0; border: 1px solid #444; border-radius: 6px; background: var(--surface); color: var(--text); }
+    .auth-box button { width: 100%; padding: 0.9rem; margin-top: 0.5rem; background: #e85d04; color: white; border: none; border-radius: 6px; cursor: pointer; }
+    .auth-box .toggle { text-align: center; margin-top: 1rem; color: var(--text-secondary); cursor: pointer; }
+    .error { color: #f44336; font-size: 0.9rem; margin-top: 0.5rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><a href="index.html"><img class="site-logo" src="icon-header.png" alt="Onigiri-giri">Onigiri-giri</a></h1>
+    <p>Login</p>
+  </header>
+  <main>
+    <section class="card auth-box">
+      <h2 id="title">Sign in</h2>
+      <input type="email" id="email" placeholder="Email">
+      <input type="password" id="password" placeholder="Password">
+      <button id="submit">Sign in</button>
+      <p class="toggle" id="toggle">Need an account? Sign up</p>
+      <p class="error" id="error"></p>
+    </section>
+  </main>
+  <footer><p>Onigiri-giri · Free Japanese Learning site</p></footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+  <script>
+    let isSignUp = false;
+    const title = document.getElementById('title');
+    const submit = document.getElementById('submit');
+    const toggle = document.getElementById('toggle');
+    const error = document.getElementById('error');
+
+    toggle.onclick = () => {
+      isSignUp = !isSignUp;
+      title.textContent = isSignUp ? 'Sign up' : 'Sign in';
+      submit.textContent = isSignUp ? 'Sign up' : 'Sign in';
+      toggle.textContent = isSignUp ? 'Have an account? Sign in' : 'Need an account? Sign up';
+      error.textContent = '';
+    };
+
+    submit.onclick = async () => {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      error.textContent = '';
+      const { data, error: err } = isSignUp 
+        ? await ogAuth.signUp(email, password)
+        : await ogAuth.signIn(email, password);
+      if (err) { error.textContent = err.message; return; }
+      if (isSignUp) { error.textContent = 'Check your email to confirm.'; return; }
+      window.location.href = 'index.html';
+    };
+  </script>
+</body>
+</html>
