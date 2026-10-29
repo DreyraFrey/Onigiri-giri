@@ -88,6 +88,7 @@
       localStorage.setItem(STREAK_KEY, JSON.stringify(s));
     }
     updateStreakDisplay();
+    if (window.ogSync) window.ogSync.syncToCloud();
   }
   function updateStreakDisplay() {
     const s = getStreak();
@@ -101,5 +102,6 @@
   }
   window.ogStreak = { mark: markPracticed };
   updateStreakDisplay();
+    if (window.ogSync) window.ogSync.syncToCloud();
 
 })();
