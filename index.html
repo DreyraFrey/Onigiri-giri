@@ -126,7 +126,19 @@
     </aside>
   </div>
 
-  <footer>
+  
+  <div id="path-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:100; align-items:center; justify-content:center;">
+    <div style="background:var(--surface); padding:2rem; border-radius:12px; max-width:400px; text-align:center;">
+      <h2>Welcome!</h2>
+      <p>Pick a path to start learning.</p>
+      <div style="display:flex; flex-direction:column; gap:0.5rem; margin-top:1rem;">
+        <button onclick="pickPath('beginner')" style="padding:0.8rem; background:#e85d04; color:white; border:none; border-radius:8px; cursor:pointer;">Beginner</button>
+        <button onclick="pickPath('apprentice')" style="padding:0.8rem; background:#e85d04; color:white; border:none; border-radius:8px; cursor:pointer;">Apprentice</button>
+        <button onclick="pickPath('master')" style="padding:0.8rem; background:#e85d04; color:white; border:none; border-radius:8px; cursor:pointer;">Master</button>
+      </div>
+    </div>
+  </div>
+<footer>
     <p>Onigiri-giri · Free Japanese Learning site</p>
   </footer>
   <script>
@@ -143,15 +155,22 @@
 <script src="auth-guard.js"></script>
 <script src="progress-sync.js"></script>
 <script>
+function pickPath(id) {
+  const data = JSON.parse(localStorage.getItem("og-paths") || '{"current":null,"progress":{}}');
+  data.current = id;
+  if (!data.progress[id]) data.progress[id] = { completed: [], badge: false };
+  localStorage.setItem("og-paths", JSON.stringify(data));
+  window.location.href = "missions.html";
+}
+
 (function(){
   const data = JSON.parse(localStorage.getItem("og-paths") || '{"current":null}');
   const el = document.getElementById("path-info");
-  if (el) {
-    if (data.current) {
-      el.textContent = "Current path: " + data.current.charAt(0).toUpperCase() + data.current.slice(1);
-    } else {
-      el.innerHTML = 'No path selected. <a href="profile.html">Pick a path</a> to start.';
-    }
+  const modal = document.getElementById("path-modal");
+  if (!data.current) {
+    modal.style.display = "flex";
+  } else if (el) {
+    el.textContent = "Current path: " + data.current.charAt(0).toUpperCase() + data.current.slice(1);
   }
 })();
 </script>
