@@ -260,6 +260,9 @@
             window.ogSRS.record('hiragana', id, false);
           }
           selected.classList.add('wrong');
+          const review = JSON.parse(localStorage.getItem('og-review') || '[]');
+          review.push({ type: 'match', item: card.textContent, time: Date.now() });
+          localStorage.setItem('og-review', JSON.stringify(review));
           card.classList.add('wrong');
           setTimeout(() => {
             selected.classList.remove('wrong', 'selected');
