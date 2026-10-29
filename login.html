@@ -42,11 +42,15 @@
     ogAuth.getUser().then(user => { if (user) window.location.href = "index.html"; });
 
     document.getElementById('discord').onclick = async () => {
-      const { error } = await ogAuth.supabase.auth.signInWithOAuth({
-        provider: 'discord',
-        options: { redirectTo: 'https://dreyrafrey.github.io/Onigiri-giri/index.html' }
-      });
-      if (error) document.getElementById('error').textContent = error.message;
+      try {
+        const { error } = await ogAuth.supabase.auth.signInWithOAuth({
+          provider: 'discord',
+          options: { redirectTo: window.location.origin + '/Onigiri-giri/index.html' }
+        });
+        if (error) document.getElementById('error').textContent = error.message;
+      } catch (e) {
+        document.getElementById('error').textContent = e.message;
+      }
     };
   </script>
 </body>
