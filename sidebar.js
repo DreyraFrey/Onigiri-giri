@@ -12,6 +12,7 @@
 
   function updateDisplay() {
     const p = getProgress();
+    const paths = JSON.parse(localStorage.getItem('og-paths') || '{"current":null,"progress":{}}');
     const set = (id, val) => {
       const el = document.getElementById(id);
       if (el) el.textContent = val;
@@ -23,6 +24,19 @@
     set('m-hira', (p.hira || 0));
     set('m-kata', (p.kata || 0));
     set('m-kanji', (p.kanji || 0));
+    
+    // Path info
+    const pathEl = document.getElementById('sidebar-path');
+    if (pathEl) {
+      if (paths.current) {
+        const missions = { beginner: 7, apprentice: 5, master: 4 };
+        const done = (paths.progress[paths.current]?.completed || []).length;
+        const total = missions[paths.current] || 1;
+        pathEl.innerHTML = `<b>${paths.current}</b> ${done}/${total}`;
+      } else {
+        pathEl.textContent = 'No path';
+      }
+    }
   }
 
   window.ogProgress = {
