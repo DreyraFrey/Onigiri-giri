@@ -119,6 +119,7 @@
       data.current = id;
       if (!data.progress[id]) data.progress[id] = { milestones: [], badge: false };
       localStorage.setItem('og-paths', JSON.stringify(data));
+      window.location.href = 'missions.html';
       render();
     }
 
