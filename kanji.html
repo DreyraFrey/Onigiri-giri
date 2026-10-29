@@ -39,6 +39,7 @@
     <a href="vocab.html">Vocabulary</a>
     <a href="slang.html">Slang</a>
     <a href="review.html">Review</a>
+    <a href="#" id="logout-btn" style="margin-left:auto;">Logout</a>
   </nav>
   <div class="layout">
     <aside class="sidebar left-sidebar">
@@ -647,5 +648,8 @@ const bt=document.getElementById("backTop");
 window.addEventListener("scroll",()=>bt.classList.toggle("show",window.scrollY>300));
 bt.onclick=()=>window.scrollTo({top:0,behavior:"smooth"});
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+<script src="auth-guard.js"></script>
 </body>
 </html>
