@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Missions – Onigiri-giri</title>
+  <link rel="stylesheet" href="style.css?v=10">
+  <link rel="icon" type="image/png" href="icon-header.png">
+  <meta name="color-scheme" content="dark">
+  <style>
+    .mission { display: flex; align-items: center; gap: 1rem; padding: 1rem; margin: 0.5rem 0; background: var(--surface); border-radius: 12px; border: 2px solid #333; }
+    .mission.locked { opacity: 0.5; }
+    .mission.done { border-color: #4caf50; }
+    .mission.current { border-color: #e85d04; }
+    .mission-num { width: 40px; height: 40px; border-radius: 50%; background: #333; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+    .mission.done .mission-num { background: #4caf50; }
+    .mission.current .mission-num { background: #e85d04; }
+    .mission-info { flex: 1; }
+    .mission-info h3 { margin: 0; }
+    .mission-info p { margin: 0.3rem 0 0; font-size: 0.9rem; color: #aaa; }
+    .play-btn { padding: 0.5rem 1rem; background: #e85d04; color: white; border: none; border-radius: 6px; cursor: pointer; }
+    .play-btn:disabled { background: #333; cursor: not-allowed; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><a href="index.html"><img class="site-logo" src="icon-header.png" alt="Onigiri-giri">Onigiri-giri</a></h1>
+    <p>Missions</p>
+    <button class="menu-toggle" aria-label="Menu">☰</button>
+  </header>
+  <nav id="nav">
+    <a href="index.html">Home</a>
+    <a href="profile.html">Profile</a>
+    <a href="missions.html" class="active">Missions</a>
+    <a href="#" id="logout-btn" style="margin-left:auto;">Logout</a>
+  </nav>
+  <main style="max-width:600px;margin:0 auto;padding:1rem;">
+    <section class="card">
+      <h2 id="path-name">Missions</h2>
+      <div id="missions"></div>
+    </section>
+  </main>
+  <footer><p>Onigiri-giri · Free Japanese Learning site</p></footer>
+  <script src="sidebar.js?v=4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+  <script src="auth-guard.js"></script>
+  <script>
+    const MISSIONS = {
+      beginner: [
+        { name: 'Hiragana Basics', desc: 'Learn the first 10 hiragana', link: 'kana-learn.html?mode=hira&group=a' },
+        { name: 'More Hiragana', desc: 'Learn the next set', link: 'kana-learn.html?mode=hira&group=ka' },
+        { name: 'Hiragana Quiz', desc: 'Test your hiragana', link: 'quiz.html?mode=hira' },
+        { name: 'Katakana Basics', desc: 'Learn the first 10 katakana', link: 'kana-learn.html?mode=kata&group=a' },
+        { name: 'Katakana Quiz', desc: 'Test your katakana', link: 'quiz.html?mode=kata' },
+        { name: 'First Kanji', desc: 'Learn 10 basic kanji', link: 'kanji-learn.html' },
+        { name: 'Beginner Exam', desc: 'Final exam for this path', link: 'vocab-exam.html?diff=beginner', isExam: true }
+      ],
+      apprentice: [
+        { name: 'Kanji Set 2', desc: 'Learn more kanji', link: 'kanji-learn.html' },
+        { name: 'Vocab Practice', desc: 'Practice vocabulary', link: 'quiz.html?mode=vocab' },
+        { name: 'Reading Practice', desc: 'Read simple sentences', link: 'reading-exam.html?diff=beginner' },
+        { name: 'Kanji Quiz', desc: 'Test your kanji', link: 'quiz.html?mode=kanji' },
+        { name: 'Apprentice Exam', desc: 'Final exam for this path', link: 'reading-exam.html?diff=adept', isExam: true }
+      ],
+      master: [
+        { name: 'Advanced Kanji', desc: 'Learn more complex kanji', link: 'kanji-learn.html' },
+        { name: 'Expert Vocab', desc: 'Advanced vocabulary', link: 'quiz.html?mode=vocab' },
+        { name: 'Reading Challenge', desc: 'Read without help', link: 'reading-exam.html?diff=adept' },
+        { name: 'Master Exam', desc: 'Final exam for this path', link: 'reading-exam.html?diff=expert', isExam: true }
+      ]
+    };
+
+    function getPaths() {
+      return JSON.parse(localStorage.getItem('og-paths') || '{"current":null,"progress":{}}');
+    }
+
+    function getCompleted(path) {
+      const data = getPaths();
+      return data.progress[path]?.completed || [];
+    }
+
+    function markComplete(path, index) {
+      const data = getPaths();
+      if (!data.progress[path]) data.progress[path] = { completed: [], badge: false };
+      if (!data.progress[path].completed.includes(index)) {
+        data.progress[path].completed.push(index);
+      }
+      if (MISSIONS[path][index].isExam) {
+        data.progress[path].badge = true;
+      }
+      localStorage.setItem('og-paths', JSON.stringify(data));
+    }
+
+    function render() {
+      const data = getPaths();
+      const path = data.current;
+      if (!path) {
+        document.getElementById('missions').innerHTML = '<p>Pick a path on the <a href="profile.html">Profile</a> page first.</p>';
+        return;
+      }
+      
+      const missions = MISSIONS[path];
+      const completed = getCompleted(path);
+      document.getElementById('path-name').textContent = path.charAt(0).toUpperCase() + path.slice(1) + ' Path';
+      
+      document.getElementById('missions').innerHTML = missions.map((m, i) => {
+        const isDone = completed.includes(i);
+        const isUnlocked = i === 0 || completed.includes(i - 1);
+        const status = isDone ? 'done' : (isUnlocked ? 'current' : 'locked');
+        return `
+          <div class="mission ${status}">
+            <div class="mission-num">${isDone ? '✓' : i + 1}</div>
+            <div class="mission-info">
+              <h3>${m.name}</h3>
+              <p>${m.desc}</p>
+            </div>
+            <button class="play-btn" ${isUnlocked ? '' : 'disabled'} onclick="location.href='${m.link}'">${isDone ? 'Replay' : 'Start'}</button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    document.querySelector('.menu-toggle').onclick = () => document.getElementById('nav').classList.toggle('open');
+    render();
+  </script>
+</body>
+</html>
