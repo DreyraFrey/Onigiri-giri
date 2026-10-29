@@ -35,12 +35,39 @@
     <a href="profile.html">Profile</a>
     <a href="#" id="logout-btn" style="margin-left:auto;">Logout</a>
   </nav>
-  <main style="max-width:600px;margin:0 auto;padding:1rem;">
+  <div class="layout">
+    <aside class="sidebar left-sidebar">
+      <div class="card">
+        <h3>Path</h3>
+        <div class="progress-item"><span id="sidebar-path">No path</span></div>
+      </div>
+      <div class="card">
+        <h3>Total</h3>
+        <div class="progress-item"><span>Hiragana</span><span id="prog-hira">0/46</span></div>
+        <div class="progress-item"><span>Katakana</span><span id="prog-kata">0/46</span></div>
+        <div class="progress-item"><span>Kanji</span><span id="prog-kanji">0/500</span></div>
+        <div class="progress-item"><span>Streak</span><span id="streak">0 days</span></div>
+      </div>
+    </aside>
+    <main>
     <section class="card">
       <h2 id="path-name">Missions</h2>
       <div id="missions"></div>
     </section>
   </main>
+    <aside class="sidebar right-sidebar">
+      <div class="card">
+        <h3>Daily Word</h3>
+        <div class="daily-word" id="daily-word">仕事</div>
+        <div class="daily-romaji" id="daily-romaji">shigoto</div>
+        <div class="daily-meaning" id="daily-meaning">work / job</div>
+      </div>
+      <div class="card">
+        <h3>Studying Tips</h3>
+        <p id="studying-tip">Complete missions in order.</p>
+      </div>
+    </aside>
+  </div>
   <footer><p>Onigiri-giri · Free Japanese Learning site</p></footer>
   <script src="sidebar.js?v=4"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
