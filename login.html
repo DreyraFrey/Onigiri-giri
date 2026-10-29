@@ -42,9 +42,9 @@
     ogAuth.getUser().then(user => { if (user) window.location.href = "index.html"; });
 
     document.getElementById('discord').onclick = async () => {
-      const { error } = await supabase.auth.signInWithOAuth({
+      const { error } = await ogAuth.supabase.auth.signInWithOAuth({
         provider: 'discord',
-        options: { redirectTo: window.location.origin + '/index.html' }
+        options: { redirectTo: 'https://dreyrafrey.github.io/Onigiri-giri/index.html' }
       });
       if (error) document.getElementById('error').textContent = error.message;
     };
