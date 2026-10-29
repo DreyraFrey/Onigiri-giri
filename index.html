@@ -127,14 +127,14 @@
   </div>
 
   
-  <div id="path-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:100; align-items:center; justify-content:center;">
-    <div style="background:var(--surface); padding:2rem; border-radius:12px; max-width:400px; text-align:center;">
-      <h2>Welcome!</h2>
-      <p>Pick a path to start learning.</p>
-      <div style="display:flex; flex-direction:column; gap:0.5rem; margin-top:1rem;">
-        <button onclick="pickPath('beginner')" style="padding:0.8rem; background:#e85d04; color:white; border:none; border-radius:8px; cursor:pointer;">Beginner</button>
-        <button onclick="pickPath('apprentice')" style="padding:0.8rem; background:#e85d04; color:white; border:none; border-radius:8px; cursor:pointer;">Apprentice</button>
-        <button onclick="pickPath('master')" style="padding:0.8rem; background:#e85d04; color:white; border:none; border-radius:8px; cursor:pointer;">Master</button>
+  <div id="path-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:200; align-items:center; justify-content:center; padding:1rem;">
+    <div style="background:var(--surface); padding:1.5rem; border-radius:16px; width:100%; max-width:340px; text-align:center;">
+      <h2 style="margin:0 0 0.5rem; font-size:1.4rem;">Welcome!</h2>
+      <p style="margin:0 0 1.2rem; color:#aaa;">Pick a path to start learning.</p>
+      <div style="display:flex; flex-direction:column; gap:0.7rem;">
+        <button onclick="pickPath('beginner')" style="padding:1rem; background:#e85d04; color:white; border:none; border-radius:10px; font-size:1.1rem; cursor:pointer; min-height:52px;">Beginner</button>
+        <button onclick="pickPath('apprentice')" style="padding:1rem; background:#e85d04; color:white; border:none; border-radius:10px; font-size:1.1rem; cursor:pointer; min-height:52px;">Apprentice</button>
+        <button onclick="pickPath('master')" style="padding:1rem; background:#e85d04; color:white; border:none; border-radius:10px; font-size:1.1rem; cursor:pointer; min-height:52px;">Master</button>
       </div>
     </div>
   </div>
