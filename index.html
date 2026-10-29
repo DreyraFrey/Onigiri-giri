@@ -142,5 +142,18 @@
 <script src="supabase.js"></script>
 <script src="auth-guard.js"></script>
 <script src="progress-sync.js"></script>
+<script>
+(function(){
+  const data = JSON.parse(localStorage.getItem("og-paths") || '{"current":null}');
+  const el = document.getElementById("path-info");
+  if (el) {
+    if (data.current) {
+      el.textContent = "Current path: " + data.current.charAt(0).toUpperCase() + data.current.slice(1);
+    } else {
+      el.innerHTML = 'No path selected. <a href="profile.html">Pick a path</a> to start.';
+    }
+  }
+})();
+</script>
 </body>
 </html>
