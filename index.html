@@ -25,14 +25,9 @@
 
   <nav id="nav">
     <a href="index.html" class="active">Home</a>
-    <a href="hiragana.html">Hiragana</a>
-    <a href="katakana.html">Katakana</a>
-    <a href="kanji.html">Kanji</a>
-    <a href="vocab.html">Vocabulary</a>
-    <a href="slang.html">Slang</a>
+    <a href="missions.html">Missions</a>
     <a href="review.html">Review</a>
     <a href="profile.html">Profile</a>
-    <a href="missions.html">Missions</a>
     <a href="#" id="logout-btn" style="margin-left:auto;">Logout</a>
   </nav>
 
@@ -73,7 +68,23 @@
         </ul>
       </section>
 
+      <section class="card" id="path-status">
+        <h2>Your Path</h2>
+        <p id="path-info">Loading...</p>
+        <a href="missions.html" class="game-link" style="display:inline-block;margin-top:1rem;">Continue</a>
+      </section>
       <section class="card">
+        <h2>Reference</h2>
+        <p>Look up characters and words anytime.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.5rem;">
+          <a href="hiragana.html" class="game-link">Hiragana</a>
+          <a href="katakana.html" class="game-link">Katakana</a>
+          <a href="kanji.html" class="game-link">Kanji</a>
+          <a href="vocab.html" class="game-link">Vocab</a>
+          <a href="slang.html" class="game-link">Slang</a>
+        </div>
+      </section>
+      <section class="card" style="display:none;">
         <h2>Learn</h2>
         <p>Start here if you are new. Learn the writing systems step by step.</p>
         <a href="kana-learn.html" class="game-link">Learn Hiragana & Katakana</a>
