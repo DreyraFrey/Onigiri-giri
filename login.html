@@ -31,8 +31,10 @@
     </section>
   </main>
   <footer><p>Onigiri-giri · Free Japanese Learning site</p></footer>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="supabase.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">  ogAuth.getUser().then(user => { if (user) window.location.href = "index.html"; });
+  </script>
+  <script src="supabase.js">  ogAuth.getUser().then(user => { if (user) window.location.href = "index.html"; });
+  </script>
   <script>
     let isSignUp = false;
     const title = document.getElementById('title');
@@ -59,6 +61,7 @@
       if (isSignUp) { error.textContent = 'Check your email to confirm.'; return; }
       window.location.href = 'index.html';
     };
+    ogAuth.getUser().then(user => { if (user) window.location.href = "index.html"; });
   </script>
 </body>
 </html>
