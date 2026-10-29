@@ -51,8 +51,12 @@
     </aside>
     <main>
       <section class="card">
-        <h2>Stats</h2>
-        <div class="stats" id="stats"></div>
+        <h2>Path Progress</h2>
+        <div id="path-progress"></div>
+      </section>
+      <section class="card">
+        <h2>Total Progress</h2>
+        <div class="stats" id="total-stats"></div>
       </section>
       <section class="card">
         <h2>Badges</h2>
@@ -122,10 +126,48 @@
     function render() {
       const data = getPaths();
       const streak = JSON.parse(localStorage.getItem('og-streak') || '{"days":0}');
+      const path = data.current;
       
-      document.getElementById('stats').innerHTML = `
-        <div class="stat"><b>${streak.days}</b>Day streak</div>
-        <div class="stat"><b>${data.current || 'None'}</b>Current path</div>
+      // Path progress
+      let pathHtml = '';
+      if (path && PATHS[path]) {
+        const missions = { beginner: 7, apprentice: 5, master: 4 };
+        const completed = (data.progress[path]?.completed || []).length;
+        const total = missions[path] || 1;
+        const pct = Math.round((completed / total) * 100);
+        const pathsDone = Object.values(data.progress).filter(p => p.badge).length;
+        pathHtml = `
+          <div style="margin-bottom:1rem;">
+            <div style="display:flex;justify-content:space-between;margin-bottom:0.3rem;">
+              <span>${PATHS[path].name}</span>
+              <span>${completed}/${total} missions</span>
+            </div>
+            <div style="background:#333;border-radius:8px;height:12px;overflow:hidden;">
+              <div style="background:#e85d04;height:100%;width:${pct}%;"></div>
+            </div>
+          </div>
+          <div class="stats">
+            <div class="stat"><b>${pathsDone}/3</b>Paths done</div>
+            <div class="stat"><b>${streak.days}</b>Day streak</div>
+          </div>
+        `;
+      } else {
+        pathHtml = '<p>No path selected. Pick one below.</p>';
+      }
+      document.getElementById('path-progress').innerHTML = pathHtml;
+
+      // Total progress
+      const hira = JSON.parse(localStorage.getItem('og-hira') || '{}');
+      const kata = JSON.parse(localStorage.getItem('og-kata') || '{}');
+      const kanji = JSON.parse(localStorage.getItem('og-kanji') || '{}');
+      const hiraCount = Object.keys(hira).length;
+      const kataCount = Object.keys(kata).length;
+      const kanjiCount = Object.keys(kanji).length;
+      document.getElementById('total-stats').innerHTML = `
+        <div class="stat"><b>${hiraCount}/46</b>Hiragana</div>
+        <div class="stat"><b>${kataCount}/46</b>Katakana</div>
+        <div class="stat"><b>${kanjiCount}/500</b>Kanji</div>
+        <div class="stat"><b>${streak.days}</b>Streak</div>
       `;
 
       const badges = Object.entries(data.progress).filter(([k,v]) => v.badge).map(([k]) => PATHS[k].badge);
@@ -137,7 +179,6 @@
         <div class="path-card ${data.current === id ? 'active' : ''}" onclick="setPath('${id}')">
           <h3>${p.name}</h3>
           <p>${p.desc}</p>
-          ${p.milestones.map(m => `<div class="milestone">${m}</div>`).join('')}
           <p style="margin-top:0.5rem;"><b>Final exam:</b> ${p.exam}</p>
           <p><b>Reward:</b> ${p.badge}</p>
         </div>
