@@ -488,3 +488,10 @@ li {
   font-size: 0.9rem;
 }
 .continue-btn:hover { background: var(--accent-hover); }
+
+/* Button spacing */
+.continue-btn { margin-top: 0.8rem; }
+.game-btn { margin: 0.4rem 0; }
+.game-link { margin: 0.3rem; }
+.card .game-btn, .card .continue-btn { margin-top: 1rem; }
+.progress-item { margin-bottom: 0.3rem; }
