@@ -442,3 +442,49 @@ li {
 @media (max-width: 700px) {
   .tab-btn { padding: 0.7rem 1rem; font-size: 0.95rem; min-height: 44px; }
 }
+
+/* Game-style buttons and cards */
+.game-btn {
+  display: block;
+  width: 100%;
+  padding: 1rem 1.2rem;
+  background: linear-gradient(180deg, #ff7a1a 0%, #e85d04 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #c44a00, 0 6px 12px rgba(0,0,0,0.3);
+  transition: transform 0.1s, box-shadow 0.1s;
+  text-align: center;
+  text-decoration: none;
+}
+.game-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #c44a00, 0 8px 16px rgba(0,0,0,0.3); }
+.game-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #c44a00; }
+
+.path-card {
+  background: var(--surface-elevated);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  padding: 1.2rem;
+  margin: 0.8rem 0;
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.1s;
+}
+.path-card:hover { border-color: var(--accent); transform: scale(1.02); }
+.path-card.active { border-color: var(--accent); background: var(--accent-soft); }
+
+.continue-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1rem;
+  background: var(--accent);
+  color: white;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+.continue-btn:hover { background: var(--accent-hover); }
