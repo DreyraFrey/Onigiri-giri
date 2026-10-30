@@ -181,10 +181,8 @@
 
       document.getElementById('paths').innerHTML = Object.entries(PATHS).map(([id, p]) => `
         <div class="path-card ${data.current === id ? 'active' : ''}" onclick="setPath('${id}')">
-          <h3>${p.name}</h3>
-          <p>${p.desc}</p>
-          <p style="margin-top:0.5rem;"><b>Final exam:</b> ${p.exam}</p>
-          <p><b>Reward:</b> ${p.badge}</p>
+          <h3 style="margin:0;">${p.name}</h3>
+          <p style="margin:0.3rem 0 0;font-size:0.9rem;color:#aaa;">${p.desc}</p>
         </div>
       `).join('');
     }
