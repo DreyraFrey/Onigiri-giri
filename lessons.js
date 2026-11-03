@@ -227,8 +227,7 @@ const LESSONS = {
     { id: 'sent-18', name: 'S18', type: 'vocab', items: [{ w: '時間があります', r: 'jikan ga arimasu', m: 'I have time' }, { w: 'お金がありません', r: 'okane ga arimasen', m: 'I do not have money' }]},
     { id: 'sent-19', name: 'S19', type: 'vocab', items: [{ w: 'ここで待ちます', r: 'koko de machimasu', m: 'I will wait here' }, { w: 'あそこで会いましょう', r: 'asoko de aimashou', m: 'let us meet over there' }]},
     { id: 'sent-20', name: 'S20', type: 'vocab', items: [{ w: '何を食べますか', r: 'nani o tabemasu ka', m: 'what will you eat' }, { w: 'いつ来ますか', r: 'itsu kimasu ka', m: 'when will you come' }]}
-  ]
-
+  ],
   master: [
     { id: 'kanji-31', name: 'Set 31', type: 'kanji', items: [{ k: '思', r: 'おも', m: 'to think' }, { k: '考', r: 'かんが', m: 'to consider' }, { k: '決', r: 'き', m: 'to decide' }]},
     { id: 'kanji-32', name: 'Set 32', type: 'kanji', items: [{ k: '選', r: 'えら', m: 'to choose' }, { k: '比', r: 'くら', m: 'to compare' }, { k: '違', r: 'ちが', m: 'to differ' }]},
