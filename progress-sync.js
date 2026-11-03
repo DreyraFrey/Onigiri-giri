@@ -1,6 +1,18 @@
 // Progress sync with Supabase
 const PROGRESS_KEYS = ['og-progress', 'og-streak', 'og-review', 'og-hira', 'og-kata', 'og-kanji', 'og-vocab', 'og-paths'];
 
+function showStatus(msg) {
+  let el = document.getElementById('sync-status');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'sync-status';
+    el.style.cssText = 'position:fixed;bottom:10px;left:10px;background:#333;color:#fff;padding:8px 12px;border-radius:8px;font-size:12px;z-index:9999;';
+    document.body.appendChild(el);
+  }
+  el.textContent = msg;
+  setTimeout(() => el.textContent = '', 3000);
+}
+
 async function collectProgress() {
   const data = {};
   PROGRESS_KEYS.forEach(key => {
@@ -18,28 +30,30 @@ async function applyProgress(data) {
 }
 
 async function syncToCloud() {
-  if (!window.ogAuth) { console.log('ogAuth not ready'); return; }
+  if (!window.ogAuth) { showStatus('Auth not ready'); return; }
   const user = await ogAuth.getUser();
-  if (!user) { console.log('No user'); return; }
+  if (!user) { showStatus('Not logged in'); return; }
   const data = await collectProgress();
-  console.log('Syncing to cloud:', data['og-paths']);
+  const pathCount = data['og-paths']?.progress?.beginner?.completed?.length || 0;
+  showStatus('Saving ' + pathCount + ' lessons...');
   await ogAuth.saveProgress(data);
-  console.log('Synced');
+  showStatus('Saved!');
 }
 
 async function syncFromCloud() {
-  if (!window.ogAuth) { console.log('ogAuth not ready'); return; }
+  if (!window.ogAuth) { showStatus('Auth not ready'); return; }
   const user = await ogAuth.getUser();
-  if (!user) { console.log('No user'); return; }
+  if (!user) { showStatus('Not logged in'); return; }
+  showStatus('Loading...');
   const cloud = await ogAuth.loadProgress();
-  console.log('Loaded from cloud:', cloud?.['og-paths']);
+  const pathCount = cloud?.['og-paths']?.progress?.beginner?.completed?.length || 0;
+  showStatus('Loaded ' + pathCount + ' lessons');
   if (cloud) {
     await applyProgress(cloud);
     if (window.updateStreakDisplay) window.updateStreakDisplay();
   }
 }
 
-// Wait for auth then sync
 async function initSync() {
   let attempts = 0;
   while (!window.ogAuth && attempts < 20) {
