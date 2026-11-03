@@ -87,7 +87,7 @@
       
       if (phase === 'teach') {
         const total = currentLesson.items.length;
-        progress.style.width = ((teachIndex / total) * 50) + '%';
+        progress.style.width = ((teachIndex / total) * 33) + '%';
         const item = currentLesson.items[teachIndex];
         let html = '<div class="teach-card">';
         if (currentLesson.type === 'kana') {
@@ -107,7 +107,7 @@
         content.innerHTML = html;
       } else if (phase === 'typing') {
         const total = currentLesson.items.length;
-        progress.style.width = (33 + (typingIndex / total) * 33) + '%';
+        progress.style.width = (66 + (typingIndex / total) * 34) + '%';
         const item = currentLesson.items[typingIndex];
         let char, answer;
         if (currentLesson.type === 'kana') {
@@ -132,7 +132,7 @@
         window.currentTypingAnswer = answer;
       } else if (phase === 'practice') {
         const total = questions.length;
-        progress.style.width = (50 + (questionIndex / total) * 50) + '%';
+        progress.style.width = (33 + (questionIndex / total) * 33) + '%';
         const q = questions[questionIndex];
         let html = '<div class="question">' + q.display + '</div>';
         html += '<div class="options">';
@@ -195,7 +195,7 @@
       
       typingIndex++;
       if (typingIndex >= currentLesson.items.length) {
-        setTimeout(function() { phase = 'practice'; buildQuestions(); render(); }, 800);
+        setTimeout(function() { phase = 'result'; render(); }, 800);
       } else {
         setTimeout(function() { render(); }, 800);
       }
@@ -204,8 +204,8 @@
     window.nextTeach = function nextTeach() {
       teachIndex++;
       if (teachIndex >= currentLesson.items.length) {
-        phase = 'typing';
-        typingIndex = 0;
+        phase = 'practice';
+        buildQuestions();
       }
       render();
     }
@@ -267,7 +267,8 @@
       setTimeout(function() {
         questionIndex++;
         if (questionIndex >= questions.length) {
-          phase = 'result';
+          phase = 'typing';
+          typingIndex = 0;
         }
         render();
       }, 800);
