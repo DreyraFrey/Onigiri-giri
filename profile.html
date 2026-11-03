@@ -163,12 +163,12 @@
       document.getElementById('path-progress').innerHTML = pathHtml;
 
       // Total progress
-      const hira = JSON.parse(localStorage.getItem('og-hira') || '{}');
-      const kata = JSON.parse(localStorage.getItem('og-kata') || '{}');
-      const kanji = JSON.parse(localStorage.getItem('og-kanji') || '{}');
-      const hiraCount = Object.keys(hira).length;
-      const kataCount = Object.keys(kata).length;
-      const kanjiCount = Object.keys(kanji).length;
+      const hiraCount = window.ogLearned ? ogLearned.getLearnedCount('hira') : 0;
+      const kataCount = window.ogLearned ? ogLearned.getLearnedCount('kata') : 0;
+      const kanjiCount = window.ogLearned ? ogLearned.getLearnedCount('kanji') : 0;
+      const hiraCount = hiraCount;
+      const kataCount = kataCount;
+      const kanjiCount = kanjiCount;
       document.getElementById('total-stats').innerHTML = `
         <div class="stat"><b>${hiraCount}/46</b>Hiragana</div>
         <div class="stat"><b>${kataCount}/46</b>Katakana</div>
