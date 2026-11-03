@@ -74,6 +74,10 @@
     let correct = 0;
     let questions = [];
     
+    function escapeHtml(str) {
+      return String(str).replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>');
+    }
+    
     function render() {
       const content = document.getElementById('content');
       const progress = document.getElementById('progress');
@@ -88,12 +92,12 @@
           html += '<div class="teach-reading">' + (KANA_READINGS[item] || '') + '</div>';
         } else if (currentLesson.type === 'kanji') {
           html += '<div class="teach-item">' + item.k + '</div>';
-          html += '<div class="teach-reading">' + item.r + '</div>';
-          html += '<div class="teach-meaning">' + item.m + '</div>';
+          html += '<div class="teach-reading">' + escapeHtml(item.r) + '</div>';
+          html += '<div class="teach-meaning">' + escapeHtml(item.m) + '</div>';
         } else {
           html += '<div class="teach-item">' + item.w + '</div>';
-          html += '<div class="teach-reading">' + item.r + '</div>';
-          html += '<div class="teach-meaning">' + item.m + '</div>';
+          html += '<div class="teach-reading">' + escapeHtml(item.r) + '</div>';
+          html += '<div class="teach-meaning">' + escapeHtml(item.m) + '</div>';
         }
         html += '</div>';
         html += '<button class="btn btn-primary next-btn" onclick="nextTeach()">Next</button>';
