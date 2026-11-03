@@ -15,10 +15,8 @@ async function applyProgress(data) {
   Object.entries(data).forEach(([key, val]) => {
     if (key === 'og-paths') {
       const local = JSON.parse(localStorage.getItem(key) || '{"current":null,"progress":{}}');
-      // Use cloud path if local has no path, otherwise keep local
-      if (!local.current && val.current) {
-        local.current = val.current;
-      }
+      // Always use cloud path (source of truth)
+      if (val.current) local.current = val.current;
       // Merge progress
       if (val.progress) {
         Object.keys(val.progress).forEach(p => {
