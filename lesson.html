@@ -195,7 +195,7 @@
       render();
     }
     
-    function goToNext() {
+    async function goToNext() {
       try {
         const pathStorage = JSON.parse(localStorage.getItem('og-paths') || '{"current":null,"progress":{}}');
         if (!pathStorage.progress[currentPathId]) pathStorage.progress[currentPathId] = {};
@@ -204,7 +204,7 @@
           pathStorage.progress[currentPathId].completed.push(currentLessonId);
         }
         localStorage.setItem('og-paths', JSON.stringify(pathStorage));
-        if (typeof syncToCloud === 'function') syncToCloud();
+        if (typeof syncToCloud === 'function') await syncToCloud();
         
         const allLessons = LESSONS[currentPathId] || [];
         const idx = allLessons.findIndex(function(l) { return l.id === currentLessonId; });
