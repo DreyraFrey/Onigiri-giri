@@ -6,11 +6,11 @@ function showStatus(msg) {
   if (!el) {
     el = document.createElement('div');
     el.id = 'sync-status';
-    el.style.cssText = 'position:fixed;bottom:10px;left:10px;background:#333;color:#fff;padding:8px 12px;border-radius:8px;font-size:12px;z-index:9999;';
+    el.style.cssText = 'position:fixed;bottom:10px;left:10px;background:#333;color:#fff;padding:8px 12px;border-radius:8px;font-size:12px;z-index:9999;max-width:300px;word-wrap:break-word;';
     document.body.appendChild(el);
   }
   el.textContent = msg;
-  setTimeout(() => el.textContent = '', 3000);
+  setTimeout(() => el.textContent = '', 5000);
 }
 
 async function collectProgress() {
@@ -34,8 +34,8 @@ async function syncToCloud() {
   const user = await ogAuth.getUser();
   if (!user) { showStatus('Not logged in'); return; }
   const data = await collectProgress();
-  const pathCount = data['og-paths']?.progress?.beginner?.completed?.length || 0;
-  showStatus('Saving ' + pathCount + ' lessons...');
+  const localPaths = localStorage.getItem('og-paths');
+  showStatus('Saving: ' + (localPaths ? localPaths.substring(0, 50) : 'none'));
   await ogAuth.saveProgress(data);
   showStatus('Saved!');
 }
@@ -44,10 +44,13 @@ async function syncFromCloud() {
   if (!window.ogAuth) { showStatus('Auth not ready'); return; }
   const user = await ogAuth.getUser();
   if (!user) { showStatus('Not logged in'); return; }
-  showStatus('Loading...');
   const cloud = await ogAuth.loadProgress();
-  const pathCount = cloud?.['og-paths']?.progress?.beginner?.completed?.length || 0;
-  showStatus('Loaded ' + pathCount + ' lessons');
+  if (!cloud) {
+    showStatus('No cloud data');
+    return;
+  }
+  const keys = Object.keys(cloud).join(', ');
+  showStatus('Cloud keys: ' + keys);
   if (cloud) {
     await applyProgress(cloud);
     if (window.updateStreakDisplay) window.updateStreakDisplay();
