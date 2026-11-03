@@ -248,9 +248,11 @@
       const correct = q.en;
       const pool = [...new Set(current.map(x => x.en))];
       const opts = [correct];
-      while (opts.length < 4 && pool.length > 0) {
+      let attempts = 0;
+      while (opts.length < 4 && pool.length > 0 && attempts < 20) {
         const r = pool.splice(Math.floor(Math.random() * pool.length), 1)[0];
         if (r !== correct) opts.push(r);
+        attempts++;
       }
       opts.sort(() => Math.random() - 0.5);
 
