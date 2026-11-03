@@ -13,7 +13,28 @@ async function collectProgress() {
 async function applyProgress(data) {
   if (!data) return;
   Object.entries(data).forEach(([key, val]) => {
-    localStorage.setItem(key, JSON.stringify(val));
+    // For og-paths, merge instead of overwrite
+    if (key === 'og-paths') {
+      const local = JSON.parse(localStorage.getItem(key) || '{"current":null,"progress":{}}');
+      // Keep local current path if set
+      if (local.current) val.current = local.current;
+      // Merge progress
+      if (val.progress) {
+        Object.keys(val.progress).forEach(p => {
+          if (!local.progress[p]) local.progress[p] = val.progress[p];
+          else {
+            // Merge completed arrays
+            const localComp = local.progress[p].completed || [];
+            const cloudComp = val.progress[p].completed || [];
+            const merged = [...new Set([...localComp, ...cloudComp])];
+            local.progress[p].completed = merged;
+          }
+        });
+      }
+      localStorage.setItem(key, JSON.stringify(local));
+    } else {
+      localStorage.setItem(key, JSON.stringify(val));
+    }
   });
 }
 
