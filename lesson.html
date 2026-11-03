@@ -193,6 +193,7 @@
     }
     
     function goToNext() {
+      alert('Saving progress...');
       try {
         const pathStorage = JSON.parse(localStorage.getItem('og-paths') || '{"current":null,"progress":{}}');
         if (!pathStorage.progress[currentPathId]) pathStorage.progress[currentPathId] = { completed: [] };
