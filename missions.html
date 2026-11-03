@@ -73,16 +73,16 @@
   <script src="supabase.js"></script>
   <script src="auth-guard.js"></script>
   <script>
-    const paths = JSON.parse(localStorage.getItem('og-paths') || '{"current":null,"progress":{}}');
+    const pathData = JSON.parse(localStorage.getItem('og-paths') || '{"current":null,"progress":{}}');
     
-    if (!paths.current) {
+    if (!pathData.current) {
       location.href = 'index.html';
     }
     
     function render() {
-      const path = paths.current;
+      const path = pathData.current;
       const lessons = LESSONS[path] || [];
-      const completed = paths.progress[path]?.completed || [];
+      const completed = pathData.progress[path]?.completed || [];
       const currentIndex = completed.length;
       
       document.getElementById('path-name').textContent = path.charAt(0).toUpperCase() + path.slice(1);
@@ -107,7 +107,7 @@
     }
     
     function play(lessonId) {
-      location.href = 'lesson.html?id=' + lessonId + '&path=' + paths.current;
+      location.href = 'lesson.html?id=' + lessonId + '&path=' + pathData.current;
     }
     
     render();
