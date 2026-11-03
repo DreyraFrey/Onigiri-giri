@@ -132,9 +132,11 @@
               // Build simple options from nearby readings
               const allReadings = Object.values(kanaMap[type]);
               const opts = [reading];
-              while (opts.length < 4) {
+              let attempts = 0;
+              while (opts.length < 4 && attempts < 20) {
                 const r = allReadings[Math.floor(Math.random() * allReadings.length)];
                 if (!opts.includes(r)) opts.push(r);
+                attempts++;
               }
               due.push({ id, q: kana, a: reading, opts: opts.sort(() => Math.random()-0.5), type });
             }
