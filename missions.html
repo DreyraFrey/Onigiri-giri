@@ -85,10 +85,15 @@
     }
     
     function render() {
-      const path = pathData.current;
+      // Reload from localStorage to get latest
+      const freshData = JSON.parse(localStorage.getItem('og-paths') || '{"current":null,"progress":{}}');
+      const path = freshData.current;
       const lessons = LESSONS[path] || [];
-      const completed = pathData.progress[path]?.completed || [];
-      const currentIndex = completed.length;
+      const completed = freshData.progress[path]?.completed || [];
+      
+      // Find the first incomplete lesson
+      let currentIndex = lessons.findIndex(l => !completed.includes(l.id));
+      if (currentIndex === -1) currentIndex = lessons.length;
       
       document.getElementById('path-name').textContent = path.charAt(0).toUpperCase() + path.slice(1);
       document.getElementById('progress').textContent = completed.length + '/' + lessons.length;
@@ -108,7 +113,7 @@
         for (let i = cat.start; i < cat.end && i < lessons.length; i++) {
           const l = lessons[i];
           let cls = 'locked';
-          if (i < currentIndex) cls = 'done';
+          if (completed.includes(l.id)) cls = 'done';
           else if (i === currentIndex) cls = 'current';
           
           const side = (i % 2 === 0) ? 'left' : 'right';
