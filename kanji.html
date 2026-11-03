@@ -638,10 +638,10 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       if (!window.ogLearned) return;
-      document.querySelectorAll('.kanji-char').forEach(function(el) {
-        const kanji = el.textContent.trim();
+      document.querySelectorAll('td.kana').forEach(function(td) {
+        const kanji = td.textContent.trim();
         if (kanji && ogLearned.isLearned('kanji', kanji)) {
-          el.classList.add('learned-kanji');
+          td.classList.add('learned-kanji');
         }
       });
     });
