@@ -51,7 +51,7 @@ async function syncFromCloud() {
   const cloud = await ogAuth.loadProgress();
   if (cloud) {
     await applyProgress(cloud);
-    if (window.updateStreakDisplay) window.updateStreakDisplay();
+    if (window.updateSidebar) window.updateSidebar();
   }
 }
 
