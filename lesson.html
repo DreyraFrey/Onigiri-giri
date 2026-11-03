@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson – Onigiri-giri</title>
+  <link rel="stylesheet" href="style.css?v=10">
+  <link rel="icon" type="image/png" href="icon-header.png">
+  <meta name="color-scheme" content="dark">
+  <style>
+    .lesson-container { max-width: 500px; margin: 0 auto; padding: 1rem; }
+    .teach-card { background: var(--surface); border-radius: 16px; padding: 1.5rem; margin: 1rem 0; text-align: center; }
+    .teach-item { font-size: 3rem; margin: 0.5rem 0; }
+    .teach-reading { font-size: 1.2rem; color: #aaa; }
+    .teach-meaning { font-size: 1rem; color: #888; }
+    .question { font-size: 2.5rem; margin: 1rem 0; text-align: center; }
+    .options { display: flex; flex-direction: column; gap: 0.6rem; }
+    .option { padding: 1rem; background: var(--surface); border: 2px solid var(--border); border-radius: 12px; font-size: 1.2rem; cursor: pointer; text-align: center; }
+    .option:hover { border-color: var(--accent); }
+    .option.correct { background: #2e7d32; border-color: #4caf50; }
+    .option.wrong { background: #c62828; border-color: #ef5350; }
+    .progress-bar { height: 6px; background: #333; border-radius: 3px; margin: 1rem 0; }
+    .progress-fill { height: 100%; background: var(--accent); border-radius: 3px; transition: width 0.3s; }
+    .result { text-align: center; padding: 2rem; }
+    .result h2 { margin: 0 0 1rem; }
+    .btn-row { display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem; }
+    .btn { padding: 0.8rem 1.5rem; border-radius: 20px; border: none; font-size: 1rem; cursor: pointer; }
+    .btn-primary { background: var(--accent); color: white; }
+    .btn-secondary { background: #333; color: white; }
+    .next-btn { margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><a href="index.html"><img class="site-logo" src="icon-header.png" alt="Onigiri-giri">Onigiri-giri</a></h1>
+    <p id="lesson-title">Lesson</p>
+    <button class="menu-toggle" aria-label="Menu">☰</button>
+  </header>
+  <nav id="nav">
+    <a href="index.html">Home</a>
+    <a href="missions.html" class="active">Missions</a>
+    <a href="review.html">Review</a>
+    <a href="profile.html">Profile</a>
+    <a href="#" id="logout-btn" style="margin-left:auto;">Logout</a>
+  </nav>
+  <main class="lesson-container">
+    <div class="progress-bar"><div class="progress-fill" id="progress" style="width:0%"></div></div>
+    <div id="content"></div>
+  </main>
+  <script src="lessons.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+  <script src="auth-guard.js"></script>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const lessonId = params.get('id');
+    const pathId = params.get('path') || 'beginner';
+    const lesson = LESSONS[pathId]?.find(l => l.id === lessonId);
+    
+    if (!lesson) { location.href = 'missions.html'; }
+    
+    document.getElementById('lesson-title').textContent = lesson.name;
+    
+    let phase = 'teach';
+    let teachIndex = 0;
+    let questionIndex = 0;
+    let correct = 0;
+    let questions = [];
+    
+    function render() {
+      const content = document.getElementById('content');
+      const progress = document.getElementById('progress');
+      
+      if (phase === 'teach') {
+        const total = lesson.items.length;
+        progress.style.width = ((teachIndex / total) * 50) + '%';
+        const item = lesson.items[teachIndex];
+        let html = '<div class="teach-card">';
+        if (lesson.type === 'kana') {
+          html += `<div class="teach-item">${item}</div>`;
+          html += `<div class="teach-reading">${KANA_READINGS[item] || ''}</div>`;
+        } else if (lesson.type === 'kanji') {
+          html += `<div class="teach-item">${item.k}</div>`;
+          html += `<div class="teach-reading">${item.r}</div>`;
+          html += `<div class="teach-meaning">${item.m}</div>`;
+        } else {
+          html += `<div class="teach-item">${item.w}</div>`;
+          html += `<div class="teach-reading">${item.r}</div>`;
+          html += `<div class="teach-meaning">${item.m}</div>`;
+        }
+        html += '</div>';
+        html += '<button class="btn btn-primary next-btn" onclick="nextTeach()">Next</button>';
+        content.innerHTML = html;
+      } else if (phase === 'practice') {
+        const total = questions.length;
+        progress.style.width = (50 + (questionIndex / total) * 50) + '%';
+        const q = questions[questionIndex];
+        let html = `<div class="question">${q.display}</div>`;
+        html += '<div class="options">';
+        q.options.forEach((opt, i) => {
+          html += `<button class="option" onclick="answer(${i})">${opt}</button>`;
+        });
+        html += '</div>';
+        content.innerHTML = html;
+      } else if (phase === 'result') {
+        progress.style.width = '100%';
+        const pct = Math.round((correct / questions.length) * 100);
+        const passed = pct >= 90;
+        let html = '<div class="result">';
+        html += `<h2>${passed ? 'Passed!' : 'Not yet'}</h2>`;
+        html += `<p>${pct}% (${correct}/${questions.length})</p>`;
+        html += '<div class="btn-row">';
+        if (passed) {
+          html += '<button class="btn btn-primary" onclick="complete()">Continue</button>';
+        } else {
+          html += '<button class="btn btn-primary" onclick="retry()">Retry</button>';
+          html += '<button class="btn btn-secondary" onclick="location.href=\'missions.html\'">Back to map</button>';
+        }
+        html += '</div></div>';
+        content.innerHTML = html;
+      }
+    }
+    
+    function nextTeach() {
+      teachIndex++;
+      if (teachIndex >= lesson.items.length) {
+        buildQuestions();
+        phase = 'practice';
+      }
+      render();
+    }
+    
+    function buildQuestions() {
+      questions = [];
+      const items = lesson.items;
+      items.forEach(item => {
+        let display, answer, pool;
+        if (lesson.type === 'kana') {
+          display = item;
+          answer = KANA_READINGS[item];
+          pool = Object.values(KANA_READINGS);
+        } else if (lesson.type === 'kanji') {
+          display = item.k;
+          answer = item.m;
+          pool = items.map(i => i.m);
+        } else {
+          display = item.w;
+          answer = item.m;
+          pool = items.map(i => i.m);
+        }
+        const options = [answer];
+        while (options.length < 4 && pool.length > 0) {
+          const pick = pool[Math.floor(Math.random() * pool.length)];
+          if (!options.includes(pick)) options.push(pick);
+        }
+        options.sort(() => Math.random() - 0.5);
+        questions.push({ display, answer, options });
+      });
+      questions.sort(() => Math.random() - 0.5);
+    }
+    
+    function answer(i) {
+      const q = questions[questionIndex];
+      const btns = document.querySelectorAll('.option');
+      btns.forEach(b => b.disabled = true);
+      if (btns[i].textContent === q.answer) {
+        btns[i].classList.add('correct');
+        correct++;
+      } else {
+        btns[i].classList.add('wrong');
+        btns.forEach(b => { if (b.textContent === q.answer) b.classList.add('correct'); });
+      }
+      setTimeout(() => {
+        questionIndex++;
+        if (questionIndex >= questions.length) {
+          phase = 'result';
+        }
+        render();
+      }, 800);
+    }
+    
+    function retry() {
+      teachIndex = 0;
+      questionIndex = 0;
+      correct = 0;
+      phase = 'teach';
+      render();
+    }
+    
+    function complete() {
+      const paths = JSON.parse(localStorage.getItem('og-paths') || '{"current":null,"progress":{}}');
+      if (!paths.progress[pathId]) paths.progress[pathId] = { completed: [] };
+      if (!paths.progress[pathId].completed.includes(lessonId)) {
+        paths.progress[pathId].completed.push(lessonId);
+      }
+      localStorage.setItem('og-paths', JSON.stringify(paths));
+      location.href = 'missions.html';
+    }
+    
+    render();
+  </script>
+</body>
+</html>
