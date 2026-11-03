@@ -52,14 +52,18 @@
   <script src="supabase.js"></script>
   <script src="auth-guard.js"></script>
   <script>
-    const params = new URLSearchParams(location.search);
-    const lessonId = params.get('id');
-    const pathId = params.get('path') || 'beginner';
-    const lesson = LESSONS[pathId]?.find(l => l.id === lessonId);
+    const urlParams = new URLSearchParams(location.search);
+    const currentLessonId = urlParams.get('id');
+    const currentPathId = urlParams.get('path') || 'beginner';
+    const currentLesson = (typeof LESSONS !== 'undefined' && LESSONS[currentPathId]) 
+      ? LESSONS[currentPathId].find(l => l.id === currentLessonId) 
+      : null;
     
-    if (!lesson) { location.href = 'missions.html'; }
+    if (!currentLesson) { 
+      location.href = 'missions.html'; 
+    }
     
-    document.getElementById('lesson-title').textContent = lesson.name;
+    document.getElementById('lesson-title').textContent = currentLesson.name;
     
     let phase = 'teach';
     let teachIndex = 0;
@@ -72,21 +76,21 @@
       const progress = document.getElementById('progress');
       
       if (phase === 'teach') {
-        const total = lesson.items.length;
+        const total = currentLesson.items.length;
         progress.style.width = ((teachIndex / total) * 50) + '%';
-        const item = lesson.items[teachIndex];
+        const item = currentLesson.items[teachIndex];
         let html = '<div class="teach-card">';
-        if (lesson.type === 'kana') {
-          html += `<div class="teach-item">${item}</div>`;
-          html += `<div class="teach-reading">${KANA_READINGS[item] || ''}</div>`;
-        } else if (lesson.type === 'kanji') {
-          html += `<div class="teach-item">${item.k}</div>`;
-          html += `<div class="teach-reading">${item.r}</div>`;
-          html += `<div class="teach-meaning">${item.m}</div>`;
+        if (currentLesson.type === 'kana') {
+          html += '<div class="teach-item">' + item + '</div>';
+          html += '<div class="teach-reading">' + (KANA_READINGS[item] || '') + '</div>';
+        } else if (currentLesson.type === 'kanji') {
+          html += '<div class="teach-item">' + item.k + '</div>';
+          html += '<div class="teach-reading">' + item.r + '</div>';
+          html += '<div class="teach-meaning">' + item.m + '</div>';
         } else {
-          html += `<div class="teach-item">${item.w}</div>`;
-          html += `<div class="teach-reading">${item.r}</div>`;
-          html += `<div class="teach-meaning">${item.m}</div>`;
+          html += '<div class="teach-item">' + item.w + '</div>';
+          html += '<div class="teach-reading">' + item.r + '</div>';
+          html += '<div class="teach-meaning">' + item.m + '</div>';
         }
         html += '</div>';
         html += '<button class="btn btn-primary next-btn" onclick="nextTeach()">Next</button>';
@@ -95,10 +99,10 @@
         const total = questions.length;
         progress.style.width = (50 + (questionIndex / total) * 50) + '%';
         const q = questions[questionIndex];
-        let html = `<div class="question">${q.display}</div>`;
+        let html = '<div class="question">' + q.display + '</div>';
         html += '<div class="options">';
-        q.options.forEach((opt, i) => {
-          html += `<button class="option" onclick="answer(${i})">${opt}</button>`;
+        q.options.forEach(function(opt, i) {
+          html += '<button class="option" onclick="answer(' + i + ')">' + opt + '</button>';
         });
         html += '</div>';
         content.innerHTML = html;
@@ -107,23 +111,27 @@
         const pct = Math.round((correct / questions.length) * 100);
         const passed = pct >= 90;
         let html = '<div class="result">';
-        html += `<h2>${passed ? 'Passed!' : 'Not yet'}</h2>`;
-        html += `<p>${pct}% (${correct}/${questions.length})</p>`;
+        html += '<h2>' + (passed ? 'Passed!' : 'Not yet') + '</h2>';
+        html += '<p>' + pct + '% (' + correct + '/' + questions.length + ')</p>';
         html += '<div class="btn-row">';
         if (passed) {
-          html += '<button class="btn btn-primary" onclick="complete()">Continue</button>';
+          html += '<button class="btn btn-primary" id="continue-btn">Continue</button>';
         } else {
           html += '<button class="btn btn-primary" onclick="retry()">Retry</button>';
           html += '<button class="btn btn-secondary" onclick="location.href=\'missions.html\'">Back to map</button>';
         }
         html += '</div></div>';
         content.innerHTML = html;
+        
+        if (passed) {
+          document.getElementById('continue-btn').onclick = goToNext;
+        }
       }
     }
     
     function nextTeach() {
       teachIndex++;
-      if (teachIndex >= lesson.items.length) {
+      if (teachIndex >= currentLesson.items.length) {
         buildQuestions();
         phase = 'practice';
       }
@@ -132,45 +140,45 @@
     
     function buildQuestions() {
       questions = [];
-      const items = lesson.items;
-      items.forEach(item => {
+      const items = currentLesson.items;
+      items.forEach(function(item) {
         let display, answer, pool;
-        if (lesson.type === 'kana') {
+        if (currentLesson.type === 'kana') {
           display = item;
           answer = KANA_READINGS[item];
           pool = Object.values(KANA_READINGS);
-        } else if (lesson.type === 'kanji') {
+        } else if (currentLesson.type === 'kanji') {
           display = item.k;
           answer = item.m;
-          pool = items.map(i => i.m);
+          pool = items.map(function(i) { return i.m; });
         } else {
           display = item.w;
           answer = item.m;
-          pool = items.map(i => i.m);
+          pool = items.map(function(i) { return i.m; });
         }
         const options = [answer];
         while (options.length < 4 && pool.length > 0) {
           const pick = pool[Math.floor(Math.random() * pool.length)];
-          if (!options.includes(pick)) options.push(pick);
+          if (options.indexOf(pick) === -1) options.push(pick);
         }
-        options.sort(() => Math.random() - 0.5);
-        questions.push({ display, answer, options });
+        options.sort(function() { return Math.random() - 0.5; });
+        questions.push({ display: display, answer: answer, options: options });
       });
-      questions.sort(() => Math.random() - 0.5);
+      questions.sort(function() { return Math.random() - 0.5; });
     }
     
     function answer(i) {
       const q = questions[questionIndex];
       const btns = document.querySelectorAll('.option');
-      btns.forEach(b => b.disabled = true);
+      btns.forEach(function(b) { b.disabled = true; });
       if (btns[i].textContent === q.answer) {
         btns[i].classList.add('correct');
         correct++;
       } else {
         btns[i].classList.add('wrong');
-        btns.forEach(b => { if (b.textContent === q.answer) b.classList.add('correct'); });
+        btns.forEach(function(b) { if (b.textContent === q.answer) b.classList.add('correct'); });
       }
-      setTimeout(() => {
+      setTimeout(function() {
         questionIndex++;
         if (questionIndex >= questions.length) {
           phase = 'result';
@@ -187,20 +195,23 @@
       render();
     }
     
-    function complete() {
-      const paths = JSON.parse(localStorage.getItem('og-paths') || '{"current":null,"progress":{}}');
-      if (!paths.progress[pathId]) paths.progress[pathId] = { completed: [] };
-      if (!paths.progress[pathId].completed.includes(lessonId)) {
-        paths.progress[pathId].completed.push(lessonId);
-      }
-      localStorage.setItem('og-paths', JSON.stringify(paths));
-      
-      // Find next lesson
-      const lessons = LESSONS[pathId] || [];
-      const currentIndex = lessons.findIndex(l => l.id === lessonId);
-      if (currentIndex >= 0 && currentIndex < lessons.length - 1) {
-        location.href = 'lesson.html?id=' + lessons[currentIndex + 1].id + '&path=' + pathId;
-      } else {
+    function goToNext() {
+      try {
+        const pathStorage = JSON.parse(localStorage.getItem('og-paths') || '{"current":null,"progress":{}}');
+        if (!pathStorage.progress[currentPathId]) pathStorage.progress[currentPathId] = { completed: [] };
+        if (pathStorage.progress[currentPathId].completed.indexOf(currentLessonId) === -1) {
+          pathStorage.progress[currentPathId].completed.push(currentLessonId);
+        }
+        localStorage.setItem('og-paths', JSON.stringify(pathStorage));
+        
+        const allLessons = LESSONS[currentPathId] || [];
+        const idx = allLessons.findIndex(function(l) { return l.id === currentLessonId; });
+        if (idx >= 0 && idx < allLessons.length - 1) {
+          location.href = 'lesson.html?id=' + allLessons[idx + 1].id + '&path=' + currentPathId;
+        } else {
+          location.href = 'missions.html';
+        }
+      } catch (e) {
         location.href = 'missions.html';
       }
     }
