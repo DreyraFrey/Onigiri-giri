@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Kanji – Onigiri-giri</title>
+  <style>
+    .learned-kanji { color: #ffd700 !important; text-shadow: 0 0 8px #ffd700; }
+    .learned-kanji::before { content: '★ '; font-size: 0.6em; }
+  </style>
   <link rel="stylesheet" href="style.css?v=10">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" type="image/png" href="icon-header.png">
@@ -630,6 +634,18 @@
   <footer>
     <p>Onigiri-giri · Free Japanese Learning site</p>
   </footer>
+  <script src="learned.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (!window.ogLearned) return;
+      document.querySelectorAll('.kanji-char').forEach(function(el) {
+        const kanji = el.textContent.trim();
+        if (kanji && ogLearned.isLearned('kanji', kanji)) {
+          el.classList.add('learned-kanji');
+        }
+      });
+    });
+  </script>
   <script src="sidebar.js?v=6"></script>
   <script>
     document.querySelector('.menu-toggle').addEventListener('click', () => {
