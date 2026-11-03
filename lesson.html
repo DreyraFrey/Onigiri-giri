@@ -50,6 +50,7 @@
     <div id="content"></div>
   </main>
   <script src="lessons.js"></script>
+  <script src="learned.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase.js"></script>
   <script src="auth-guard.js"></script>
@@ -178,7 +179,17 @@
       const q = questions[questionIndex];
       const btns = document.querySelectorAll('.option');
       btns.forEach(function(b) { b.disabled = true; });
-      if (btns[i].textContent === q.answer) {
+      const isCorrect = btns[i].textContent === q.answer;
+      
+      // Track learned
+      if (window.ogLearned) {
+        let type = currentLesson.type;
+        let item = q.display;
+        if (type === 'kana') type = currentLesson.mode;
+        ogLearned.trackAnswer(type, item, isCorrect);
+      }
+      
+      if (isCorrect) {
         btns[i].classList.add('correct');
         correct++;
       } else {
