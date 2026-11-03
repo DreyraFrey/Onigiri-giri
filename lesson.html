@@ -143,7 +143,9 @@
         content.innerHTML = html;
       } else if (phase === 'result') {
         progress.style.width = '100%';
-        const pct = Math.round((correct / questions.length) * 100);
+        const totalItems = questions.length + currentLesson.items.length;
+        const totalCorrect = correct + typingCorrect;
+        const pct = Math.round((totalCorrect / totalItems) * 100);
         const passed = pct >= 90;
         let html = '<div class="result">';
         html += '<h2>' + (passed ? 'Passed!' : 'Not yet') + '</h2>';
