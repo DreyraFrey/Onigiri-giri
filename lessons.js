@@ -175,7 +175,7 @@ const LESSONS = {
       { w: '日本語', r: 'nihongo', m: 'Japanese language' },
       { w: '勉強', r: 'benkyou', m: 'study' }
     ]}
-  ]
+  ],
   apprentice: [
     { id: 'kanji-16', name: 'Set 16', type: 'kanji', items: [{ k: '見', r: 'み', m: 'to see' }, { k: '行', r: 'い', m: 'to go' }, { k: '来', r: 'く', m: 'to come' }]},
     { id: 'kanji-17', name: 'Set 17', type: 'kanji', items: [{ k: '食', r: 'た', m: 'to eat' }, { k: '飲', r: 'の', m: 'to drink' }, { k: '話', r: 'はな', m: 'to speak' }]},
