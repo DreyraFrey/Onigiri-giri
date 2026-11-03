@@ -106,12 +106,20 @@
       document.getElementById('path-name').textContent = path.charAt(0).toUpperCase() + path.slice(1);
       document.getElementById('progress').textContent = completed.length + '/' + lessons.length;
       
-      const categories = [
-        { name: 'Hiragana', start: 0, end: 10 },
-        { name: 'Katakana', start: 10, end: 20 },
-        { name: 'Kanji', start: 20, end: 35 },
-        { name: 'Vocabulary', start: 35, end: 50 }
-      ];
+      const categoriesByPath = {
+        beginner: [
+          { name: 'Hiragana', start: 0, end: 10 },
+          { name: 'Katakana', start: 10, end: 20 },
+          { name: 'Kanji', start: 20, end: 35 },
+          { name: 'Vocabulary', start: 35, end: 50 }
+        ],
+        apprentice: [
+          { name: 'Kanji', start: 0, end: 15 },
+          { name: 'Vocabulary', start: 15, end: 30 },
+          { name: 'Sentences', start: 30, end: 50 }
+        ]
+      };
+      const categories = categoriesByPath[path] || [];
       
       let html = '<div class="path-map">';
       let globalIndex = 0;
