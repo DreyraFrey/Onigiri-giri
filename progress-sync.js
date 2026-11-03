@@ -13,17 +13,17 @@ async function collectProgress() {
 async function applyProgress(data) {
   if (!data) return;
   Object.entries(data).forEach(([key, val]) => {
-    // For og-paths, merge instead of overwrite
     if (key === 'og-paths') {
       const local = JSON.parse(localStorage.getItem(key) || '{"current":null,"progress":{}}');
-      // Keep local current path if set
-      if (local.current) val.current = local.current;
+      // Use cloud path if local has no path, otherwise keep local
+      if (!local.current && val.current) {
+        local.current = val.current;
+      }
       // Merge progress
       if (val.progress) {
         Object.keys(val.progress).forEach(p => {
           if (!local.progress[p]) local.progress[p] = val.progress[p];
           else {
-            // Merge completed arrays
             const localComp = local.progress[p].completed || [];
             const cloudComp = val.progress[p].completed || [];
             const merged = [...new Set([...localComp, ...cloudComp])];
