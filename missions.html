@@ -8,16 +8,21 @@
   <link rel="icon" type="image/png" href="icon-header.png">
   <meta name="color-scheme" content="dark">
   <style>
-    .path-map { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; padding: 1rem 0; }
-    .path-dot { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; border: 3px solid transparent; transition: transform 0.1s; }
-    .path-dot.locked { background: #333; color: #666; cursor: default; }
-    .path-dot.current { background: #e85d04; color: white; }
-    .path-dot.done { background: #7b1fa2; color: white; }
-    .path-dot:not(.locked):hover { transform: scale(1.1); }
-    .path-label { font-size: 0.8rem; color: #aaa; text-align: center; max-width: 100px; }
-    .path-row { display: flex; align-items: center; gap: 0.5rem; }
-    .path-line { width: 3px; height: 20px; background: #333; }
-    .path-line.done { background: #7b1fa2; }
+    .path-map { padding: 1rem; max-width: 400px; margin: 0 auto; }
+    .category-header { text-align: center; color: #e85d04; font-size: 0.9rem; font-weight: 600; margin: 1.5rem 0 0.5rem; text-transform: uppercase; letter-spacing: 1px; }
+    .path-row { display: flex; align-items: center; justify-content: center; height: 70px; position: relative; }
+    .path-row.left { justify-content: flex-start; padding-left: 20px; }
+    .path-row.right { justify-content: flex-end; padding-right: 20px; }
+    .path-dot { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; box-shadow: 0 4px 0 rgba(0,0,0,0.3); }
+    .path-dot.locked { background: #2a2a2a; color: #555; cursor: default; box-shadow: 0 3px 0 #1a1a1a; }
+    .path-dot.current { background: linear-gradient(180deg, #ff7a1a, #e85d04); color: white; box-shadow: 0 4px 0 #c44a00; animation: pulse 2s infinite; }
+    .path-dot.done { background: linear-gradient(180deg, #9c27b0, #7b1fa2); color: white; box-shadow: 0 4px 0 #5a1575; }
+    .path-dot:not(.locked):hover { transform: scale(1.15) translateY(-2px); }
+    .path-connector { position: absolute; width: 60%; height: 4px; background: #333; border-radius: 2px; top: 50%; }
+    .path-connector.done { background: #7b1fa2; }
+    .path-row.left .path-connector { right: 10%; }
+    .path-row.right .path-connector { left: 10%; }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
   </style>
 </head>
 <body>
@@ -88,20 +93,34 @@
       document.getElementById('path-name').textContent = path.charAt(0).toUpperCase() + path.slice(1);
       document.getElementById('progress').textContent = completed.length + '/' + lessons.length;
       
+      const categories = [
+        { name: 'Hiragana', start: 0, end: 10 },
+        { name: 'Katakana', start: 10, end: 20 },
+        { name: 'Kanji', start: 20, end: 35 },
+        { name: 'Vocabulary', start: 35, end: 50 }
+      ];
+      
       let html = '<div class="path-map">';
-      lessons.forEach((l, i) => {
-        let cls = 'locked';
-        if (i < currentIndex) cls = 'done';
-        else if (i === currentIndex) cls = 'current';
-        
-        if (i > 0) {
-          html += '<div class="path-line ' + (i <= currentIndex ? 'done' : '') + '"></div>';
+      let globalIndex = 0;
+      
+      categories.forEach(cat => {
+        html += '<div class="category-header">' + cat.name + '</div>';
+        for (let i = cat.start; i < cat.end && i < lessons.length; i++) {
+          const l = lessons[i];
+          let cls = 'locked';
+          if (i < currentIndex) cls = 'done';
+          else if (i === currentIndex) cls = 'current';
+          
+          const side = (i % 2 === 0) ? 'left' : 'right';
+          html += '<div class="path-row ' + side + '">';
+          if (i > cat.start) {
+            html += '<div class="path-connector ' + (i <= currentIndex ? 'done' : '') + '"></div>';
+          }
+          html += '<div class="path-dot ' + cls + '"' + (cls !== 'locked' ? ' onclick="play(\'' + l.id + '\')"' : '') + '>' + (i + 1) + '</div>';
+          html += '</div>';
         }
-        html += '<div class="path-row">';
-        html += '<div class="path-dot ' + cls + '"' + (cls !== 'locked' ? ' onclick="play(\'' + l.id + '\')"' : '') + '>' + (i + 1) + '</div>';
-        html += '<div class="path-label">' + l.name + '</div>';
-        html += '</div>';
       });
+      
       html += '</div>';
       document.getElementById('missions').innerHTML = html;
     }
