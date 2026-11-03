@@ -119,6 +119,9 @@
   </div>
   <footer><p>Onigiri-giri · Free Japanese Learning site</p></footer>
   <script>
+    function escapeHtml(str) {
+      return String(str).replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>');
+    }
     // v8 - no color feedback
     document.querySelector('.menu-toggle').addEventListener('click', () => {
       document.getElementById('nav').classList.toggle('open');
@@ -243,7 +246,7 @@
       answered = false;
       const q = current[index];
       document.getElementById('progress').textContent = (index + 1) + ' / ' + current.length;
-      document.getElementById('question').innerHTML = q.sentence ? q.sentence + '<br><span style="font-size:0.85em;color:var(--text-secondary);">(' + q.jp + ')</span>' : q.jp;
+      document.getElementById('question').innerHTML = q.sentence ? escapeHtml(q.sentence) + '<br><span style="font-size:0.85em;color:var(--text-secondary);">(' + escapeHtml(q.jp) + ')</span>' : escapeHtml(q.jp);
 
       const correct = q.en;
       const pool = [...new Set(current.map(x => x.en))];
@@ -292,7 +295,7 @@
         wrongs.forEach(w => {
           const div = document.createElement('div');
           div.className = 'wrong-item';
-          div.innerHTML = '<strong>' + w.jp + '</strong> → ' + w.en;
+          div.innerHTML = '<strong>' + escapeHtml(w.jp) + '</strong> → ' + escapeHtml(w.en);
           list.appendChild(div);
         });
       }
