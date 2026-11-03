@@ -211,6 +211,21 @@
           pathStorage.progress[currentPathId].completed.push(currentLessonId);
         }
         localStorage.setItem('og-paths', JSON.stringify(pathStorage));
+        
+        // Update sidebar progress
+        const prog = JSON.parse(localStorage.getItem('og-progress') || '{}');
+        const lessonType = currentLesson.type;
+        const itemCount = currentLesson.items.length;
+        if (lessonType === 'kana') {
+          if (currentLesson.mode === 'hira') prog.hira = Math.min(46, (prog.hira || 0) + itemCount);
+          else if (currentLesson.mode === 'kata') prog.kata = Math.min(46, (prog.kata || 0) + itemCount);
+        } else if (lessonType === 'kanji') {
+          prog.kanji = Math.min(500, (prog.kanji || 0) + itemCount);
+        } else if (lessonType === 'vocab') {
+          prog.vocab = (prog.vocab || 0) + itemCount;
+        }
+        localStorage.setItem('og-progress', JSON.stringify(prog));
+        
         if (typeof syncToCloud === 'function') await syncToCloud();
         
         const allLessons = LESSONS[currentPathId] || [];
