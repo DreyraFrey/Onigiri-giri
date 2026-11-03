@@ -1,18 +1,6 @@
 // Progress sync with Supabase
 const PROGRESS_KEYS = ['og-progress', 'og-streak', 'og-review', 'og-hira', 'og-kata', 'og-kanji', 'og-vocab', 'og-paths'];
 
-function showStatus(msg) {
-  let el = document.getElementById('sync-status');
-  if (!el) {
-    el = document.createElement('div');
-    el.id = 'sync-status';
-    el.style.cssText = 'position:fixed;bottom:10px;left:10px;background:#333;color:#fff;padding:8px 12px;border-radius:8px;font-size:12px;z-index:9999;max-width:300px;word-wrap:break-word;';
-    document.body.appendChild(el);
-  }
-  el.textContent = msg;
-  setTimeout(() => el.textContent = '', 5000);
-}
-
 async function collectProgress() {
   const data = {};
   PROGRESS_KEYS.forEach(key => {
@@ -30,27 +18,18 @@ async function applyProgress(data) {
 }
 
 async function syncToCloud() {
-  if (!window.ogAuth) { showStatus('Auth not ready'); return; }
+  if (!window.ogAuth) return;
   const user = await ogAuth.getUser();
-  if (!user) { showStatus('Not logged in'); return; }
+  if (!user) return;
   const data = await collectProgress();
-  const localPaths = localStorage.getItem('og-paths');
-  showStatus('Saving: ' + (localPaths ? localPaths.substring(0, 50) : 'none'));
   await ogAuth.saveProgress(data);
-  showStatus('Saved!');
 }
 
 async function syncFromCloud() {
-  if (!window.ogAuth) { showStatus('Auth not ready'); return; }
+  if (!window.ogAuth) return;
   const user = await ogAuth.getUser();
-  if (!user) { showStatus('Not logged in'); return; }
+  if (!user) return;
   const cloud = await ogAuth.loadProgress();
-  if (!cloud) {
-    showStatus('No cloud data');
-    return;
-  }
-  const keys = Object.keys(cloud).join(', ');
-  showStatus('Cloud keys: ' + keys);
   if (cloud) {
     await applyProgress(cloud);
     if (window.updateStreakDisplay) window.updateStreakDisplay();
