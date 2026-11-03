@@ -142,7 +142,7 @@
       location.href = 'lesson.html?id=' + lessonId + '&path=' + pathData.current;
     }
     
-    if (typeof syncFromCloud === "function") syncFromCloud().then(render); else render();
+    setTimeout(render, 1000);
   </script>
 </body>
 </html>
