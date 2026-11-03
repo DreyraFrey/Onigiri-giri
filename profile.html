@@ -89,6 +89,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase.js"></script>
   <script src="auth-guard.js"></script>
+  <script src="progress-sync.js"></script>
   <script>
     const PATHS = {
       beginner: {
@@ -118,13 +119,13 @@
       return JSON.parse(localStorage.getItem('og-paths') || '{"current":null,"progress":{}}');
     }
 
-    function setPath(id) {
+    async function setPath(id) {
       const data = getPaths();
       data.current = id;
       if (!data.progress[id]) data.progress[id] = { completed: [], badge: false };
       localStorage.setItem('og-paths', JSON.stringify(data));
+      if (typeof syncToCloud === 'function') await syncToCloud();
       window.location.href = 'missions.html';
-      render();
     }
 
     function render() {
