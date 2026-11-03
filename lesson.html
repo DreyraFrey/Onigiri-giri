@@ -195,16 +195,14 @@
     }
     
     function goToNext() {
-      alert('Lesson: ' + currentLessonId + ', Path: ' + currentPathId);
       try {
         const pathStorage = JSON.parse(localStorage.getItem('og-paths') || '{"current":null,"progress":{}}');
-        alert('Before: ' + JSON.stringify(pathStorage.progress));
-        if (!pathStorage.progress[currentPathId]) pathStorage.progress[currentPathId] = { completed: [] };
+        if (!pathStorage.progress[currentPathId]) pathStorage.progress[currentPathId] = {};
+        if (!pathStorage.progress[currentPathId].completed) pathStorage.progress[currentPathId].completed = [];
         if (pathStorage.progress[currentPathId].completed.indexOf(currentLessonId) === -1) {
           pathStorage.progress[currentPathId].completed.push(currentLessonId);
         }
         localStorage.setItem('og-paths', JSON.stringify(pathStorage));
-        alert('After: ' + JSON.stringify(pathStorage.progress));
         
         const allLessons = LESSONS[currentPathId] || [];
         const idx = allLessons.findIndex(function(l) { return l.id === currentLessonId; });
