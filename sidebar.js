@@ -13,9 +13,12 @@
       const el = document.getElementById(id);
       if (el) el.textContent = val;
     };
-    set('prog-hira', (p.hira || 0) + '/46');
-    set('prog-kata', (p.kata || 0) + '/46');
-    set('prog-kanji', (p.kanji || 0) + '/500');
+    const hiraCount = window.ogLearned ? ogLearned.getLearnedCount('hira') : (p.hira || 0);
+    const kataCount = window.ogLearned ? ogLearned.getLearnedCount('kata') : (p.kata || 0);
+    const kanjiCount = window.ogLearned ? ogLearned.getLearnedCount('kanji') : (p.kanji || 0);
+    set('prog-hira', hiraCount + '/46');
+    set('prog-kata', kataCount + '/46');
+    set('prog-kanji', kanjiCount + '/500');
     
     // Path info
     const pathEl = document.getElementById('sidebar-path');
