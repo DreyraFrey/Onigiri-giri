@@ -18,31 +18,40 @@ async function applyProgress(data) {
 }
 
 async function syncToCloud() {
-  if (!window.ogAuth) return;
+  if (!window.ogAuth) { console.log('ogAuth not ready'); return; }
   const user = await ogAuth.getUser();
-  if (!user) return;
+  if (!user) { console.log('No user'); return; }
   const data = await collectProgress();
+  console.log('Syncing to cloud:', data['og-paths']);
   await ogAuth.saveProgress(data);
+  console.log('Synced');
 }
 
 async function syncFromCloud() {
-  if (!window.ogAuth) return;
+  if (!window.ogAuth) { console.log('ogAuth not ready'); return; }
   const user = await ogAuth.getUser();
-  if (!user) return;
+  if (!user) { console.log('No user'); return; }
   const cloud = await ogAuth.loadProgress();
+  console.log('Loaded from cloud:', cloud?.['og-paths']);
   if (cloud) {
     await applyProgress(cloud);
-    // Refresh displays
     if (window.updateStreakDisplay) window.updateStreakDisplay();
   }
 }
 
-// Auto-sync on page load
-document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(syncFromCloud, 500);
-});
+// Wait for auth then sync
+async function initSync() {
+  let attempts = 0;
+  while (!window.ogAuth && attempts < 20) {
+    await new Promise(r => setTimeout(r, 100));
+    attempts++;
+  }
+  if (window.ogAuth) {
+    await syncFromCloud();
+  }
+}
 
-// Sync before unload
+document.addEventListener('DOMContentLoaded', initSync);
 window.addEventListener('beforeunload', syncToCloud);
 
 window.ogSync = { syncToCloud, syncFromCloud, collectProgress };
