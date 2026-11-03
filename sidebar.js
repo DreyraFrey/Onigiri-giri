@@ -40,6 +40,7 @@
     const streak = JSON.parse(localStorage.getItem('og-streak') || '{"days":0}');
     const streakEl = document.getElementById('streak');
     if (streakEl) streakEl.textContent = streak.days + ' day' + (streak.days !== 1 ? 's' : '');
+    set('m-streak', streak.days);
   }
 
   // Expose for external calls
