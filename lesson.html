@@ -161,7 +161,7 @@
       }
     }
     
-    function checkTyping() {
+    window.checkTyping = function checkTyping() {
       const input = document.getElementById('typing-input');
       const feedback = document.getElementById('typing-feedback');
       const val = input.value.trim().toLowerCase();
@@ -201,7 +201,7 @@
       }
     }
     
-    function nextTeach() {
+    window.nextTeach = function nextTeach() {
       teachIndex++;
       if (teachIndex >= currentLesson.items.length) {
         buildQuestions();
