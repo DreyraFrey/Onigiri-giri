@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Typing Practice – Onigiri-giri</title>
+  <link rel="stylesheet" href="style.css?v=10">
+  <link rel="icon" type="image/png" href="icon-header.png">
+  <meta name="color-scheme" content="dark">
+  <style>
+    .typing-char { font-size: 5rem; text-align: center; margin: 1rem 0; }
+    .typing-input { font-size: 1.5rem; padding: 0.8rem 1rem; width: 100%; max-width: 300px; text-align: center; border-radius: 12px; border: 2px solid var(--border); background: var(--surface); color: var(--text); }
+    .typing-input:focus { border-color: var(--accent); outline: none; }
+    .typing-input.correct { border-color: #4caf50; background: rgba(76,175,80,0.1); }
+    .typing-input.wrong { border-color: #f44336; background: rgba(244,67,54,0.1); }
+    .mode-select { display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 1rem; }
+    .mode-btn { padding: 0.5rem 1rem; border-radius: 20px; border: none; background: var(--surface); color: var(--text); cursor: pointer; }
+    .mode-btn.active { background: var(--accent); color: white; }
+    .feedback { text-align: center; min-height: 1.5rem; margin: 0.5rem 0; font-weight: 500; }
+    .feedback.correct { color: #4caf50; }
+    .feedback.wrong { color: #f44336; }
+    .stats { display: flex; justify-content: center; gap: 2rem; margin-top: 1rem; color: var(--text-secondary); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><a href="index.html"><img class="site-logo" src="icon-header.png" alt="Onigiri-giri">Onigiri-giri</a></h1>
+    <p>Typing Practice</p>
+    <button class="menu-toggle" aria-label="Menu">☰</button>
+  </header>
+  <nav id="nav">
+    <a href="index.html">Home</a>
+    <a href="missions.html">Missions</a>
+    <a href="review.html">Review</a>
+    <a href="profile.html">Profile</a>
+    <a href="#" id="logout-btn" style="margin-left:auto;">Logout</a>
+  </nav>
+  <div class="layout">
+    <aside class="sidebar left-sidebar">
+      <div class="card">
+        <h3>Path</h3>
+        <div class="progress-item"><span id="sidebar-path">No path</span></div>
+      </div>
+      <div class="card">
+        <h3>Total</h3>
+        <div class="progress-item"><span>Hiragana</span><span id="prog-hira">0/46</span></div>
+        <div class="progress-item"><span>Katakana</span><span id="prog-kata">0/46</span></div>
+        <div class="progress-item"><span>Kanji</span><span id="prog-kanji">0/500</span></div>
+        <div class="progress-item"><span>Streak</span><span id="streak">0 days</span></div>
+      </div>
+    </aside>
+    <main>
+      <section class="card">
+        <h2>Typing Practice</h2>
+        <p>Type the romaji reading. No Japanese keyboard needed.</p>
+        <div class="mode-select">
+          <button class="mode-btn active" data-mode="hira">Hiragana</button>
+          <button class="mode-btn" data-mode="kata">Katakana</button>
+          <button class="mode-btn" data-mode="kanji">Kanji</button>
+        </div>
+        <div class="typing-char" id="char">あ</div>
+        <div style="text-align:center;">
+          <input type="text" class="typing-input" id="input" placeholder="type romaji..." autocomplete="off" autocapitalize="off" spellcheck="false">
+        </div>
+        <div class="feedback" id="feedback"></div>
+        <div class="stats">
+          <span>Correct: <b id="correct">0</b></span>
+          <span>Streak: <b id="streak-count">0</b></span>
+        </div>
+      </section>
+    </main>
+    <aside class="sidebar right-sidebar">
+      <div class="card">
+        <h3>Daily Word</h3>
+        <div class="daily-word" id="daily-word">仕事</div>
+        <div class="daily-romaji" id="daily-romaji">shigoto</div>
+        <div class="daily-meaning" id="daily-meaning">work / job</div>
+      </div>
+      <div class="card">
+        <h3>Studying Tips</h3>
+        <p id="studying-tip">Type the romaji for each character.</p>
+      </div>
+    </aside>
+  </div>
+  <footer><p>Onigiri-giri · Free Japanese Learning site</p></footer>
+  <script src="lessons.js"></script>
+  <script src="learned.js"></script>
+  <script src="sidebar.js?v=9"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+  <script src="auth-guard.js"></script>
+  <script src="progress-sync.js"></script>
+  <script>
+    const kanaData = {
+      hira: [
+        { c: 'あ', r: 'a' }, { c: 'い', r: 'i' }, { c: 'う', r: 'u' }, { c: 'え', r: 'e' }, { c: 'お', r: 'o' },
+        { c: 'か', r: 'ka' }, { c: 'き', r: 'ki' }, { c: 'く', r: 'ku' }, { c: 'け', r: 'ke' }, { c: 'こ', r: 'ko' },
+        { c: 'さ', r: 'sa' }, { c: 'し', r: 'shi' }, { c: 'す', r: 'su' }, { c: 'せ', r: 'se' }, { c: 'そ', r: 'so' },
+        { c: 'た', r: 'ta' }, { c: 'ち', r: 'chi' }, { c: 'つ', r: 'tsu' }, { c: 'て', r: 'te' }, { c: 'と', r: 'to' },
+        { c: 'な', r: 'na' }, { c: 'に', r: 'ni' }, { c: 'ぬ', r: 'nu' }, { c: 'ね', r: 'ne' }, { c: 'の', r: 'no' },
+        { c: 'は', r: 'ha' }, { c: 'ひ', r: 'hi' }, { c: 'ふ', r: 'fu' }, { c: 'へ', r: 'he' }, { c: 'ほ', r: 'ho' },
+        { c: 'ま', r: 'ma' }, { c: 'み', r: 'mi' }, { c: 'む', r: 'mu' }, { c: 'め', r: 'me' }, { c: 'も', r: 'mo' },
+        { c: 'や', r: 'ya' }, { c: 'ゆ', r: 'yu' }, { c: 'よ', r: 'yo' },
+        { c: 'ら', r: 'ra' }, { c: 'り', r: 'ri' }, { c: 'る', r: 'ru' }, { c: 'れ', r: 're' }, { c: 'ろ', r: 'ro' },
+        { c: 'わ', r: 'wa' }, { c: 'を', r: 'wo' }, { c: 'ん', r: 'n' }
+      ],
+      kata: [
+        { c: 'ア', r: 'a' }, { c: 'イ', r: 'i' }, { c: 'ウ', r: 'u' }, { c: 'エ', r: 'e' }, { c: 'オ', r: 'o' },
+        { c: 'カ', r: 'ka' }, { c: 'キ', r: 'ki' }, { c: 'ク', r: 'ku' }, { c: 'ケ', r: 'ke' }, { c: 'コ', r: 'ko' },
+        { c: 'サ', r: 'sa' }, { c: 'シ', r: 'shi' }, { c: 'ス', r: 'su' }, { c: 'セ', r: 'se' }, { c: 'ソ', r: 'so' },
+        { c: 'タ', r: 'ta' }, { c: 'チ', r: 'chi' }, { c: 'ツ', r: 'tsu' }, { c: 'テ', r: 'te' }, { c: 'ト', r: 'to' },
+        { c: 'ナ', r: 'na' }, { c: 'ニ', r: 'ni' }, { c: 'ヌ', r: 'nu' }, { c: 'ネ', r: 'ne' }, { c: 'ノ', r: 'no' },
+        { c: 'ハ', r: 'ha' }, { c: 'ヒ', r: 'hi' }, { c: 'フ', r: 'fu' }, { c: 'ヘ', r: 'he' }, { c: 'ホ', r: 'ho' },
+        { c: 'マ', r: 'ma' }, { c: 'ミ', r: 'mi' }, { c: 'ム', r: 'mu' }, { c: 'メ', r: 'me' }, { c: 'モ', r: 'mo' },
+        { c: 'ヤ', r: 'ya' }, { c: 'ユ', r: 'yu' }, { c: 'ヨ', r: 'yo' },
+        { c: 'ラ', r: 'ra' }, { c: 'リ', r: 'ri' }, { c: 'ル', r: 'ru' }, { c: 'レ', r: 're' }, { c: 'ロ', r: 'ro' },
+        { c: 'ワ', r: 'wa' }, { c: 'ヲ', r: 'wo' }, { c: 'ン', r: 'n' }
+      ],
+      kanji: [
+        { c: '人', r: 'hito' }, { c: '一', r: 'ichi' }, { c: '二', r: 'ni' }, { c: '三', r: 'san' },
+        { c: '四', r: 'shi' }, { c: '五', r: 'go' }, { c: '六', r: 'roku' }, { c: '七', r: 'shichi' },
+        { c: '八', r: 'hachi' }, { c: '九', r: 'kyuu' }, { c: '十', r: 'juu' }, { c: '日', r: 'hi' },
+        { c: '月', r: 'tsuki' }, { c: '火', r: 'hi' }, { c: '水', r: 'mizu' }, { c: '木', r: 'ki' },
+        { c: '金', r: 'kin' }, { c: '土', r: 'tsuchi' }, { c: '山', r: 'yama' }, { c: '川', r: 'kawa' }
+      ]
+    };
+
+    let mode = 'hira';
+    let current = null;
+    let correct = 0;
+    let streak = 0;
+
+    function next() {
+      const pool = kanaData[mode];
+      current = pool[Math.floor(Math.random() * pool.length)];
+      document.getElementById('char').textContent = current.c;
+      const input = document.getElementById('input');
+      input.value = '';
+      input.className = 'typing-input';
+      input.focus();
+      document.getElementById('feedback').textContent = '';
+      document.getElementById('feedback').className = 'feedback';
+    }
+
+    function check() {
+      const input = document.getElementById('input');
+      const val = input.value.trim().toLowerCase();
+      const feedback = document.getElementById('feedback');
+      
+      if (val === current.r) {
+        input.className = 'typing-input correct';
+        feedback.textContent = 'Correct!';
+        feedback.className = 'feedback correct';
+        correct++;
+        streak++;
+        document.getElementById('correct').textContent = correct;
+        document.getElementById('streak-count').textContent = streak;
+        
+        // Track learned
+        if (window.ogLearned) {
+          ogLearned.trackAnswer(mode, current.c, true);
+        }
+        
+        setTimeout(next, 800);
+      } else {
+        input.className = 'typing-input wrong';
+        feedback.textContent = 'Answer: ' + current.r;
+        feedback.className = 'feedback wrong';
+        streak = 0;
+        document.getElementById('streak-count').textContent = streak;
+        
+        if (window.ogLearned) {
+          ogLearned.trackAnswer(mode, current.c, false);
+        }
+        
+        setTimeout(next, 1500);
+      }
+      
+      if (typeof syncToCloud === 'function') syncToCloud();
+    }
+
+    document.getElementById('input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') check();
+    });
+
+    document.querySelectorAll('.mode-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        mode = this.dataset.mode;
+        next();
+      });
+    });
+
+    document.querySelector('.menu-toggle').addEventListener('click', () => {
+      document.getElementById('nav').classList.toggle('open');
+    });
+
+    next();
+  </script>
+</body>
+</html>
