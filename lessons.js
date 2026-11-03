@@ -176,6 +176,262 @@ const LESSONS = {
       { w: '勉強', r: 'benkyou', m: 'study' }
     ]}
   ]
+
+  apprentice: [
+    // Kanji 51-100 (15 lessons)
+    { id: 'kanji-16', name: 'Set 16', type: 'kanji', items: [
+      { k: '見', r: 'み', m: 'to see' },
+      { k: '行', r: 'い', m: 'to go' },
+      { k: '来', r: 'く', m: 'to come' }
+    ]},
+    { id: 'kanji-17', name: 'Set 17', type: 'kanji', items: [
+      { k: '食', r: 'た', m: 'to eat' },
+      { k: '飲', r: 'の', m: 'to drink' },
+      { k: '話', r: 'はな', m: 'to speak' }
+    ]},
+    { id: 'kanji-18', name: 'Set 18', type: 'kanji', items: [
+      { k: '読', r: 'よ', m: 'to read' },
+      { k: '書', r: 'か', m: 'to write' },
+      { k: '聞', r: 'き', m: 'to listen' }
+    ]},
+    { id: 'kanji-19', name: 'Set 19', type: 'kanji', items: [
+      { k: '買', r: 'か', m: 'to buy' },
+      { k: '売', r: 'う', m: 'to sell' },
+      { k: '待', r: 'ま', m: 'to wait' }
+    ]},
+    { id: 'kanji-20', name: 'Set 20', type: 'kanji', items: [
+      { k: '立', r: 'た', m: 'to stand' },
+      { k: '座', r: 'すわ', m: 'to sit' },
+      { k: '歩', r: 'ある', m: 'to walk' }
+    ]},
+    { id: 'kanji-21', name: 'Set 21', type: 'kanji', items: [
+      { k: '走', r: 'はし', m: 'to run' },
+      { k: '休', r: 'やす', m: 'to rest' },
+      { k: '起', r: 'お', m: 'to wake up' }
+    ]},
+    { id: 'kanji-22', name: 'Set 22', type: 'kanji', items: [
+      { k: '寝', r: 'ね', m: 'to sleep' },
+      { k: '思', r: 'おも', m: 'to think' },
+      { k: '知', r: 'し', m: 'to know' }
+    ]},
+    { id: 'kanji-23', name: 'Set 23', type: 'kanji', items: [
+      { k: '学', r: 'まな', m: 'to learn' },
+      { k: '教', r: 'おし', m: 'to teach' },
+      { k: '働', r: 'はたら', m: 'to work' }
+    ]},
+    { id: 'kanji-24', name: 'Set 24', type: 'kanji', items: [
+      { k: '作', r: 'つく', m: 'to make' },
+      { k: '使', r: 'つか', m: 'to use' },
+      { k: '持', r: 'も', m: 'to hold' }
+    ]},
+    { id: 'kanji-25', name: 'Set 25', type: 'kanji', items: [
+      { k: '開', r: 'あ', m: 'to open' },
+      { k: '閉', r: 'し', m: 'to close' },
+      { k: '入', r: 'はい', m: 'to enter' }
+    ]},
+    { id: 'kanji-26', name: 'Set 26', type: 'kanji', items: [
+      { k: '出', r: 'で', m: 'to exit' },
+      { k: '会', r: 'あ', m: 'to meet' },
+      { k: '帰', r: 'かえ', m: 'to return' }
+    ]},
+    { id: 'kanji-27', name: 'Set 27', type: 'kanji', items: [
+      { k: '乗', r: 'の', m: 'to ride' },
+      { k: '降', r: 'お', m: 'to get off' },
+      { k: '送', r: 'おく', m: 'to send' }
+    ]},
+    { id: 'kanji-28', name: 'Set 28', type: 'kanji', items: [
+      { k: '届', r: 'とど', m: 'to deliver' },
+      { k: '受', r: 'う', m: 'to receive' },
+      { k: '渡', r: 'わた', m: 'to hand over' }
+    ]},
+    { id: 'kanji-29', name: 'Set 29', type: 'kanji', items: [
+      { k: '始', r: 'はじ', m: 'to begin' },
+      { k: '終', r: 'お', m: 'to end' },
+      { k: '続', r: 'つづ', m: 'to continue' }
+    ]},
+    { id: 'kanji-30', name: 'Set 30', type: 'kanji', items: [
+      { k: '止', r: 'と', m: 'to stop' },
+      { k: '変', r: 'か', m: 'to change' },
+      { k: '直', r: 'なお', m: 'to fix' }
+    ]},
+    // Vocab topics (15 lessons)
+    { id: 'vocab-16', name: 'Work', type: 'vocab', items: [
+      { w: '仕事', r: 'shigoto', m: 'work / job' },
+      { w: '会社', r: 'kaisha', m: 'company' },
+      { w: '給料', r: 'kyuuryou', m: 'salary' }
+    ]},
+    { id: 'vocab-17', name: 'School', type: 'vocab', items: [
+      { w: '授業', r: 'jugyou', m: 'class / lesson' },
+      { w: '宿題', r: 'shukudai', m: 'homework' },
+      { w: '試験', r: 'shiken', m: 'exam / test' }
+    ]},
+    { id: 'vocab-18', name: 'Travel', type: 'vocab', items: [
+      { w: '旅行', r: 'ryokou', m: 'travel' },
+      { w: '切符', r: 'kippu', m: 'ticket' },
+      { w: '駅', r: 'eki', m: 'station' }
+    ]},
+    { id: 'vocab-19', name: 'Shopping', type: 'vocab', items: [
+      { w: '買い物', r: 'kaimono', m: 'shopping' },
+      { w: '値段', r: 'nedan', m: 'price' },
+      { w: '安い', r: 'yasui', m: 'cheap' }
+    ]},
+    { id: 'vocab-20', name: 'Food', type: 'vocab', items: [
+      { w: '料理', r: 'ryouri', m: 'cooking / cuisine' },
+      { w: '味', r: 'aji', m: 'taste / flavor' },
+      { w: '美味しい', r: 'oishii', m: 'delicious' }
+    ]},
+    { id: 'vocab-21', name: 'Weather', type: 'vocab', items: [
+      { w: '天気', r: 'tenki', m: 'weather' },
+      { w: '雨', r: 'ame', m: 'rain' },
+      { w: '晴れ', r: 'hare', m: 'sunny' }
+    ]},
+    { id: 'vocab-22', name: 'Body', type: 'vocab', items: [
+      { w: '体', r: 'karada', m: 'body' },
+      { w: '頭', r: 'atama', m: 'head' },
+      { w: '顔', r: 'kao', m: 'face' }
+    ]},
+    { id: 'vocab-23', name: 'Clothes', type: 'vocab', items: [
+      { w: '服', r: 'fuku', m: 'clothes' },
+      { w: 'シャツ', r: 'shatsu', m: 'shirt' },
+      { w: '靴', r: 'kutsu', m: 'shoes' }
+    ]},
+    { id: 'vocab-24', name: 'Colors', type: 'vocab', items: [
+      { w: '色', r: 'iro', m: 'color' },
+      { w: '赤', r: 'aka', m: 'red' },
+      { w: '青', r: 'ao', m: 'blue' }
+    ]},
+    { id: 'vocab-25', name: 'Numbers', type: 'vocab', items: [
+      { w: '万', r: 'man', m: 'ten thousand' },
+      { w: '円', r: 'en', m: 'yen' },
+      { w: '番', r: 'ban', m: 'number' }
+    ]},
+    { id: 'vocab-26', name: 'Time', type: 'vocab', items: [
+      { w: '時間', r: 'jikan', m: 'time' },
+      { w: '週', r: 'shuu', m: 'week' },
+      { w: '月', r: 'tsuki', m: 'month' }
+    ]},
+    { id: 'vocab-27', name: 'Places', type: 'vocab', items: [
+      { w: '場所', r: 'basho', m: 'place' },
+      { w: '町', r: 'machi', m: 'town' },
+      { w: '村', r: 'mura', m: 'village' }
+    ]},
+    { id: 'vocab-28', name: 'Nature', type: 'vocab', items: [
+      { w: '自然', r: 'shizen', m: 'nature' },
+      { w: '海', r: 'umi', m: 'sea' },
+      { w: '空', r: 'sora', m: 'sky' }
+    ]},
+    { id: 'vocab-29', name: 'Animals', type: 'vocab', items: [
+      { w: '動物', r: 'doubutsu', m: 'animal' },
+      { w: '犬', r: 'inu', m: 'dog' },
+      { w: '猫', r: 'neko', m: 'cat' }
+    ]},
+    { id: 'vocab-30', name: 'Feelings', type: 'vocab', items: [
+      { w: '気持ち', r: 'kimochi', m: 'feeling' },
+      { w: '嬉しい', r: 'ureshii', m: 'happy' },
+      { w: '悲しい', r: 'kanashii', m: 'sad' }
+    ]},
+    // Simple sentences (20 lessons)
+    { id: 'sent-1', name: 'Sentences 1', type: 'vocab', items: [
+      { w: 'これは本です', r: 'kore wa hon desu', m: 'this is a book' },
+      { w: 'それはペンです', r: 'sore wa pen desu', m: 'that is a pen' },
+      { w: 'あれは車です', r: 'are wa kuruma desu', m: 'that over there is a car' }
+    ]},
+    { id: 'sent-2', name: 'Sentences 2', type: 'vocab', items: [
+      { w: '私は学生です', r: 'watashi wa gakusei desu', m: 'I am a student' },
+      { w: '彼は先生です', r: 'kare wa sensei desu', m: 'he is a teacher' },
+      { w: '彼女は医者です', r: 'kanojo wa isha desu', m: 'she is a doctor' }
+    ]},
+    { id: 'sent-3', name: 'Sentences 3', type: 'vocab', items: [
+      { w: '今日は月曜日です', r: 'kyou wa getsuyoubi desu', m: 'today is Monday' },
+      { w: '明日は火曜日です', r: 'ashita wa kayoubi desu', m: 'tomorrow is Tuesday' },
+      { w: '昨日は日曜日でした', r: 'kinou wa nichiyoubi deshita', m: 'yesterday was Sunday' }
+    ]},
+    { id: 'sent-4', name: 'Sentences 4', type: 'vocab', items: [
+      { w: '天気がいいです', r: 'tenki ga ii desu', m: 'the weather is good' },
+      { w: '雨が降っています', r: 'ame ga futte imasu', m: 'it is raining' },
+      { w: '風が強いです', r: 'kaze ga tsuyoi desu', m: 'the wind is strong' }
+    ]},
+    { id: 'sent-5', name: 'Sentences 5', type: 'vocab', items: [
+      { w: 'ご飯を食べます', r: 'gohan o tabemasu', m: 'I eat a meal' },
+      { w: '水を飲みます', r: 'mizu o nomimasu', m: 'I drink water' },
+      { w: '本を読みます', r: 'hon o yomimasu', m: 'I read a book' }
+    ]},
+    { id: 'sent-6', name: 'Sentences 6', type: 'vocab', items: [
+      { w: '学校に行きます', r: 'gakkou ni ikimasu', m: 'I go to school' },
+      { w: '家に帰ります', r: 'ie ni kaerimasu', m: 'I go home' },
+      { w: '駅に着きます', r: 'eki ni tsukimasu', m: 'I arrive at the station' }
+    ]},
+    { id: 'sent-7', name: 'Sentences 7', type: 'vocab', items: [
+      { w: '友達と話します', r: 'tomodachi to hanashimasu', m: 'I talk with a friend' },
+      { w: '母に電話します', r: 'haha ni denwa shimasu', m: 'I call my mother' },
+      { w: '先生に聞きます', r: 'sensei ni kikimasu', m: 'I ask the teacher' }
+    ]},
+    { id: 'sent-8', name: 'Sentences 8', type: 'vocab', items: [
+      { w: '日本語を勉強します', r: 'nihongo o benkyou shimasu', m: 'I study Japanese' },
+      { w: '漢字を覚えます', r: 'kanji o oboemasu', m: 'I memorize kanji' },
+      { w: 'テストを受けます', r: 'tesuto o ukemasu', m: 'I take a test' }
+    ]},
+    { id: 'sent-9', name: 'Sentences 9', type: 'vocab', items: [
+      { w: '映画を見ます', r: 'eiga o mimasu', m: 'I watch a movie' },
+      { w: '音楽を聞きます', r: 'ongaku o kikimasu', m: 'I listen to music' },
+      { w: 'ゲームをします', r: 'geemu o shimasu', m: 'I play games' }
+    ]},
+    { id: 'sent-10', name: 'Sentences 10', type: 'vocab', items: [
+      { w: '買い物に行きます', r: 'kaimono ni ikimasu', m: 'I go shopping' },
+      { w: 'パンを買います', r: 'pan o kaimasu', m: 'I buy bread' },
+      { w: 'お金を払います', r: 'okane o haraimasu', m: 'I pay money' }
+    ]},
+    { id: 'sent-11', name: 'Sentences 11', type: 'vocab', items: [
+      { w: '朝ごはんを食べました', r: 'asagohan o tabemashita', m: 'I ate breakfast' },
+      { w: '昼ごはんを作りました', r: 'hirugohan o tsukurimashita', m: 'I made lunch' },
+      { w: '晩ごはんを食べます', r: 'bangohan o tabemasu', m: 'I will eat dinner' }
+    ]},
+    { id: 'sent-12', name: 'Sentences 12', type: 'vocab', items: [
+      { w: '電車に乗ります', r: 'densha ni norimasu', m: 'I ride the train' },
+      { w: 'バスを降ります', r: 'basu o orimasu', m: 'I get off the bus' },
+      { w: 'タクシーを呼びます', r: 'takushii o yobimasu', m: 'I call a taxi' }
+    ]},
+    { id: 'sent-13', name: 'Sentences 13', type: 'vocab', items: [
+      { w: '病院に行きます', r: 'byouin ni ikimasu', m: 'I go to the hospital' },
+      { w: '薬を飲みます', r: 'kusuri o nomimasu', m: 'I take medicine' },
+      { w: '休みます', r: 'yasumimasu', m: 'I rest' }
+    ]},
+    { id: 'sent-14', name: 'Sentences 14', type: 'vocab', items: [
+      { w: '手紙を書きます', r: 'tegami o kakimasu', m: 'I write a letter' },
+      { w: 'メールを送ります', r: 'meeru o okurimasu', m: 'I send an email' },
+      { w: '電話をかけます', r: 'denwa o kakemasu', m: 'I make a phone call' }
+    ]},
+    { id: 'sent-15', name: 'Sentences 15', type: 'vocab', items: [
+      { w: '窓を開けます', r: 'mado o akemasu', m: 'I open the window' },
+      { w: 'ドアを閉めます', r: 'doa o shimemasu', m: 'I close the door' },
+      { w: '電気をつけます', r: 'denki o tsukemasu', m: 'I turn on the light' }
+    ]},
+    { id: 'sent-16', name: 'Sentences 16', type: 'vocab', items: [
+      { w: '新しい服を買いました', r: 'atarashii fuku o kaimashita', m: 'I bought new clothes' },
+      { w: '古い本を読みました', r: 'furui hon o yomimashita', m: 'I read an old book' },
+      { w: '大きい犬を見ました', r: 'ookii inu o mimashita', m: 'I saw a big dog' }
+    ]},
+    { id: 'sent-17', name: 'Sentences 17', type: 'vocab', items: [
+      { w: '日本語が好きです', r: 'nihongo ga suki desu', m: 'I like Japanese' },
+      { w: '数学が苦手です', r: 'suugaku ga nigate desu', m: 'I am bad at math' },
+      { w: '音楽が得意です', r: 'ongaku ga tokui desu', m: 'I am good at music' }
+    ]},
+    { id: 'sent-18', name: 'Sentences 18', type: 'vocab', items: [
+      { w: '時間があります', r: 'jikan ga arimasu', m: 'I have time' },
+      { w: 'お金がありません', r: 'okane ga arimasen', m: 'I do not have money' },
+      { w: '質問があります', r: 'shitsumon ga arimasu', m: 'I have a question' }
+    ]},
+    { id: 'sent-19', name: 'Sentences 19', type: 'vocab', items: [
+      { w: 'ここで待ちます', r: 'koko de machimasu', m: 'I will wait here' },
+      { w: 'あそこで会いましょう', r: 'asoko de aimashou', m: 'let us meet over there' },
+      { w: 'どこに行きますか', r: 'doko ni ikimasu ka', m: 'where are you going' }
+    ]},
+    { id: 'sent-20', name: 'Sentences 20', type: 'vocab', items: [
+      { w: '何を食べますか', r: 'nani o tabemasu ka', m: 'what will you eat' },
+      { w: 'いつ来ますか', r: 'itsu kimasu ka', m: 'when will you come' },
+      { w: '誰と行きますか', r: 'dare to ikimasu ka', m: 'who will you go with' }
+    ]}
+  ]
 };
 
 // Kana readings for practice
@@ -200,4 +456,260 @@ const KANA_READINGS = {
   'ヤ':'ya','ユ':'yu','ヨ':'yo',
   'ラ':'ra','リ':'ri','ル':'ru','レ':'re','ロ':'ro',
   'ワ':'wa','ヲ':'wo','ン':'n'
+
+  apprentice: [
+    // Kanji 51-100 (15 lessons)
+    { id: 'kanji-16', name: 'Set 16', type: 'kanji', items: [
+      { k: '見', r: 'み', m: 'to see' },
+      { k: '行', r: 'い', m: 'to go' },
+      { k: '来', r: 'く', m: 'to come' }
+    ]},
+    { id: 'kanji-17', name: 'Set 17', type: 'kanji', items: [
+      { k: '食', r: 'た', m: 'to eat' },
+      { k: '飲', r: 'の', m: 'to drink' },
+      { k: '話', r: 'はな', m: 'to speak' }
+    ]},
+    { id: 'kanji-18', name: 'Set 18', type: 'kanji', items: [
+      { k: '読', r: 'よ', m: 'to read' },
+      { k: '書', r: 'か', m: 'to write' },
+      { k: '聞', r: 'き', m: 'to listen' }
+    ]},
+    { id: 'kanji-19', name: 'Set 19', type: 'kanji', items: [
+      { k: '買', r: 'か', m: 'to buy' },
+      { k: '売', r: 'う', m: 'to sell' },
+      { k: '待', r: 'ま', m: 'to wait' }
+    ]},
+    { id: 'kanji-20', name: 'Set 20', type: 'kanji', items: [
+      { k: '立', r: 'た', m: 'to stand' },
+      { k: '座', r: 'すわ', m: 'to sit' },
+      { k: '歩', r: 'ある', m: 'to walk' }
+    ]},
+    { id: 'kanji-21', name: 'Set 21', type: 'kanji', items: [
+      { k: '走', r: 'はし', m: 'to run' },
+      { k: '休', r: 'やす', m: 'to rest' },
+      { k: '起', r: 'お', m: 'to wake up' }
+    ]},
+    { id: 'kanji-22', name: 'Set 22', type: 'kanji', items: [
+      { k: '寝', r: 'ね', m: 'to sleep' },
+      { k: '思', r: 'おも', m: 'to think' },
+      { k: '知', r: 'し', m: 'to know' }
+    ]},
+    { id: 'kanji-23', name: 'Set 23', type: 'kanji', items: [
+      { k: '学', r: 'まな', m: 'to learn' },
+      { k: '教', r: 'おし', m: 'to teach' },
+      { k: '働', r: 'はたら', m: 'to work' }
+    ]},
+    { id: 'kanji-24', name: 'Set 24', type: 'kanji', items: [
+      { k: '作', r: 'つく', m: 'to make' },
+      { k: '使', r: 'つか', m: 'to use' },
+      { k: '持', r: 'も', m: 'to hold' }
+    ]},
+    { id: 'kanji-25', name: 'Set 25', type: 'kanji', items: [
+      { k: '開', r: 'あ', m: 'to open' },
+      { k: '閉', r: 'し', m: 'to close' },
+      { k: '入', r: 'はい', m: 'to enter' }
+    ]},
+    { id: 'kanji-26', name: 'Set 26', type: 'kanji', items: [
+      { k: '出', r: 'で', m: 'to exit' },
+      { k: '会', r: 'あ', m: 'to meet' },
+      { k: '帰', r: 'かえ', m: 'to return' }
+    ]},
+    { id: 'kanji-27', name: 'Set 27', type: 'kanji', items: [
+      { k: '乗', r: 'の', m: 'to ride' },
+      { k: '降', r: 'お', m: 'to get off' },
+      { k: '送', r: 'おく', m: 'to send' }
+    ]},
+    { id: 'kanji-28', name: 'Set 28', type: 'kanji', items: [
+      { k: '届', r: 'とど', m: 'to deliver' },
+      { k: '受', r: 'う', m: 'to receive' },
+      { k: '渡', r: 'わた', m: 'to hand over' }
+    ]},
+    { id: 'kanji-29', name: 'Set 29', type: 'kanji', items: [
+      { k: '始', r: 'はじ', m: 'to begin' },
+      { k: '終', r: 'お', m: 'to end' },
+      { k: '続', r: 'つづ', m: 'to continue' }
+    ]},
+    { id: 'kanji-30', name: 'Set 30', type: 'kanji', items: [
+      { k: '止', r: 'と', m: 'to stop' },
+      { k: '変', r: 'か', m: 'to change' },
+      { k: '直', r: 'なお', m: 'to fix' }
+    ]},
+    // Vocab topics (15 lessons)
+    { id: 'vocab-16', name: 'Work', type: 'vocab', items: [
+      { w: '仕事', r: 'shigoto', m: 'work / job' },
+      { w: '会社', r: 'kaisha', m: 'company' },
+      { w: '給料', r: 'kyuuryou', m: 'salary' }
+    ]},
+    { id: 'vocab-17', name: 'School', type: 'vocab', items: [
+      { w: '授業', r: 'jugyou', m: 'class / lesson' },
+      { w: '宿題', r: 'shukudai', m: 'homework' },
+      { w: '試験', r: 'shiken', m: 'exam / test' }
+    ]},
+    { id: 'vocab-18', name: 'Travel', type: 'vocab', items: [
+      { w: '旅行', r: 'ryokou', m: 'travel' },
+      { w: '切符', r: 'kippu', m: 'ticket' },
+      { w: '駅', r: 'eki', m: 'station' }
+    ]},
+    { id: 'vocab-19', name: 'Shopping', type: 'vocab', items: [
+      { w: '買い物', r: 'kaimono', m: 'shopping' },
+      { w: '値段', r: 'nedan', m: 'price' },
+      { w: '安い', r: 'yasui', m: 'cheap' }
+    ]},
+    { id: 'vocab-20', name: 'Food', type: 'vocab', items: [
+      { w: '料理', r: 'ryouri', m: 'cooking / cuisine' },
+      { w: '味', r: 'aji', m: 'taste / flavor' },
+      { w: '美味しい', r: 'oishii', m: 'delicious' }
+    ]},
+    { id: 'vocab-21', name: 'Weather', type: 'vocab', items: [
+      { w: '天気', r: 'tenki', m: 'weather' },
+      { w: '雨', r: 'ame', m: 'rain' },
+      { w: '晴れ', r: 'hare', m: 'sunny' }
+    ]},
+    { id: 'vocab-22', name: 'Body', type: 'vocab', items: [
+      { w: '体', r: 'karada', m: 'body' },
+      { w: '頭', r: 'atama', m: 'head' },
+      { w: '顔', r: 'kao', m: 'face' }
+    ]},
+    { id: 'vocab-23', name: 'Clothes', type: 'vocab', items: [
+      { w: '服', r: 'fuku', m: 'clothes' },
+      { w: 'シャツ', r: 'shatsu', m: 'shirt' },
+      { w: '靴', r: 'kutsu', m: 'shoes' }
+    ]},
+    { id: 'vocab-24', name: 'Colors', type: 'vocab', items: [
+      { w: '色', r: 'iro', m: 'color' },
+      { w: '赤', r: 'aka', m: 'red' },
+      { w: '青', r: 'ao', m: 'blue' }
+    ]},
+    { id: 'vocab-25', name: 'Numbers', type: 'vocab', items: [
+      { w: '万', r: 'man', m: 'ten thousand' },
+      { w: '円', r: 'en', m: 'yen' },
+      { w: '番', r: 'ban', m: 'number' }
+    ]},
+    { id: 'vocab-26', name: 'Time', type: 'vocab', items: [
+      { w: '時間', r: 'jikan', m: 'time' },
+      { w: '週', r: 'shuu', m: 'week' },
+      { w: '月', r: 'tsuki', m: 'month' }
+    ]},
+    { id: 'vocab-27', name: 'Places', type: 'vocab', items: [
+      { w: '場所', r: 'basho', m: 'place' },
+      { w: '町', r: 'machi', m: 'town' },
+      { w: '村', r: 'mura', m: 'village' }
+    ]},
+    { id: 'vocab-28', name: 'Nature', type: 'vocab', items: [
+      { w: '自然', r: 'shizen', m: 'nature' },
+      { w: '海', r: 'umi', m: 'sea' },
+      { w: '空', r: 'sora', m: 'sky' }
+    ]},
+    { id: 'vocab-29', name: 'Animals', type: 'vocab', items: [
+      { w: '動物', r: 'doubutsu', m: 'animal' },
+      { w: '犬', r: 'inu', m: 'dog' },
+      { w: '猫', r: 'neko', m: 'cat' }
+    ]},
+    { id: 'vocab-30', name: 'Feelings', type: 'vocab', items: [
+      { w: '気持ち', r: 'kimochi', m: 'feeling' },
+      { w: '嬉しい', r: 'ureshii', m: 'happy' },
+      { w: '悲しい', r: 'kanashii', m: 'sad' }
+    ]},
+    // Simple sentences (20 lessons)
+    { id: 'sent-1', name: 'Sentences 1', type: 'vocab', items: [
+      { w: 'これは本です', r: 'kore wa hon desu', m: 'this is a book' },
+      { w: 'それはペンです', r: 'sore wa pen desu', m: 'that is a pen' },
+      { w: 'あれは車です', r: 'are wa kuruma desu', m: 'that over there is a car' }
+    ]},
+    { id: 'sent-2', name: 'Sentences 2', type: 'vocab', items: [
+      { w: '私は学生です', r: 'watashi wa gakusei desu', m: 'I am a student' },
+      { w: '彼は先生です', r: 'kare wa sensei desu', m: 'he is a teacher' },
+      { w: '彼女は医者です', r: 'kanojo wa isha desu', m: 'she is a doctor' }
+    ]},
+    { id: 'sent-3', name: 'Sentences 3', type: 'vocab', items: [
+      { w: '今日は月曜日です', r: 'kyou wa getsuyoubi desu', m: 'today is Monday' },
+      { w: '明日は火曜日です', r: 'ashita wa kayoubi desu', m: 'tomorrow is Tuesday' },
+      { w: '昨日は日曜日でした', r: 'kinou wa nichiyoubi deshita', m: 'yesterday was Sunday' }
+    ]},
+    { id: 'sent-4', name: 'Sentences 4', type: 'vocab', items: [
+      { w: '天気がいいです', r: 'tenki ga ii desu', m: 'the weather is good' },
+      { w: '雨が降っています', r: 'ame ga futte imasu', m: 'it is raining' },
+      { w: '風が強いです', r: 'kaze ga tsuyoi desu', m: 'the wind is strong' }
+    ]},
+    { id: 'sent-5', name: 'Sentences 5', type: 'vocab', items: [
+      { w: 'ご飯を食べます', r: 'gohan o tabemasu', m: 'I eat a meal' },
+      { w: '水を飲みます', r: 'mizu o nomimasu', m: 'I drink water' },
+      { w: '本を読みます', r: 'hon o yomimasu', m: 'I read a book' }
+    ]},
+    { id: 'sent-6', name: 'Sentences 6', type: 'vocab', items: [
+      { w: '学校に行きます', r: 'gakkou ni ikimasu', m: 'I go to school' },
+      { w: '家に帰ります', r: 'ie ni kaerimasu', m: 'I go home' },
+      { w: '駅に着きます', r: 'eki ni tsukimasu', m: 'I arrive at the station' }
+    ]},
+    { id: 'sent-7', name: 'Sentences 7', type: 'vocab', items: [
+      { w: '友達と話します', r: 'tomodachi to hanashimasu', m: 'I talk with a friend' },
+      { w: '母に電話します', r: 'haha ni denwa shimasu', m: 'I call my mother' },
+      { w: '先生に聞きます', r: 'sensei ni kikimasu', m: 'I ask the teacher' }
+    ]},
+    { id: 'sent-8', name: 'Sentences 8', type: 'vocab', items: [
+      { w: '日本語を勉強します', r: 'nihongo o benkyou shimasu', m: 'I study Japanese' },
+      { w: '漢字を覚えます', r: 'kanji o oboemasu', m: 'I memorize kanji' },
+      { w: 'テストを受けます', r: 'tesuto o ukemasu', m: 'I take a test' }
+    ]},
+    { id: 'sent-9', name: 'Sentences 9', type: 'vocab', items: [
+      { w: '映画を見ます', r: 'eiga o mimasu', m: 'I watch a movie' },
+      { w: '音楽を聞きます', r: 'ongaku o kikimasu', m: 'I listen to music' },
+      { w: 'ゲームをします', r: 'geemu o shimasu', m: 'I play games' }
+    ]},
+    { id: 'sent-10', name: 'Sentences 10', type: 'vocab', items: [
+      { w: '買い物に行きます', r: 'kaimono ni ikimasu', m: 'I go shopping' },
+      { w: 'パンを買います', r: 'pan o kaimasu', m: 'I buy bread' },
+      { w: 'お金を払います', r: 'okane o haraimasu', m: 'I pay money' }
+    ]},
+    { id: 'sent-11', name: 'Sentences 11', type: 'vocab', items: [
+      { w: '朝ごはんを食べました', r: 'asagohan o tabemashita', m: 'I ate breakfast' },
+      { w: '昼ごはんを作りました', r: 'hirugohan o tsukurimashita', m: 'I made lunch' },
+      { w: '晩ごはんを食べます', r: 'bangohan o tabemasu', m: 'I will eat dinner' }
+    ]},
+    { id: 'sent-12', name: 'Sentences 12', type: 'vocab', items: [
+      { w: '電車に乗ります', r: 'densha ni norimasu', m: 'I ride the train' },
+      { w: 'バスを降ります', r: 'basu o orimasu', m: 'I get off the bus' },
+      { w: 'タクシーを呼びます', r: 'takushii o yobimasu', m: 'I call a taxi' }
+    ]},
+    { id: 'sent-13', name: 'Sentences 13', type: 'vocab', items: [
+      { w: '病院に行きます', r: 'byouin ni ikimasu', m: 'I go to the hospital' },
+      { w: '薬を飲みます', r: 'kusuri o nomimasu', m: 'I take medicine' },
+      { w: '休みます', r: 'yasumimasu', m: 'I rest' }
+    ]},
+    { id: 'sent-14', name: 'Sentences 14', type: 'vocab', items: [
+      { w: '手紙を書きます', r: 'tegami o kakimasu', m: 'I write a letter' },
+      { w: 'メールを送ります', r: 'meeru o okurimasu', m: 'I send an email' },
+      { w: '電話をかけます', r: 'denwa o kakemasu', m: 'I make a phone call' }
+    ]},
+    { id: 'sent-15', name: 'Sentences 15', type: 'vocab', items: [
+      { w: '窓を開けます', r: 'mado o akemasu', m: 'I open the window' },
+      { w: 'ドアを閉めます', r: 'doa o shimemasu', m: 'I close the door' },
+      { w: '電気をつけます', r: 'denki o tsukemasu', m: 'I turn on the light' }
+    ]},
+    { id: 'sent-16', name: 'Sentences 16', type: 'vocab', items: [
+      { w: '新しい服を買いました', r: 'atarashii fuku o kaimashita', m: 'I bought new clothes' },
+      { w: '古い本を読みました', r: 'furui hon o yomimashita', m: 'I read an old book' },
+      { w: '大きい犬を見ました', r: 'ookii inu o mimashita', m: 'I saw a big dog' }
+    ]},
+    { id: 'sent-17', name: 'Sentences 17', type: 'vocab', items: [
+      { w: '日本語が好きです', r: 'nihongo ga suki desu', m: 'I like Japanese' },
+      { w: '数学が苦手です', r: 'suugaku ga nigate desu', m: 'I am bad at math' },
+      { w: '音楽が得意です', r: 'ongaku ga tokui desu', m: 'I am good at music' }
+    ]},
+    { id: 'sent-18', name: 'Sentences 18', type: 'vocab', items: [
+      { w: '時間があります', r: 'jikan ga arimasu', m: 'I have time' },
+      { w: 'お金がありません', r: 'okane ga arimasen', m: 'I do not have money' },
+      { w: '質問があります', r: 'shitsumon ga arimasu', m: 'I have a question' }
+    ]},
+    { id: 'sent-19', name: 'Sentences 19', type: 'vocab', items: [
+      { w: 'ここで待ちます', r: 'koko de machimasu', m: 'I will wait here' },
+      { w: 'あそこで会いましょう', r: 'asoko de aimashou', m: 'let us meet over there' },
+      { w: 'どこに行きますか', r: 'doko ni ikimasu ka', m: 'where are you going' }
+    ]},
+    { id: 'sent-20', name: 'Sentences 20', type: 'vocab', items: [
+      { w: '何を食べますか', r: 'nani o tabemasu ka', m: 'what will you eat' },
+      { w: 'いつ来ますか', r: 'itsu kimasu ka', m: 'when will you come' },
+      { w: '誰と行きますか', r: 'dare to ikimasu ka', m: 'who will you go with' }
+    ]}
+  ]
 };
