@@ -121,7 +121,7 @@
     function setPath(id) {
       const data = getPaths();
       data.current = id;
-      if (!data.progress[id]) data.progress[id] = { milestones: [], badge: false };
+      if (!data.progress[id]) data.progress[id] = { completed: [], badge: false };
       localStorage.setItem('og-paths', JSON.stringify(data));
       window.location.href = 'missions.html';
       render();
