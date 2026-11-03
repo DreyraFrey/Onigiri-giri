@@ -78,6 +78,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase.js"></script>
   <script src="auth-guard.js"></script>
+  <script src="progress-sync.js"></script>
   <script>
     const pathData = JSON.parse(localStorage.getItem('og-paths') || '{"current":null,"progress":{}}');
     
@@ -141,7 +142,7 @@
       location.href = 'lesson.html?id=' + lessonId + '&path=' + pathData.current;
     }
     
-    render();
+    if (typeof syncFromCloud === "function") syncFromCloud().then(render); else render();
   </script>
 </body>
 </html>
