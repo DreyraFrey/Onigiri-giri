@@ -19,6 +19,9 @@
     set('prog-hira', hiraCount + '/46');
     set('prog-kata', kataCount + '/46');
     set('prog-kanji', kanjiCount + '/500');
+    set('m-hira', hiraCount);
+    set('m-kata', kataCount);
+    set('m-kanji', kanjiCount);
     
     // Path info
     const pathEl = document.getElementById('sidebar-path');
