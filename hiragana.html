@@ -96,8 +96,9 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       if (!window.ogLearned) return;
-      document.querySelectorAll('td').forEach(function(td) {
-        const kana = td.textContent.trim().split('\n')[0].trim();
+      document.querySelectorAll('td.kana').forEach(function(td) {
+        const text = td.innerHTML;
+        const kana = text.split('<br>')[0].trim();
         if (kana && ogLearned.isLearned('hira', kana)) {
           td.classList.add('learned');
         }
