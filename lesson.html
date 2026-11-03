@@ -204,8 +204,8 @@
     window.nextTeach = function nextTeach() {
       teachIndex++;
       if (teachIndex >= currentLesson.items.length) {
-        buildQuestions();
-        phase = 'practice';
+        phase = 'typing';
+        typingIndex = 0;
       }
       render();
     }
