@@ -53,6 +53,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase.js"></script>
   <script src="auth-guard.js"></script>
+  <script src="progress-sync.js"></script>
   <script>
     const urlParams = new URLSearchParams(location.search);
     const currentLessonId = urlParams.get('id');
@@ -203,6 +204,7 @@
           pathStorage.progress[currentPathId].completed.push(currentLessonId);
         }
         localStorage.setItem('og-paths', JSON.stringify(pathStorage));
+        if (typeof syncToCloud === 'function') syncToCloud();
         
         const allLessons = LESSONS[currentPathId] || [];
         const idx = allLessons.findIndex(function(l) { return l.id === currentLessonId; });
