@@ -71,8 +71,10 @@
     
     let phase = 'teach';
     let teachIndex = 0;
+    let typingIndex = 0;
     let questionIndex = 0;
     let correct = 0;
+    let typingCorrect = 0;
     let questions = [];
     
     function escapeHtml(str) {
@@ -103,6 +105,31 @@
         html += '</div>';
         html += '<button class="btn btn-primary next-btn" onclick="nextTeach()">Next</button>';
         content.innerHTML = html;
+      } else if (phase === 'typing') {
+        const total = currentLesson.items.length;
+        progress.style.width = (33 + (typingIndex / total) * 33) + '%';
+        const item = currentLesson.items[typingIndex];
+        let char, answer;
+        if (currentLesson.type === 'kana') {
+          char = item;
+          answer = KANA_READINGS[item] || '';
+        } else if (currentLesson.type === 'kanji') {
+          char = item.k;
+          answer = item.r;
+        } else {
+          char = item.w;
+          answer = item.r;
+        }
+        let html = '<div class="typing-char" style="font-size:4rem;text-align:center;margin:1rem 0;">' + char + '</div>';
+        html += '<div style="text-align:center;"><input type="text" id="typing-input" class="typing-input" placeholder="type romaji..." autocomplete="off" style="font-size:1.3rem;padding:0.6rem 1rem;width:200px;text-align:center;border-radius:10px;border:2px solid var(--border);background:var(--surface);color:var(--text);"></div>';
+        html += '<div id="typing-feedback" style="text-align:center;min-height:1.5rem;margin:0.5rem 0;"></div>';
+        html += '<div style="text-align:center;"><button class="btn btn-primary" onclick="checkTyping()">Check</button></div>';
+        content.innerHTML = html;
+        document.getElementById('typing-input').focus();
+        document.getElementById('typing-input').addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') checkTyping();
+        });
+        window.currentTypingAnswer = answer;
       } else if (phase === 'practice') {
         const total = questions.length;
         progress.style.width = (50 + (questionIndex / total) * 50) + '%';
@@ -131,6 +158,46 @@
         html += '</div></div>';
         content.innerHTML = html;
         
+      }
+    }
+    
+    function checkTyping() {
+      const input = document.getElementById('typing-input');
+      const feedback = document.getElementById('typing-feedback');
+      const val = input.value.trim().toLowerCase();
+      const answer = window.currentTypingAnswer;
+      
+      if (val === answer.toLowerCase()) {
+        input.style.borderColor = '#4caf50';
+        feedback.textContent = 'Correct!';
+        feedback.style.color = '#4caf50';
+        typingCorrect++;
+        
+        // Track learned
+        if (window.ogLearned) {
+          const item = currentLesson.items[typingIndex];
+          const char = currentLesson.type === 'kana' ? item : (item.k || item.w);
+          const type = currentLesson.type === 'kana' ? currentLesson.mode : currentLesson.type;
+          ogLearned.trackAnswer(type, char, true);
+        }
+      } else {
+        input.style.borderColor = '#f44336';
+        feedback.textContent = 'Answer: ' + answer;
+        feedback.style.color = '#f44336';
+        
+        if (window.ogLearned) {
+          const item = currentLesson.items[typingIndex];
+          const char = currentLesson.type === 'kana' ? item : (item.k || item.w);
+          const type = currentLesson.type === 'kana' ? currentLesson.mode : currentLesson.type;
+          ogLearned.trackAnswer(type, char, false);
+        }
+      }
+      
+      typingIndex++;
+      if (typingIndex >= currentLesson.items.length) {
+        setTimeout(function() { phase = 'practice'; buildQuestions(); render(); }, 800);
+      } else {
+        setTimeout(function() { render(); }, 800);
       }
     }
     
