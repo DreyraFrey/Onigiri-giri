@@ -194,7 +194,15 @@
         paths.progress[pathId].completed.push(lessonId);
       }
       localStorage.setItem('og-paths', JSON.stringify(paths));
-      location.href = 'missions.html';
+      
+      // Find next lesson
+      const lessons = LESSONS[pathId] || [];
+      const currentIndex = lessons.findIndex(l => l.id === lessonId);
+      if (currentIndex >= 0 && currentIndex < lessons.length - 1) {
+        location.href = 'lesson.html?id=' + lessons[currentIndex + 1].id + '&path=' + pathId;
+      } else {
+        location.href = 'missions.html';
+      }
     }
     
     render();
