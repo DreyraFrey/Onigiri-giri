@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Katakana – Onigiri-giri</title>
+  <style>
+    .learned { color: #ffd700 !important; text-shadow: 0 0 10px #ffd700, 0 0 20px #ff8c00; font-weight: bold; }
+    .learned::after { content: '★'; font-size: 0.5em; margin-left: 2px; color: #ffd700; }
+  </style>
   <link rel="stylesheet" href="style.css?v=7">
   <link rel="icon" type="image/png" href="icon-header.png">
   <link rel="manifest" href="manifest.json">
@@ -88,6 +92,18 @@
     </aside>
   </div>
   <footer><p>Onigiri-giri · Free Japanese Learning site</p></footer>
+  <script src="learned.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (!window.ogLearned) return;
+      document.querySelectorAll('td').forEach(function(td) {
+        const kana = td.textContent.trim().split('\n')[0].trim();
+        if (kana && ogLearned.isLearned('kata', kana)) {
+          td.classList.add('learned');
+        }
+      });
+    });
+  </script>
   <script>
     document.querySelector('.menu-toggle').addEventListener('click', () => {
       document.getElementById('nav').classList.toggle('open');
