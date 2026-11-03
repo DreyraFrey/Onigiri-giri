@@ -115,7 +115,7 @@
         html += '<p>' + pct + '% (' + correct + '/' + questions.length + ')</p>';
         html += '<div class="btn-row">';
         if (passed) {
-          html += '<button class="btn btn-primary" id="continue-btn">Continue</button>';
+          html += '<button class="btn btn-primary" onclick="goToNext()">Continue</button>';
         } else {
           html += '<button class="btn btn-primary" onclick="retry()">Retry</button>';
           html += '<button class="btn btn-secondary" onclick="location.href=\'missions.html\'">Back to map</button>';
@@ -123,9 +123,6 @@
         html += '</div></div>';
         content.innerHTML = html;
         
-        if (passed) {
-          document.getElementById('continue-btn').onclick = goToNext;
-        }
       }
     }
     
