@@ -157,9 +157,12 @@
           pool = items.map(function(i) { return i.m; });
         }
         const options = [answer];
-        while (options.length < 4 && pool.length > 0) {
-          const pick = pool[Math.floor(Math.random() * pool.length)];
+        const uniquePool = [...new Set(pool)].filter(p => p !== answer);
+        let attempts = 0;
+        while (options.length < 4 && uniquePool.length > 0 && attempts < 20) {
+          const pick = uniquePool[Math.floor(Math.random() * uniquePool.length)];
           if (options.indexOf(pick) === -1) options.push(pick);
+          attempts++;
         }
         options.sort(function() { return Math.random() - 0.5; });
         questions.push({ display: display, answer: answer, options: options });
