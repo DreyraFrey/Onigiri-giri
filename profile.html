@@ -136,7 +136,7 @@
       // Path progress
       let pathHtml = '';
       if (path && PATHS[path]) {
-        const missions = { beginner: 7, apprentice: 5, master: 4 };
+        const missions = { beginner: 50, apprentice: 50, master: 50 };
         const completed = (data.progress[path]?.completed || []).length;
         const total = missions[path] || 1;
         const pct = Math.round((completed / total) * 100);
