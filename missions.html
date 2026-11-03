@@ -90,6 +90,12 @@
       const freshData = JSON.parse(localStorage.getItem('og-paths') || '{"current":null,"progress":{}}');
       const path = freshData.current;
       const lessons = LESSONS[path] || [];
+      
+      // Handle old data format (milestones) and new format (completed)
+      if (freshData.progress[path] && !freshData.progress[path].completed) {
+        freshData.progress[path].completed = [];
+        localStorage.setItem('og-paths', JSON.stringify(freshData));
+      }
       const completed = freshData.progress[path]?.completed || [];
       
       // Find the first incomplete lesson
