@@ -8,18 +8,16 @@
   <link rel="icon" type="image/png" href="icon-header.png">
   <meta name="color-scheme" content="dark">
   <style>
-    .mission { display: flex; align-items: center; gap: 1rem; padding: 1rem; margin: 0.5rem 0; background: var(--surface); border-radius: 12px; border: 2px solid #333; }
-    .mission.locked { opacity: 0.5; }
-    .mission.done { border-color: #4caf50; }
-    .mission.current { border-color: #e85d04; }
-    .mission-num { width: 40px; height: 40px; border-radius: 50%; background: #333; display: flex; align-items: center; justify-content: center; font-weight: bold; }
-    .mission.done .mission-num { background: #4caf50; }
-    .mission.current .mission-num { background: #e85d04; }
-    .mission-info { flex: 1; }
-    .mission-info h3 { margin: 0; }
-    .mission-info p { margin: 0.3rem 0 0; font-size: 0.9rem; color: #aaa; }
-    .play-btn { padding: 0.6rem 1.2rem; margin-left: 0.5rem; background: #e85d04; color: white; border: none; border-radius: 6px; cursor: pointer; }
-    .play-btn:disabled { background: #333; cursor: not-allowed; }
+    .path-map { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; padding: 1rem 0; }
+    .path-dot { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; border: 3px solid transparent; transition: transform 0.1s; }
+    .path-dot.locked { background: #333; color: #666; cursor: default; }
+    .path-dot.current { background: #e85d04; color: white; }
+    .path-dot.done { background: #7b1fa2; color: white; }
+    .path-dot:not(.locked):hover { transform: scale(1.1); }
+    .path-label { font-size: 0.8rem; color: #aaa; text-align: center; max-width: 100px; }
+    .path-row { display: flex; align-items: center; gap: 0.5rem; }
+    .path-line { width: 3px; height: 20px; background: #333; }
+    .path-line.done { background: #7b1fa2; }
   </style>
 </head>
 <body>
@@ -69,11 +67,13 @@
     </aside>
   </div>
   <footer><p>Onigiri-giri · Free Japanese Learning site</p></footer>
+  <script src="lessons.js"></script>
   <script src="sidebar.js?v=4"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase.js"></script>
   <script src="auth-guard.js"></script>
   <script>
+    // Using LESSONS from lessons.js
     const MISSIONS = {
       beginner: [
         { name: 'Hiragana Basics', desc: 'Learn the first 10 hiragana', link: 'kana-learn.html?mode=hira&group=a' },
