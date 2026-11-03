@@ -29,7 +29,7 @@
     const pathEl = document.getElementById('sidebar-path');
     if (pathEl) {
       if (paths.current) {
-        const missions = { beginner: 50, apprentice: 0, master: 0 };
+        const missions = (typeof LESSONS !== 'undefined') ? { beginner: (LESSONS.beginner || []).length || 50, apprentice: (LESSONS.apprentice || []).length, master: (LESSONS.master || []).length } : { beginner: 50, apprentice: 0, master: 0 };
         const done = (paths.progress[paths.current]?.completed || []).length;
         const total = missions[paths.current] || 1;
         pathEl.innerHTML = `<b>${paths.current}</b> ${done}/${total}`;
