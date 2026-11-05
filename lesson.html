@@ -287,6 +287,9 @@
     
     async function goToNext() {
       try {
+        // Award XP
+        if (window.ogXP) ogXP.addXP(20);
+        
         const pathStorage = JSON.parse(localStorage.getItem('og-paths') || '{"current":null,"progress":{}}');
         if (!pathStorage.progress[currentPathId]) pathStorage.progress[currentPathId] = {};
         if (!pathStorage.progress[currentPathId].completed) pathStorage.progress[currentPathId].completed = [];
