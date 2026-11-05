@@ -84,6 +84,7 @@
     </aside>
   </div>
   <footer><p>Onigiri-giri · Free Japanese Learning site</p></footer>
+  <script src="xp.js"></script>
   <script src="learned.js"></script>
   <script src="review.js"></script>
   <script src="sidebar.js?v=9"></script>
@@ -202,6 +203,7 @@
       if (isCorrect) {
         btn.classList.add('correct');
         correct++;
+        if (window.ogXP) ogXP.addXP(5);
         if (window.ogSRS) ogSRS.record(dueItems[currentIndex].type, dueItems[currentIndex].id, true);
       } else {
         btn.classList.add('wrong');
