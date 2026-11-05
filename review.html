@@ -14,10 +14,9 @@
     .review-session { display: none; }
     .review-prompt { font-size: 2.5rem; text-align: center; margin: 1.5rem 0; }
     .review-options { display: flex; flex-direction: column; gap: 0.75rem; max-width: 400px; margin: 0 auto; }
-    .review-option { padding: 0.8rem 1.2rem; background: var(--surface); border: 2px solid var(--border); border-radius: 12px; cursor: pointer; font-size: 1.1rem; text-align: center; transition: all 0.15s; }
-    .review-option:hover { border-color: var(--accent); }
-    .review-option.correct { background: #4caf50; border-color: #4caf50; color: white; }
-    .review-option.wrong { background: #f44336; border-color: #f44336; color: white; }
+    .review-options .btn { margin: 0; }
+    .review-options .btn.correct { background: #4caf50; border-color: #4caf50; }
+    .review-options .btn.wrong { background: #f44336; border-color: #f44336; }
     .review-progress { text-align: center; color: var(--text-secondary); margin-bottom: 0.5rem; }
     .review-actions { display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem; }
   </style>
@@ -154,10 +153,28 @@
       const item = dueItems[currentIndex];
       document.getElementById('progress').textContent = (currentIndex + 1) + ' / ' + dueItems.length;
       
-      const char = item.id.split('-').pop();
+      // Extract character from ID (handles formats like "hira-あ", "hiragana-あ", "kanji-八", or just "あ")
+      let char = item.id;
+      if (char.includes('-')) char = char.split('-').pop();
+      
+      // Skip if not a valid Japanese character
+      if (!/[ぁ-んァ-ン一-龯]/.test(char)) {
+        currentIndex++;
+        showQuestion();
+        return;
+      }
+      
       document.getElementById('prompt').textContent = char;
       
-      const answer = KANA_READINGS[char] || char;
+      // Get the reading
+      const answer = KANA_READINGS[char];
+      if (!answer) {
+        // Skip items without known readings
+        currentIndex++;
+        showQuestion();
+        return;
+      }
+      
       const options = [answer];
       const allReadings = Object.values(KANA_READINGS);
       while (options.length < 4) {
@@ -170,7 +187,8 @@
       optionsDiv.innerHTML = '';
       options.forEach(opt => {
         const btn = document.createElement('button');
-        btn.className = 'review-option';
+        btn.className = 'btn btn-secondary';
+        btn.style.cssText = 'width:100%;padding:0.8rem;font-size:1.1rem;';
         btn.textContent = opt;
         btn.onclick = () => answerQuestion(btn, opt === answer);
         optionsDiv.appendChild(btn);
