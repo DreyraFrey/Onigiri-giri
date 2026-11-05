@@ -8,6 +8,12 @@
   <link rel="icon" type="image/png" href="icon-header.png">
   <meta name="color-scheme" content="dark">
   <style>
+    .character-sheet { display: grid; grid-template-columns: 140px 1fr; gap: 1.5rem; align-items: start; }
+    .avatar-section { text-align: center; }
+    .avatar-frame { width: 120px; height: 120px; border-radius: 50%; border: 3px solid var(--accent); background: var(--surface); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; font-size: 3rem; }
+    .level-badge { background: var(--accent); color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: bold; display: inline-block; }
+    .xp-section { flex: 1; }
+    .xp-label { display: flex; justify-content: space-between; margin-bottom: 0.3rem; font-size: 0.9rem; }
     .path-card { border: 2px solid #333; border-radius: 12px; padding: 1rem; margin: 0.5rem 0; cursor: pointer; }
     .path-card.active { border-color: #e85d04; background: rgba(232,93,4,0.1); }
     .path-card h3 { margin: 0 0 0.5rem; }
@@ -55,11 +61,23 @@
     </aside>
     <main>
       <section class="card">
-        <h2>Level</h2>
-        <div id="level-display" style="text-align:center;">
-          <div style="font-size:2rem;font-weight:bold;" id="level-num">1</div>
-          <div id="xp-text">0 / 100 XP</div>
-          <div class="level-bar"><div class="level-bar-fill" id="level-bar" style="width:0%"></div></div>
+        <h2>Character</h2>
+        <div class="character-sheet">
+          <div class="avatar-section">
+            <div class="avatar-frame" id="avatar">🍙</div>
+            <div class="level-badge">Lv <span id="level-num">1</span></div>
+          </div>
+          <div class="xp-section">
+            <div class="xp-label">
+              <span>Experience</span>
+              <span id="xp-text">0 / 100 XP</span>
+            </div>
+            <div class="level-bar" style="height:12px;"><div class="level-bar-fill" id="level-bar" style="width:0%"></div></div>
+            <div style="margin-top:1rem;">
+              <div class="progress-item"><span>🔥 Streak</span><span id="profile-streak">0 days</span></div>
+              <div class="progress-item"><span>📖 Kanji</span><span id="profile-kanji">0</span></div>
+            </div>
+          </div>
         </div>
       </section>
       <section class="card">
