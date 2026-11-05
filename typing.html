@@ -86,6 +86,7 @@
   <footer><p>Onigiri-giri · Free Japanese Learning site</p></footer>
   <script src="lessons.js"></script>
   <script src="learned.js"></script>
+  <script src="xp.js"></script>
   <script src="sidebar.js?v=9"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase.js"></script>
@@ -151,6 +152,7 @@
       if (val === current.r) {
         input.className = 'typing-input correct';
         feedback.textContent = 'Correct!';
+        if (window.ogXP) { ogXP.addXP(5); ogXP.updateDaily(1); }
         feedback.className = 'feedback correct';
         correct++;
         streak++;
