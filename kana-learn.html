@@ -195,7 +195,7 @@
           const correct = o.k === currentItem.k;
           if (window.ogSRS) {
             const type = script === 'hira' ? 'hira' : 'kata';
-            window.ogSRS.record(type, type + '-' + currentItem.k, correct);
+            if (window.ogXP) ogXP.addXP(5); window.ogSRS.record(type, type + '-' + currentItem.k, correct);
           }
           if (correct) {
             b.style.background = 'var(--accent)';
