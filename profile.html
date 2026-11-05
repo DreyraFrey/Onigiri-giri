@@ -219,6 +219,49 @@
 
     document.querySelector('.menu-toggle').onclick = () => document.getElementById('nav').classList.toggle('open');
     render();
+    
+    async function loadUsername() {
+      try {
+        const user = await getUser();
+        if (user) {
+          const meta = user.user_metadata || {};
+          const name = meta.full_name || meta.name || meta.user_name || meta.preferred_username || meta.custom_claims?.global_name || user.email?.split('@')[0] || 'Learner';
+          document.getElementById('username').textContent = name;
+        } else {
+          document.getElementById('username').textContent = 'No user';
+        }
+      } catch (e) {
+        document.getElementById('username').textContent = 'Error';
+      }
+    }
+    
+    function updateLevelDisplay() {
+      if (!window.ogXP) return;
+      const prog = ogXP.getLevelProgress();
+      document.getElementById('level-num').textContent = prog.level;
+      document.getElementById('xp-text').textContent = prog.xp + ' / ' + prog.nextLevelXP + ' XP';
+      document.getElementById('level-bar').style.width = (prog.progress * 100) + '%';
+      const streakEl = document.getElementById('profile-streak');
+      if (streakEl) streakEl.textContent = (localStorage.getItem('og-streak') || '0') + ' days';
+      const kanjiEl = document.getElementById('profile-kanji');
+      if (kanjiEl && window.ogLearned) kanjiEl.textContent = ogLearned.getLearnedCount('kanji');
+      
+      const achContainer = document.getElementById('achievements');
+      if (achContainer) {
+        achContainer.innerHTML = '';
+        ogXP.ACHIEVEMENTS.forEach(ach => {
+          const unlocked = ogXP.hasAchievement(ach.id);
+          const div = document.createElement('div');
+          div.style.cssText = 'text-align:center;padding:0.5rem;border-radius:8px;background:' + (unlocked ? 'var(--accent)' : 'var(--border)') + ';opacity:' + (unlocked ? '1' : '0.4') + ';width:70px;';
+          div.innerHTML = '<div style="font-size:1.5rem;">' + ach.icon + '</div><div style="font-size:0.7rem;">' + ach.name + '</div>';
+          div.title = ach.desc;
+          achContainer.appendChild(div);
+        });
+      }
+    }
+    
+    loadUsername();
+    setTimeout(updateLevelDisplay, 500);
   </script>
 </body>
 </html>
