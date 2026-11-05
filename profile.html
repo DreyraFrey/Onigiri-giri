@@ -13,7 +13,7 @@
     .avatar-frame { width: 120px; height: 120px; border-radius: 50%; border: 3px solid var(--accent); background: var(--surface); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; font-size: 3rem; }
     .level-badge { background: var(--accent); color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: bold; display: inline-block; }
     .xp-section { flex: 1; }
-    .badge-slot { width: 36px; height: 36px; border: 2px dashed var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-size: 1.2rem; }
+    .badge-slot { width: 50px; height: 50px; border: 2px dashed var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-size: 1.5rem; }
     .xp-label { display: flex; justify-content: space-between; margin-bottom: 0.3rem; font-size: 0.9rem; }
     .path-card { border: 2px solid #333; border-radius: 12px; padding: 1rem; margin: 0.5rem 0; cursor: pointer; }
     .path-card.active { border-color: #e85d04; background: rgba(232,93,4,0.1); }
@@ -76,7 +76,7 @@
             <div class="level-bar" style="height:12px;"><div class="level-bar-fill" id="level-bar" style="width:0%"></div></div>
             <div style="margin-top:1rem;">
               <div class="progress-item"><span>🔥 Streak</span><span id="profile-streak">0 days</span></div>
-              <div style="display:flex;gap:0.5rem;margin-top:0.5rem;" id="badge-slots">
+              <div style="display:flex;gap:0.75rem;margin-top:0.8rem;justify-content:center;" id="badge-slots">
                 <div class="badge-slot">○</div>
                 <div class="badge-slot">○</div>
                 <div class="badge-slot">○</div>
@@ -95,7 +95,19 @@
       </section>
       <section class="card">
         <h2>Achievements</h2>
-        <div id="achievements" style="display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;"></div>
+        <div id="achievements" style="display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;min-height:180px;">
+          <div style="text-align:center;padding:0.5rem;border-radius:8px;background:var(--border);opacity:0.4;width:70px;"><div style="font-size:1.5rem;">🌱</div><div style="font-size:0.7rem;">First Steps</div></div>
+          <div style="text-align:center;padding:0.5rem;border-radius:8px;background:var(--border);opacity:0.4;width:70px;"><div style="font-size:1.5rem;">🔥</div><div style="font-size:0.7rem;">Week Warrior</div></div>
+          <div style="text-align:center;padding:0.5rem;border-radius:8px;background:var(--border);opacity:0.4;width:70px;"><div style="font-size:1.5rem;">💪</div><div style="font-size:0.7rem;">Monthly Master</div></div>
+          <div style="text-align:center;padding:0.5rem;border-radius:8px;background:var(--border);opacity:0.4;width:70px;"><div style="font-size:1.5rem;">📖</div><div style="font-size:0.7rem;">Kanji Novice</div></div>
+          <div style="text-align:center;padding:0.5rem;border-radius:8px;background:var(--border);opacity:0.4;width:70px;"><div style="font-size:1.5rem;">📚</div><div style="font-size:0.7rem;">Kanji Apprentice</div></div>
+          <div style="text-align:center;padding:0.5rem;border-radius:8px;background:var(--border);opacity:0.4;width:70px;"><div style="font-size:1.5rem;">🎓</div><div style="font-size:0.7rem;">Kanji Master</div></div>
+          <div style="text-align:center;padding:0.5rem;border-radius:8px;background:var(--border);opacity:0.4;width:70px;"><div style="font-size:1.5rem;">🏅</div><div style="font-size:0.7rem;">Beginner Complete</div></div>
+          <div style="text-align:center;padding:0.5rem;border-radius:8px;background:var(--border);opacity:0.4;width:70px;"><div style="font-size:1.5rem;">🥈</div><div style="font-size:0.7rem;">Apprentice Complete</div></div>
+          <div style="text-align:center;padding:0.5rem;border-radius:8px;background:var(--border);opacity:0.4;width:70px;"><div style="font-size:1.5rem;">🥇</div><div style="font-size:0.7rem;">Master Complete</div></div>
+          <div style="text-align:center;padding:0.5rem;border-radius:8px;background:var(--border);opacity:0.4;width:70px;"><div style="font-size:1.5rem;">⭐</div><div style="font-size:0.7rem;">Rising Star</div></div>
+          <div style="text-align:center;padding:0.5rem;border-radius:8px;background:var(--border);opacity:0.4;width:70px;"><div style="font-size:1.5rem;">🌟</div><div style="font-size:0.7rem;">Veteran</div></div>
+        </div>
       </section>
       <section class="card">
         <h2>Badges</h2>
@@ -209,10 +221,11 @@
         <div class="stat"><b>${streak.days}</b>Streak</div>
       `;
 
-      const badges = Object.entries(data.progress).filter(([k,v]) => v.badge).map(([k]) => PATHS[k].badge);
-      document.getElementById('badges').innerHTML = badges.length 
-        ? badges.map(b => `<span class="badge">${b}</span>`).join('')
-        : '<p>No badges yet. Complete a path exam to earn one.</p>';
+      const earnedBadges = Object.entries(data.progress).filter(([k,v]) => v.badge).map(([k]) => k);
+      document.getElementById('badges').innerHTML = Object.entries(PATHS).map(([id, p]) => {
+        const earned = earnedBadges.includes(id);
+        return `<span class="badge" style="opacity:${earned ? '1' : '0.4'};background:${earned ? 'var(--accent)' : 'var(--border)'};">${p.badge}</span>`;
+      }).join('');
 
       document.getElementById('paths').innerHTML = Object.entries(PATHS).map(([id, p]) => `
         <div class="path-card ${data.current === id ? 'active' : ''}" onclick="setPath('${id}')">
