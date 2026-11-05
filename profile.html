@@ -242,7 +242,7 @@
       document.getElementById('xp-text').textContent = prog.xp + ' / ' + prog.nextLevelXP + ' XP';
       document.getElementById('level-bar').style.width = (prog.progress * 100) + '%';
       const streakEl = document.getElementById('profile-streak');
-      if (streakEl) streakEl.textContent = (localStorage.getItem('og-streak') || '0') + ' days';
+      if (streakEl) { const s = JSON.parse(localStorage.getItem('og-streak') || '{"days":0}'); streakEl.textContent = s.days + ' days'; }
       const kanjiEl = document.getElementById('profile-kanji');
       if (kanjiEl && window.ogLearned) kanjiEl.textContent = ogLearned.getLearnedCount('kanji');
       
