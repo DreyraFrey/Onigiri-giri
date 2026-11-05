@@ -1,5 +1,9 @@
 const XP_KEY = 'og-xp';
-const LEVEL_XP = [0, 100, 250, 500, 1000, 1750, 2750, 4000, 5500, 7500, 10000];
+const MAX_LEVEL = 222;
+const LEVEL_XP = [0];
+for (let i = 1; i <= MAX_LEVEL; i++) {
+  LEVEL_XP.push(Math.floor(100 * Math.pow(1.15, i - 1)));
+}
 
 function getXP() {
   return parseInt(localStorage.getItem(XP_KEY) || '0');
@@ -17,7 +21,7 @@ function addXP(amount) {
 function getLevel() {
   const xp = getXP();
   for (let i = LEVEL_XP.length - 1; i >= 0; i--) {
-    if (xp >= LEVEL_XP[i]) return i + 1;
+    if (xp >= LEVEL_XP[i]) return Math.min(i + 1, MAX_LEVEL);
   }
   return 1;
 }
@@ -118,4 +122,74 @@ function checkAchievements() {
   if (level >= 10) unlockAchievement('level-10');
 }
 
-window.ogXP = { getXP, addXP, getLevel, getLevelProgress, unlockAchievement, hasAchievement, getAchievements, checkAchievements, ACHIEVEMENTS };
+// Combo system
+let combo = 0;
+const COMBO_KEY = 'og-combo';
+
+function getCombo() { return combo; }
+
+function addCombo() {
+  combo++;
+  localStorage.setItem(COMBO_KEY, combo);
+  return combo;
+}
+
+function resetCombo() {
+  combo = 0;
+  localStorage.setItem(COMBO_KEY, 0);
+}
+
+function getComboMultiplier() {
+  if (combo >= 10) return 2;
+  if (combo >= 5) return 1.5;
+  if (combo >= 3) return 1.25;
+  return 1;
+}
+
+function addXPWithCombo(baseAmount) {
+  const mult = getComboMultiplier();
+  const amount = Math.floor(baseAmount * mult);
+  addXP(amount);
+  return { amount, multiplier: mult, combo };
+}
+
+// Daily challenge
+const DAILY_KEY = 'og-daily';
+
+function getDaily() {
+  const data = JSON.parse(localStorage.getItem(DAILY_KEY) || '{}');
+  const today = new Date().toDateString();
+  if (data.date !== today) {
+    return { date: today, completed: false, type: getDailyType(), progress: 0, target: 5 };
+  }
+  return data;
+}
+
+function getDailyType() {
+  const types = ['lessons', 'kanji', 'kana', 'typing'];
+  return types[Math.floor(Math.random() * types.length)];
+}
+
+function updateDaily(progress) {
+  const daily = getDaily();
+  if (daily.completed) return daily;
+  daily.progress = Math.min(daily.progress + progress, daily.target);
+  if (daily.progress >= daily.target) {
+    daily.completed = true;
+    addXP(50);
+    showDailyComplete();
+  }
+  localStorage.setItem(DAILY_KEY, JSON.stringify(daily));
+  return daily;
+}
+
+function showDailyComplete() {
+  const toast = document.createElement('div');
+  toast.className = 'achievement-toast';
+  toast.innerHTML = '<div class="achievement-content"><span class="achievement-icon">🎯</span><div><b>Daily Complete!</b><br><small>+50 XP</small></div></div>';
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
+
+window.ogXP = { getXP, addXP, getLevel, getLevelProgress, unlockAchievement, hasAchievement, getAchievements, checkAchievements, ACHIEVEMENTS, getCombo, addCombo, resetCombo, getComboMultiplier, addXPWithCombo, getDaily, updateDaily, MAX_LEVEL };
+EOF
