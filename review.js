@@ -19,10 +19,12 @@ function srsRecord(type, id, correct) {
 
   item.seen++;
   if (correct) {
+    if (window.ogXP) { ogXP.addCombo(); ogXP.addXPWithCombo(3); }
     item.interval = item.interval === 0 ? 1 : Math.round(item.interval * item.ease);
     item.ease = Math.min(item.ease + 0.1, 3);
     item.due = Date.now() + item.interval * 24 * 60 * 60 * 1000;
   } else {
+    if (window.ogXP) ogXP.resetCombo();
     item.interval = 0;
     item.ease = Math.max(item.ease - 0.2, 1.3);
     item.due = Date.now(); // due immediately
