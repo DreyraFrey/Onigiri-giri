@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <title>Stroke Order – Onigiri-giri</title>
+  <link rel="stylesheet" href="style.css?v=10">
+  <link rel="icon" type="image/png" href="icon-header.png">
+  <meta name="color-scheme" content="dark">
+  <style>
+    .stroke-container { text-align: center; }
+    .stroke-char { font-size: 2rem; margin: 0.5rem 0; }
+    .stroke-meaning { color: var(--text-secondary); margin-bottom: 1rem; }
+    #canvas { border: 2px solid var(--border); border-radius: 12px; background: var(--surface); touch-action: none; }
+    .stroke-controls { display: flex; gap: 1rem; justify-content: center; margin-top: 1rem; }
+    .stroke-count { margin-top: 0.5rem; color: var(--text-secondary); }
+    .desktop-msg { display: none; text-align: center; padding: 2rem; }
+    @media (min-width: 768px) {
+      .stroke-container { display: none; }
+      .desktop-msg { display: block; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><a href="index.html"><img class="site-logo" src="icon-header.png" alt="Onigiri-giri">Onigiri-giri</a></h1>
+    <p>Stroke Order</p>
+    <button class="menu-toggle" aria-label="Menu">☰</button>
+  </header>
+  <nav id="nav">
+    <a href="index.html">Home</a>
+    <a href="missions.html">Missions</a>
+    <a href="review.html">Review</a>
+    <a href="profile.html">Profile</a>
+    <a href="#" id="logout-btn" style="margin-left:auto;">Logout</a>
+  </nav>
+  <div class="layout">
+    <aside class="sidebar left-sidebar">
+      <div class="card">
+        <h3>Path</h3>
+        <div class="progress-item"><span id="sidebar-path">No path</span></div>
+      </div>
+    </aside>
+    <main>
+      <section class="card">
+        <div class="desktop-msg">
+          <h2>Phone Only</h2>
+          <p>Stroke Order practice works best on a phone with touch input.</p>
+          <p>Open this page on your phone to practice.</p>
+        </div>
+        <div class="stroke-container">
+          <h2>Stroke Order</h2>
+          <div class="stroke-char" id="char">人</div>
+          <div class="stroke-meaning" id="meaning">person (hito)</div>
+          <canvas id="canvas" width="280" height="280"></canvas>
+          <div class="stroke-count">Strokes: <span id="stroke-count">0</span> / <span id="stroke-target">2</span></div>
+          <div class="stroke-controls">
+            <button class="btn btn-secondary" onclick="clearCanvas()">Clear</button>
+            <button class="btn btn-primary" onclick="next()">Next</button>
+          </div>
+        </div>
+      </section>
+    </main>
+    <aside class="sidebar right-sidebar">
+      <div class="card">
+        <h3>Studying Tips</h3>
+        <p>Draw each stroke carefully. Follow the correct order.</p>
+      </div>
+    </aside>
+  </div>
+  <footer><p>Onigiri-giri · Free Japanese Learning site</p></footer>
+  <script src="sidebar.js?v=9"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+  <script src="auth-guard.js"></script>
+  <script src="progress-sync.js"></script>
+  <script>
+    const kanjiData = [
+      { c: '人', m: 'person', r: 'hito', strokes: 2 },
+      { c: '一', m: 'one', r: 'ichi', strokes: 1 },
+      { c: '二', m: 'two', r: 'ni', strokes: 2 },
+      { c: '三', m: 'three', r: 'san', strokes: 3 },
+      { c: '日', m: 'sun/day', r: 'hi', strokes: 4 },
+      { c: '月', m: 'moon/month', r: 'tsuki', strokes: 4 },
+      { c: '火', m: 'fire', r: 'hi', strokes: 4 },
+      { c: '水', m: 'water', r: 'mizu', strokes: 4 },
+      { c: '木', m: 'tree', r: 'ki', strokes: 4 },
+      { c: '山', m: 'mountain', r: 'yama', strokes: 3 }
+    ];
+
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    let drawing = false;
+    let strokes = 0;
+    let current = null;
+
+    function next() {
+      current = kanjiData[Math.floor(Math.random() * kanjiData.length)];
+      document.getElementById('char').textContent = current.c;
+      document.getElementById('meaning').textContent = current.m + ' (' + current.r + ')';
+      document.getElementById('stroke-target').textContent = current.strokes;
+      clearCanvas();
+    }
+
+    function clearCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      strokes = 0;
+      document.getElementById('stroke-count').textContent = strokes;
+    }
+
+    function getPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      const touch = e.touches ? e.touches[0] : e;
+      return { x: touch.clientX - rect.left, y: touch.clientY - rect.top };
+    }
+
+    function startDraw(e) {
+      e.preventDefault();
+      drawing = true;
+      const pos = getPos(e);
+      ctx.beginPath();
+      ctx.moveTo(pos.x, pos.y);
+      strokes++;
+      document.getElementById('stroke-count').textContent = strokes;
+    }
+
+    function draw(e) {
+      if (!drawing) return;
+      e.preventDefault();
+      const pos = getPos(e);
+      ctx.lineWidth = 4;
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = '#f97316';
+      ctx.lineTo(pos.x, pos.y);
+      ctx.stroke();
+    }
+
+    function endDraw(e) {
+      e.preventDefault();
+      drawing = false;
+    }
+
+    canvas.addEventListener('touchstart', startDraw);
+    canvas.addEventListener('touchmove', draw);
+    canvas.addEventListener('touchend', endDraw);
+    canvas.addEventListener('mousedown', startDraw);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', endDraw);
+
+    document.querySelector('.menu-toggle').addEventListener('click', () => {
+      document.getElementById('nav').classList.toggle('open');
+    });
+
+    next();
+  </script>
+</body>
+</html>
