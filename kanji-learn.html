@@ -177,7 +177,7 @@
         b.textContent = o.k;
         b.onclick = () => {
           const correct = o.k === currentItem.k;
-          if (window.ogSRS) window.ogSRS.record('kanji', 'kanji-' + currentItem.k, correct);
+          if (window.ogSRS) if (window.ogXP) ogXP.addXP(5); window.ogSRS.record('kanji', 'kanji-' + currentItem.k, correct);
           if (correct) {
             b.style.background = 'var(--accent)';
             setTimeout(next, 400);
