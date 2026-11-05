@@ -13,6 +13,7 @@
     .avatar-frame { width: 120px; height: 120px; border-radius: 50%; border: 3px solid var(--accent); background: var(--surface); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; font-size: 3rem; }
     .level-badge { background: var(--accent); color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: bold; display: inline-block; }
     .xp-section { flex: 1; }
+    .badge-slot { width: 36px; height: 36px; border: 2px dashed var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-size: 1.2rem; }
     .xp-label { display: flex; justify-content: space-between; margin-bottom: 0.3rem; font-size: 0.9rem; }
     .path-card { border: 2px solid #333; border-radius: 12px; padding: 1rem; margin: 0.5rem 0; cursor: pointer; }
     .path-card.active { border-color: #e85d04; background: rgba(232,93,4,0.1); }
@@ -75,7 +76,11 @@
             <div class="level-bar" style="height:12px;"><div class="level-bar-fill" id="level-bar" style="width:0%"></div></div>
             <div style="margin-top:1rem;">
               <div class="progress-item"><span>🔥 Streak</span><span id="profile-streak">0 days</span></div>
-              <div class="progress-item"><span>📖 Kanji</span><span id="profile-kanji">0</span></div>
+              <div style="display:flex;gap:0.5rem;margin-top:0.5rem;" id="badge-slots">
+                <div class="badge-slot">○</div>
+                <div class="badge-slot">○</div>
+                <div class="badge-slot">○</div>
+              </div>
             </div>
           </div>
         </div>
