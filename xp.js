@@ -1,8 +1,12 @@
 const XP_KEY = 'og-xp';
 const MAX_LEVEL = 222;
 const LEVEL_XP = [0];
+let total = 0;
 for (let i = 1; i <= MAX_LEVEL; i++) {
-  LEVEL_XP.push(Math.floor(100 * Math.pow(1.15, i - 1)));
+  const tier = Math.floor((i - 1) / 10);
+  const xpNeeded = 100 * (tier + 1);
+  total += xpNeeded;
+  LEVEL_XP.push(total);
 }
 
 function getXP() {
