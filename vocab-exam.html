@@ -286,6 +286,11 @@
       document.getElementById('exam').style.display = 'none';
       document.getElementById('results').style.display = 'block';
       document.getElementById('score').textContent = score + ' / ' + current.length + ' correct';
+      if (window.ogXP && score > 0) {
+        const xp = Math.floor(score * 2);
+        ogXP.addXP(xp);
+        ogXP.updateDaily(1);
+      }
       if (window.ogProgress) window.ogProgress.add('vocab', Math.round(score / current.length * 5));
       const list = document.getElementById('wrong-list');
       list.innerHTML = '';
