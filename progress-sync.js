@@ -1,5 +1,5 @@
 // Progress sync with Supabase
-const PROGRESS_KEYS = ['og-learned', 'og-progress', 'og-streak', 'og-review', 'og-srs', 'og-hira', 'og-kata', 'og-kanji', 'og-vocab', 'og-paths', 'og-xp', 'og-achievements', 'og-daily'];
+const PROGRESS_KEYS = ['og-learned', 'og-progress', 'og-streak', 'og-review', 'og-srs', 'og-hira', 'og-kata', 'og-kanji', 'og-vocab', 'og-paths', 'og-xp', 'og-achievements', 'og-daily', 'og-badge-slots'];
 
 async function collectProgress() {
   const data = {};
