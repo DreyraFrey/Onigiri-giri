@@ -55,6 +55,18 @@
     </aside>
     <main>
       <section class="card">
+        <h2>Level</h2>
+        <div id="level-display" style="text-align:center;">
+          <div style="font-size:2rem;font-weight:bold;" id="level-num">1</div>
+          <div id="xp-text">0 / 100 XP</div>
+          <div class="level-bar"><div class="level-bar-fill" id="level-bar" style="width:0%"></div></div>
+        </div>
+      </section>
+      <section class="card">
+        <h2>Achievements</h2>
+        <div id="achievements" style="display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;"></div>
+      </section>
+      <section class="card">
         <h2>Path Progress</h2>
         <div id="path-progress"></div>
       </section>
@@ -86,6 +98,7 @@
   </div>
   <footer><p>Onigiri-giri · Free Japanese Learning site</p></footer>
   <script src="learned.js"></script>
+  <script src="xp.js"></script>
   <script src="sidebar.js?v=9"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase.js"></script>
