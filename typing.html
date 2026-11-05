@@ -152,7 +152,11 @@
       if (val === current.r) {
         input.className = 'typing-input correct';
         feedback.textContent = 'Correct!';
-        if (window.ogXP) { ogXP.addXP(5); ogXP.updateDaily(1); }
+        if (window.ogXP) { 
+          ogXP.addXP(5); 
+          const daily = ogXP.getDaily();
+          if (daily.type === 'typing') ogXP.updateDaily(1);
+        }
         feedback.className = 'feedback correct';
         correct++;
         streak++;
