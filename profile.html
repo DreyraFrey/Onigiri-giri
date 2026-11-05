@@ -151,6 +151,7 @@
   <script src="progress-sync.js?v=2"></script>
   <script>
     const PATHS = {
+      test: { name: 'Test', badge: '🧪 Test Badge' },
       beginner: {
         name: 'Beginner',
         desc: 'Learn the basics: kana, simple vocab, and your first kanji.',
@@ -366,6 +367,12 @@
     
     window.equipBadge = equipBadge;
     window.unequipBadge = unequipBadge;
+    
+    // Grant test badge for testing
+    const pathData = JSON.parse(localStorage.getItem('og-paths') || '{"progress":{}}');
+    if (!pathData.progress.test) pathData.progress.test = {};
+    pathData.progress.test.badge = true;
+    localStorage.setItem('og-paths', JSON.stringify(pathData));
     
     renderBadgeSlots();
     renderBadges();
