@@ -1,27 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Review – Onigiri-giri</title>
-  <link rel="stylesheet" href="style.css?v=7">
+  <link rel="stylesheet" href="style.css?v=10">
   <link rel="icon" type="image/png" href="icon-header.png">
-  <link rel="manifest" href="manifest.json">
   <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#15202b">
+  <style>
+    .review-start { text-align: center; padding: 1rem 0; }
+    .review-start img { width: 80px; margin: 1rem 0; }
+    .review-session { display: none; }
+    .review-prompt { font-size: 2.5rem; text-align: center; margin: 1.5rem 0; }
+    .review-options { display: flex; flex-direction: column; gap: 0.75rem; max-width: 400px; margin: 0 auto; }
+    .review-option { padding: 0.8rem 1.2rem; background: var(--surface); border: 2px solid var(--border); border-radius: 12px; cursor: pointer; font-size: 1.1rem; text-align: center; transition: all 0.15s; }
+    .review-option:hover { border-color: var(--accent); }
+    .review-option.correct { background: #4caf50; border-color: #4caf50; color: white; }
+    .review-option.wrong { background: #f44336; border-color: #f44336; color: white; }
+    .review-progress { text-align: center; color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .review-actions { display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem; }
+  </style>
 </head>
 <body>
   <header>
     <h1><a href="index.html"><img class="site-logo" src="icon-header.png" alt="Onigiri-giri">Onigiri-giri</a></h1>
-    <p>Spaced Review</p>
+    <p>Review</p>
     <button class="menu-toggle" aria-label="Menu">☰</button>
   </header>
-    <div class="mobile-progress">
-      <span>あ <b id="m-hira">0</b></span>
-      <span>ア <b id="m-kata">0</b></span>
-      <span>漢 <b id="m-kanji">0</b></span>
-      <span>🔥 <b id="m-streak">0</b></span>
-    </div>
+  <div class="mobile-progress">
+    <span>あ <b id="m-hira">0</b></span>
+    <span>ア <b id="m-kata">0</b></span>
+    <span>漢 <b id="m-kanji">0</b></span>
+    <span>🔥 <b id="m-streak">0</b></span>
+  </div>
   <nav id="nav">
     <a href="index.html">Home</a>
     <a href="missions.html">Missions</a>
@@ -29,13 +41,11 @@
     <a href="profile.html">Profile</a>
     <a href="#" id="logout-btn" style="margin-left:auto;">Logout</a>
   </nav>
-
   <div class="layout">
     <aside class="sidebar left-sidebar">
       <div class="card">
         <h3>Path</h3>
         <div class="progress-item"><span id="sidebar-path">No path</span></div>
-        <a href="missions.html" class="continue-btn">▶ Continue</a>
       </div>
       <div class="card">
         <h3>Total</h3>
@@ -44,36 +54,23 @@
         <div class="progress-item"><span>Kanji</span><span id="prog-kanji">0/500</span></div>
         <div class="progress-item"><span>Streak</span><span id="streak">0 days</span></div>
       </div>
-      <div class="card">
-        <h3>Quick Practice</h3>
-        <a href="hiragana-matching.html" class="sidebar-link">Hiragana Matching</a>
-        <a href="katakana-matching.html" class="sidebar-link">Katakana Matching</a>
-        <a href="matching.html" class="sidebar-link">Kanji Memory</a>
-        <a href="quiz.html" class="sidebar-link">Quiz</a>
-      </div>
     </aside>
-
     <main>
-      <section class="card" id="select">
-        <h2>Review</h2>
-        <p>Items you've practiced. Wrong answers come back sooner. Correct ones return later in the session and on future days.</p>
-        <div id="due-area" style="display:flex; align-items:center; gap:1rem;">
-          <img id="think-mascot" src="mascot-think-flipped.png" alt="Thinking" style="width:80px; height:auto; display:none;">
-          <p id="due-count" style="margin:0;">Checking due items...</p>
+      <section class="card" id="start-screen">
+        <div class="review-start">
+          <h2>Review</h2>
+          <img src="mascot-think.png" alt="Thinking" id="mascot">
+          <p id="due-text">Checking...</p>
+          <button class="btn btn-primary" id="start-btn" style="display:none;">Start Review</button>
+          <p id="no-due" style="display:none;color:var(--text-secondary);">Nothing due. Practice some lessons first.</p>
         </div>
-        <button class="game-link" id="startReview" style="display:none;">Start Review</button>
-        <p id="no-due" style="display:none; color: var(--text-secondary);">Nothing due right now. Practice some quizzes or matching games first.</p>
       </section>
-
-      <section class="card" id="reviewArea" style="display:none;">
-        <p id="progress">0 / 0</p>
-        <p id="prompt" style="font-size:1.6rem; margin:1rem 0;">—</p>
-        <div id="options" style="display:flex; flex-direction:column; gap:0.6rem;"></div>
-        <button id="again" class="game-link" style="background:#c0392b; margin-top:0.5rem;">Again</button>
-        <button id="good" class="game-link" style="margin-top:0.5rem;">Good</button>
+      <section class="card review-session" id="session">
+        <div class="review-progress" id="progress">1 / 10</div>
+        <div class="review-prompt" id="prompt">あ</div>
+        <div class="review-options" id="options"></div>
       </section>
     </main>
-
     <aside class="sidebar right-sidebar">
       <div class="card">
         <h3>Daily Word</h3>
@@ -87,135 +84,127 @@
       </div>
     </aside>
   </div>
-
-  <footer>
-    <p>Onigiri-giri · Free Japanese Learning site</p>
-  </footer>
+  <footer><p>Onigiri-giri · Free Japanese Learning site</p></footer>
   <script src="learned.js"></script>
   <script src="review.js"></script>
   <script src="sidebar.js?v=9"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+  <script src="auth-guard.js"></script>
+  <script src="progress-sync.js"></script>
   <script>
+    const KANA_READINGS = {
+      'あ':'a','い':'i','う':'u','え':'e','お':'o',
+      'か':'ka','き':'ki','く':'ku','け':'ke','こ':'ko',
+      'さ':'sa','し':'shi','す':'su','せ':'se','そ':'so',
+      'た':'ta','ち':'chi','つ':'tsu','て':'te','と':'to',
+      'な':'na','に':'ni','ぬ':'nu','ね':'ne','の':'no',
+      'は':'ha','ひ':'hi','ふ':'fu','へ':'he','ほ':'ho',
+      'ま':'ma','み':'mi','む':'mu','め':'me','も':'mo',
+      'や':'ya','ゆ':'yu','よ':'yo',
+      'ら':'ra','り':'ri','る':'ru','れ':'re','ろ':'ro',
+      'わ':'wa','を':'wo','ん':'n'
+    };
+
+    let dueItems = [];
+    let currentIndex = 0;
+    let correct = 0;
+
+    function checkDue() {
+      const srs = JSON.parse(localStorage.getItem('og-srs') || '{}');
+      const now = Date.now();
+      dueItems = [];
+      
+      Object.entries(srs).forEach(([type, items]) => {
+        Object.entries(items).forEach(([id, data]) => {
+          if (data.due <= now) {
+            dueItems.push({ type, id, ...data });
+          }
+        });
+      });
+
+      const dueText = document.getElementById('due-text');
+      const startBtn = document.getElementById('start-btn');
+      const noDue = document.getElementById('no-due');
+
+      if (dueItems.length > 0) {
+        dueText.textContent = dueItems.length + ' items due';
+        startBtn.style.display = 'inline-block';
+        noDue.style.display = 'none';
+      } else {
+        dueText.textContent = '';
+        startBtn.style.display = 'none';
+        noDue.style.display = 'block';
+      }
+    }
+
+    function startReview() {
+      document.getElementById('start-screen').style.display = 'none';
+      document.getElementById('session').style.display = 'block';
+      currentIndex = 0;
+      correct = 0;
+      showQuestion();
+    }
+
+    function showQuestion() {
+      if (currentIndex >= dueItems.length) {
+        finishReview();
+        return;
+      }
+      const item = dueItems[currentIndex];
+      document.getElementById('progress').textContent = (currentIndex + 1) + ' / ' + dueItems.length;
+      
+      const char = item.id.split('-').pop();
+      document.getElementById('prompt').textContent = char;
+      
+      const answer = KANA_READINGS[char] || char;
+      const options = [answer];
+      const allReadings = Object.values(KANA_READINGS);
+      while (options.length < 4) {
+        const r = allReadings[Math.floor(Math.random() * allReadings.length)];
+        if (!options.includes(r)) options.push(r);
+      }
+      options.sort(() => Math.random() - 0.5);
+      
+      const optionsDiv = document.getElementById('options');
+      optionsDiv.innerHTML = '';
+      options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'review-option';
+        btn.textContent = opt;
+        btn.onclick = () => answerQuestion(btn, opt === answer);
+        optionsDiv.appendChild(btn);
+      });
+    }
+
+    function answerQuestion(btn, isCorrect) {
+      const options = document.querySelectorAll('.review-option');
+      options.forEach(o => o.style.pointerEvents = 'none');
+      
+      if (isCorrect) {
+        btn.classList.add('correct');
+        correct++;
+        if (window.ogSRS) ogSRS.record(dueItems[currentIndex].type, dueItems[currentIndex].id, true);
+      } else {
+        btn.classList.add('wrong');
+        if (window.ogSRS) ogSRS.record(dueItems[currentIndex].type, dueItems[currentIndex].id, false);
+      }
+      
+      currentIndex++;
+      setTimeout(showQuestion, 600);
+    }
+
+    function finishReview() {
+      document.getElementById('session').innerHTML = '<div style="text-align:center;padding:2rem;"><h2>Done!</h2><p>' + correct + ' / ' + dueItems.length + ' correct</p><button class="btn btn-primary" onclick="location.reload()">Back</button></div>';
+      if (typeof syncToCloud === 'function') syncToCloud();
+    }
+
+    document.getElementById('start-btn').onclick = startReview;
     document.querySelector('.menu-toggle').addEventListener('click', () => {
       document.getElementById('nav').classList.toggle('open');
     });
 
-    // Simple demo pool — real items come from practice
-    const pool = {
-      hira: [
-        { id: 'hira-あ', q: 'あ', a: 'a', opts: ['a','i','u','e'] },
-        { id: 'hira-か', q: 'か', a: 'ka', opts: ['ka','ki','ku','ke'] },
-        { id: 'hira-さ', q: 'さ', a: 'sa', opts: ['sa','shi','su','se'] }
-      ],
-      kanji: [
-        { id: 'kanji-人', q: '人', a: 'person', opts: ['person','year','day','big'] },
-        { id: 'kanji-日', q: '日', a: 'day', opts: ['day','month','year','time'] }
-      ]
-    };
-
-    const kanaMap = {
-      hira: { 'あ':'a','い':'i','う':'u','え':'e','お':'o','か':'ka','き':'ki','く':'ku','け':'ke','こ':'ko','さ':'sa','し':'shi','す':'su','せ':'se','そ':'so','た':'ta','ち':'chi','つ':'tsu','て':'te','と':'to','な':'na','に':'ni','ぬ':'nu','ね':'ne','の':'no','は':'ha','ひ':'hi','ふ':'fu','へ':'he','ほ':'ho','ま':'ma','み':'mi','む':'mu','め':'me','も':'mo','や':'ya','ゆ':'yu','よ':'yo','ら':'ra','り':'ri','る':'ru','れ':'re','ろ':'ro','わ':'wa','を':'wo','ん':'n' },
-      kata: { 'ア':'a','イ':'i','ウ':'u','エ':'e','オ':'o','カ':'ka','キ':'ki','ク':'ku','ケ':'ke','コ':'ko','サ':'sa','シ':'shi','ス':'su','セ':'se','ソ':'so','タ':'ta','チ':'chi','ツ':'tsu','テ':'te','ト':'to','ナ':'na','ニ':'ni','ヌ':'nu','ネ':'ne','ノ':'no','ハ':'ha','ヒ':'hi','フ':'fu','ヘ':'he','ホ':'ho','マ':'ma','ミ':'mi','ム':'mu','メ':'me','モ':'mo','ヤ':'ya','ユ':'yu','ヨ':'yo','ラ':'ra','リ':'ri','ル':'ru','レ':'re','ロ':'ro','ワ':'wa','ヲ':'wo','ン':'n' }
-    };
-
-    function getDueItems() {
-      const due = [];
-      ['hira','kata','kanji'].forEach(type => {
-        const ids = window.ogSRS.due(type, 15);
-        ids.forEach(id => {
-          // Prefer pool if present
-          const found = (pool[type] || []).find(p => p.id === id);
-          if (found) {
-            due.push({ ...found, type });
-          } else if (type === 'hira' || type === 'kata') {
-            const kana = id.replace(type + '-', '');
-            const reading = kanaMap[type][kana];
-            if (reading) {
-              // Build simple options from nearby readings
-              const allReadings = Object.values(kanaMap[type]);
-              const opts = [reading];
-              let attempts = 0;
-              while (opts.length < 4 && attempts < 20) {
-                const r = allReadings[Math.floor(Math.random() * allReadings.length)];
-                if (!opts.includes(r)) opts.push(r);
-                attempts++;
-              }
-              due.push({ id, q: kana, a: reading, opts: opts.sort(() => Math.random()-0.5), type });
-            }
-          }
-        });
-      });
-      return due;
-    }
-
-    let session = null;
-    let current = null;
-    let total = 0;
-    let done = 0;
-
-    function showDue() {
-      const due = getDueItems();
-      document.getElementById('due-count').textContent = due.length + ' items due';
-      document.getElementById('startReview').style.display = due.length ? 'inline-flex' : 'none';
-      document.getElementById('no-due').style.display = due.length ? 'none' : 'block';
-      document.getElementById('think-mascot').style.display = due.length ? 'block' : 'none';
-    }
-
-    function start() {
-      const due = getDueItems();
-      if (!due.length) return;
-      session = new window.ogSRS.SessionQueue(due.map(d => d.id));
-      total = due.length;
-      done = 0;
-      document.getElementById('select').style.display = 'none';
-      document.getElementById('reviewArea').style.display = 'block';
-      next();
-    }
-
-    function next() {
-      const id = session.next();
-      if (!id) {
-        document.getElementById('reviewArea').style.display = 'none';
-        document.getElementById('select').style.display = 'block';
-        showDue();
-        return;
-      }
-      current = null;
-      for (const type of ['hira','kata','kanji']) {
-        const found = (pool[type] || []).find(p => p.id === id);
-        if (found) { current = { ...found, type }; break; }
-      }
-      if (!current) { next(); return; }
-      document.getElementById('progress').textContent = (done + 1) + ' / ' + total;
-      document.getElementById('prompt').textContent = current.q;
-      const opts = document.getElementById('options');
-      opts.innerHTML = '';
-      current.opts.forEach(o => {
-        const b = document.createElement('button');
-        b.className = 'game-link';
-        b.style.background = 'var(--surface-elevated)';
-        b.style.color = 'var(--text)';
-        b.textContent = o;
-        b.onclick = () => answer(o === current.a);
-        opts.appendChild(b);
-      });
-    }
-
-    function answer(correct) {
-      window.ogSRS.record(current.type, current.id, correct);
-      session.answered(current.id, correct);
-      done++;
-      setTimeout(next, 400);
-    }
-
-    document.getElementById('startReview').onclick = start;
-    document.getElementById('again').onclick = () => answer(false);
-    document.getElementById('good').onclick = () => answer(true);
-
-    showDue();
+    checkDue();
   </script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase.js"></script>
-<script src="auth-guard.js"></script>
-<script src="progress-sync.js"></script>
 </body>
 </html>
