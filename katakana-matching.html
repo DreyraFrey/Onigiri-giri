@@ -236,7 +236,7 @@
           card.classList.add('matched');
           selected.classList.remove('selected');
           matchedCount++;
-          if (window.ogSRS) window.ogSRS.record('kata', 'katakana-' + card.dataset.value, true);
+          if (window.ogSRS) if (window.ogXP) ogXP.addXP(5); window.ogSRS.record('kata', 'katakana-' + card.dataset.value, true);
           selected = null;
 
           if (matchedCount >= 5) {
@@ -255,7 +255,7 @@
           // Wrong match - record and flash
           if (window.ogSRS) {
             const id = 'katakana-' + (selected.dataset.type === 'h' ? selected.dataset.value : card.dataset.value);
-            window.ogSRS.record('katakana', id, false);
+            if (window.ogXP) ogXP.addXP(5); window.ogSRS.record('katakana', id, false);
           }
           selected.classList.add('wrong');
           const review = JSON.parse(localStorage.getItem('og-review') || '[]');
