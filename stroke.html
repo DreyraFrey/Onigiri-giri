@@ -82,16 +82,16 @@
   <script src="progress-sync.js"></script>
   <script>
     const kanjiData = [
-      { c: '人', m: 'person', r: 'hito', strokes: 2 },
-      { c: '一', m: 'one', r: 'ichi', strokes: 1 },
-      { c: '二', m: 'two', r: 'ni', strokes: 2 },
-      { c: '三', m: 'three', r: 'san', strokes: 3 },
-      { c: '日', m: 'sun/day', r: 'hi', strokes: 4 },
-      { c: '月', m: 'moon/month', r: 'tsuki', strokes: 4 },
-      { c: '火', m: 'fire', r: 'hi', strokes: 4 },
-      { c: '水', m: 'water', r: 'mizu', strokes: 4 },
-      { c: '木', m: 'tree', r: 'ki', strokes: 4 },
-      { c: '山', m: 'mountain', r: 'yama', strokes: 3 }
+      { c: '人', m: 'person', r: 'hito', strokes: 2, starts: [[0.3, 0.2], [0.7, 0.2]] },
+      { c: '一', m: 'one', r: 'ichi', strokes: 1, starts: [[0.2, 0.5]] },
+      { c: '二', m: 'two', r: 'ni', strokes: 2, starts: [[0.25, 0.35], [0.2, 0.6]] },
+      { c: '三', m: 'three', r: 'san', strokes: 3, starts: [[0.25, 0.25], [0.22, 0.5], [0.2, 0.75]] },
+      { c: '日', m: 'sun/day', r: 'hi', strokes: 4, starts: [[0.25, 0.2], [0.75, 0.2], [0.25, 0.5], [0.25, 0.8]] },
+      { c: '月', m: 'moon/month', r: 'tsuki', strokes: 4, starts: [[0.25, 0.15], [0.75, 0.2], [0.3, 0.45], [0.3, 0.7]] },
+      { c: '火', m: 'fire', r: 'hi', strokes: 4, starts: [[0.35, 0.2], [0.65, 0.2], [0.5, 0.4], [0.3, 0.55]] },
+      { c: '水', m: 'water', r: 'mizu', strokes: 4, starts: [[0.5, 0.15], [0.25, 0.35], [0.75, 0.35], [0.5, 0.45]] },
+      { c: '木', m: 'tree', r: 'ki', strokes: 4, starts: [[0.5, 0.15], [0.2, 0.4], [0.8, 0.4], [0.5, 0.55]] },
+      { c: '山', m: 'mountain', r: 'yama', strokes: 3, starts: [[0.25, 0.3], [0.5, 0.15], [0.75, 0.3]] }
     ];
 
     const canvas = document.getElementById('canvas');
@@ -116,6 +116,20 @@
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText(current.c, canvas.width/2, canvas.height/2);
+      
+      // Draw stroke order numbers
+      ctx.font = 'bold 16px sans-serif';
+      ctx.fillStyle = 'rgba(249,115,22,0.7)';
+      current.starts.forEach((pos, i) => {
+        const x = pos[0] * canvas.width;
+        const y = pos[1] * canvas.height;
+        ctx.beginPath();
+        ctx.arc(x, y, 12, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(249,115,22,0.3)';
+        ctx.fill();
+        ctx.fillStyle = '#f97316';
+        ctx.fillText(i + 1, x, y);
+      });
     }
 
     function clearCanvas() {
