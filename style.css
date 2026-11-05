@@ -251,6 +251,9 @@ main {
   border-radius: var(--radius);
   padding: 1.25rem;
   margin-bottom: 1rem;
+  box-sizing: border-box;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .card h2 {
