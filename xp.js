@@ -199,3 +199,7 @@ function showDailyComplete() {
 
 window.ogXP = { getXP, addXP, getLevel, getLevelProgress, unlockAchievement, hasAchievement, getAchievements, checkAchievements, ACHIEVEMENTS, getCombo, addCombo, resetCombo, getComboMultiplier, addXPWithCombo, getDaily, updateDaily, MAX_LEVEL };
 EOF
+
+const style = document.createElement('style');
+style.textContent = '@keyframes xpFade { 0% { opacity:1; transform:translateY(0); } 100% { opacity:0; transform:translateY(-30px); } } @keyframes levelPop { 0% { transform:translate(-50%,-50%) scale(0.5); opacity:0; } 100% { transform:translate(-50%,-50%) scale(1); opacity:1; } }';
+document.head.appendChild(style);
