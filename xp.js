@@ -160,7 +160,9 @@ function getDaily() {
   const data = JSON.parse(localStorage.getItem(DAILY_KEY) || '{}');
   const today = new Date().toDateString();
   if (data.date !== today) {
-    return { date: today, completed: false, type: getDailyType(), progress: 0, target: 5 };
+    const newDaily = { date: today, completed: false, type: getDailyType(), progress: 0, target: 5 };
+    localStorage.setItem(DAILY_KEY, JSON.stringify(newDaily));
+    return newDaily;
   }
   return data;
 }
