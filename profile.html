@@ -8,9 +8,11 @@
   <link rel="icon" type="image/png" href="icon-header.png">
   <meta name="color-scheme" content="dark">
   <style>
-    .character-sheet { display: grid; grid-template-columns: 140px 1fr; gap: 1.5rem; align-items: start; }
+    .character-sheet { display: grid; grid-template-columns: 1fr; gap: 1rem; align-items: start; }
+    @media (min-width: 500px) { .character-sheet { grid-template-columns: 120px 1fr; gap: 1.5rem; } }
     .avatar-section { text-align: center; }
-    .avatar-frame { width: 120px; height: 120px; border-radius: 50%; border: 3px solid var(--accent); background: var(--surface); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; font-size: 3rem; }
+    .avatar-frame { width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--accent); background: var(--surface); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; font-size: 2rem; }
+    @media (min-width: 500px) { .avatar-frame { width: 120px; height: 120px; font-size: 3rem; } }
     .level-badge { background: var(--accent); color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: bold; display: inline-block; }
     .xp-section { flex: 1; }
     .badge-slot { width: 50px; height: 50px; border: 2px dashed var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-size: 1.5rem; }
