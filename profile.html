@@ -86,6 +86,17 @@
         </div>
       </section>
       <section class="card">
+        <h2>Daily Challenge</h2>
+        <div id="daily-challenge">
+          <div style="display:flex;justify-content:space-between;margin-bottom:0.5rem;">
+            <span id="daily-type">Loading...</span>
+            <span id="daily-progress">0/5</span>
+          </div>
+          <div class="level-bar"><div class="level-bar-fill" id="daily-bar" style="width:0%"></div></div>
+          <div id="daily-reward" style="text-align:center;margin-top:0.5rem;color:var(--text-secondary);">+50 XP</div>
+        </div>
+      </section>
+      <section class="card">
         <h2>Path Progress</h2>
         <div id="path-progress"></div>
       </section>
@@ -280,6 +291,20 @@
     
     loadUsername();
     setTimeout(updateLevelDisplay, 500);
+    
+    function updateDaily() {
+      if (!window.ogXP) return;
+      const daily = ogXP.getDaily();
+      const types = { lessons: 'Complete lessons', kanji: 'Practice kanji', kana: 'Practice kana', typing: 'Typing practice' };
+      document.getElementById('daily-type').textContent = types[daily.type] || 'Complete tasks';
+      document.getElementById('daily-progress').textContent = daily.progress + '/' + daily.target;
+      document.getElementById('daily-bar').style.width = (daily.progress / daily.target * 100) + '%';
+      if (daily.completed) {
+        document.getElementById('daily-reward').textContent = '✓ Complete!';
+        document.getElementById('daily-reward').style.color = '#4caf50';
+      }
+    }
+    setTimeout(updateDaily, 500);
   </script>
 </body>
 </html>
