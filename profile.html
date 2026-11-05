@@ -78,11 +78,7 @@
             <div class="level-bar" style="height:12px;"><div class="level-bar-fill" id="level-bar" style="width:0%"></div></div>
             <div style="margin-top:1rem;">
               <div class="progress-item"><span>🔥 Streak</span><span id="profile-streak">0 days</span></div>
-              <div style="display:flex;gap:0.75rem;margin-top:0.8rem;justify-content:center;" id="badge-slots">
-                <div class="badge-slot">○</div>
-                <div class="badge-slot">○</div>
-                <div class="badge-slot">○</div>
-              </div>
+              <div style="display:flex;gap:0.75rem;margin-top:0.8rem;justify-content:center;" id="badge-slots"></div>
             </div>
           </div>
         </div>
@@ -124,6 +120,7 @@
       </section>
       <section class="card">
         <h2>Badges</h2>
+        <p style="color:var(--text-secondary);font-size:0.85rem;margin:0 0 0.5rem;">Click to equip (max 3)</p>
         <div id="badges"></div>
       </section>
       <section class="card">
@@ -307,6 +304,71 @@
       }
     }
     setTimeout(updateDaily, 500);
+    
+    // Badge selection system
+    const BADGE_SLOTS_KEY = 'og-badge-slots';
+    
+    function getBadgeSlots() {
+      return JSON.parse(localStorage.getItem(BADGE_SLOTS_KEY) || '[null,null,null]');
+    }
+    
+    function saveBadgeSlots(slots) {
+      localStorage.setItem(BADGE_SLOTS_KEY, JSON.stringify(slots));
+      if (typeof syncToCloud === 'function') syncToCloud();
+    }
+    
+    function renderBadgeSlots() {
+      const slots = getBadgeSlots();
+      const data = JSON.parse(localStorage.getItem('og-paths') || '{"progress":{}}');
+      const container = document.getElementById('badge-slots');
+      container.innerHTML = slots.map((badgeId, i) => {
+        if (badgeId && data.progress[badgeId] && data.progress[badgeId].badge) {
+          const badge = PATHS[badgeId];
+          return `<div class="badge-slot" style="border-style:solid;border-color:var(--accent);cursor:pointer;" onclick="unequipBadge(${i})" title="Click to unequip">${badge ? badge.badge.split(' ')[0] : '🏅'}</div>`;
+        }
+        return `<div class="badge-slot">○</div>`;
+      }).join('');
+    }
+    
+    function equipBadge(badgeId) {
+      const slots = getBadgeSlots();
+      const emptySlot = slots.indexOf(null);
+      if (emptySlot === -1) {
+        alert('All slots full. Unequip one first.');
+        return;
+      }
+      if (slots.includes(badgeId)) return;
+      slots[emptySlot] = badgeId;
+      saveBadgeSlots(slots);
+      renderBadgeSlots();
+      renderBadges();
+    }
+    
+    function unequipBadge(slotIndex) {
+      const slots = getBadgeSlots();
+      slots[slotIndex] = null;
+      saveBadgeSlots(slots);
+      renderBadgeSlots();
+      renderBadges();
+    }
+    
+    function renderBadges() {
+      const data = JSON.parse(localStorage.getItem('og-paths') || '{"progress":{}}');
+      const slots = getBadgeSlots();
+      document.getElementById('badges').innerHTML = Object.entries(PATHS).map(([id, p]) => {
+        const earned = data.progress[id] && data.progress[id].badge;
+        const equipped = slots.includes(id);
+        const style = earned ? (equipped ? 'background:var(--accent);cursor:pointer;' : 'background:var(--surface);border:2px solid var(--accent);cursor:pointer;') : 'opacity:0.4;background:var(--border);';
+        const onclick = earned ? `onclick="equipBadge('${id}')"` : '';
+        return `<span class="badge" style="${style}" ${onclick}>${p.badge}${equipped ? ' ✓' : ''}</span>`;
+      }).join('');
+    }
+    
+    window.equipBadge = equipBadge;
+    window.unequipBadge = unequipBadge;
+    
+    renderBadgeSlots();
+    renderBadges();
   </script>
 </body>
 </html>
