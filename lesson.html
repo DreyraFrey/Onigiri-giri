@@ -150,6 +150,7 @@
         const pct = Math.round((totalCorrect / totalItems) * 100);
         const passed = pct >= 90;
         let html = '<div class="result">';
+        html += '<img src="' + (passed ? 'mascot-bow.png' : 'mascot-determined.png') + '" alt="" style="width:80px;margin:0.5rem 0;">';
         html += '<h2>' + (passed ? 'Passed!' : 'Not yet') + '</h2>';
         html += '<p>' + pct + '% (' + correct + '/' + questions.length + ')</p>';
         html += '<div class="btn-row">';
