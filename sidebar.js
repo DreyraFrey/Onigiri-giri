@@ -120,3 +120,28 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 });
+
+// Review due indicator
+function updateReviewIndicator() {
+  const srs = JSON.parse(localStorage.getItem('og-srs') || '{}');
+  const now = Date.now();
+  let dueCount = 0;
+  Object.values(srs).forEach(items => {
+    Object.values(items).forEach(item => {
+      if (item.due <= now) dueCount++;
+    });
+  });
+  
+  const reviewLink = document.querySelector('a[href="review.html"]');
+  if (reviewLink && dueCount > 0) {
+    let badge = reviewLink.querySelector('.due-badge');
+    if (!badge) {
+      badge = document.createElement('span');
+      badge.className = 'due-badge';
+      badge.style.cssText = 'background:var(--accent);color:white;font-size:0.7rem;padding:0.1rem 0.4rem;border-radius:10px;margin-left:0.3rem;';
+      reviewLink.appendChild(badge);
+    }
+    badge.textContent = '📖 ' + dueCount;
+  }
+}
+setTimeout(updateReviewIndicator, 500);
