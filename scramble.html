@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sentence Scramble – Onigiri-giri</title>
+  <link rel="stylesheet" href="style.css?v=10">
+  <link rel="icon" type="image/png" href="icon-header.png">
+  <meta name="color-scheme" content="dark">
+  <style>
+    .scramble-meaning { font-size: 1.3rem; text-align: center; margin: 1rem 0; color: var(--text-secondary); }
+    .scramble-answer { min-height: 60px; display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; padding: 1rem; background: var(--surface); border-radius: 12px; margin: 1rem 0; border: 2px dashed var(--border); }
+    .scramble-tiles { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin: 1rem 0; }
+    .tile { padding: 0.6rem 1rem; background: var(--accent); color: white; border-radius: 8px; cursor: pointer; font-size: 1.1rem; border: none; transition: transform 0.1s; }
+    .tile:hover { transform: scale(1.05); }
+    .tile.used { opacity: 0.3; pointer-events: none; }
+    .scramble-controls { display: flex; gap: 1rem; justify-content: center; margin-top: 1rem; }
+    .feedback { text-align: center; min-height: 1.5rem; margin: 0.5rem 0; font-weight: 500; }
+    .feedback.correct { color: #4caf50; }
+    .feedback.wrong { color: #f44336; }
+    .stats { display: flex; justify-content: center; gap: 2rem; margin-top: 1rem; color: var(--text-secondary); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><a href="index.html"><img class="site-logo" src="icon-header.png" alt="Onigiri-giri">Onigiri-giri</a></h1>
+    <p>Sentence Scramble</p>
+    <button class="menu-toggle" aria-label="Menu">☰</button>
+  </header>
+  <nav id="nav">
+    <a href="index.html">Home</a>
+    <a href="missions.html">Missions</a>
+    <a href="review.html">Review</a>
+    <a href="profile.html">Profile</a>
+    <a href="#" id="logout-btn" style="margin-left:auto;">Logout</a>
+  </nav>
+  <div class="layout">
+    <aside class="sidebar left-sidebar">
+      <div class="card">
+        <h3>Path</h3>
+        <div class="progress-item"><span id="sidebar-path">No path</span></div>
+      </div>
+      <div class="card">
+        <h3>Total</h3>
+        <div class="progress-item"><span>Hiragana</span><span id="prog-hira">0/46</span></div>
+        <div class="progress-item"><span>Katakana</span><span id="prog-kata">0/46</span></div>
+        <div class="progress-item"><span>Kanji</span><span id="prog-kanji">0/500</span></div>
+        <div class="progress-item"><span>Streak</span><span id="streak">0 days</span></div>
+      </div>
+    </aside>
+    <main>
+      <section class="card">
+        <h2>Sentence Scramble</h2>
+        <p>Click the tiles in order to build the sentence.</p>
+        <div class="scramble-meaning" id="meaning">I am a student.</div>
+        <div class="scramble-answer" id="answer"></div>
+        <div class="scramble-tiles" id="tiles"></div>
+        <div class="feedback" id="feedback"></div>
+        <div class="scramble-controls">
+          <button class="btn btn-secondary" onclick="reset()">Reset</button>
+          <button class="btn btn-primary" onclick="check()">Check</button>
+        </div>
+        <div class="stats">
+          <span>Correct: <b id="correct">0</b></span>
+          <span>Streak: <b id="streak-count">0</b></span>
+        </div>
+      </section>
+    </main>
+    <aside class="sidebar right-sidebar">
+      <div class="card">
+        <h3>Daily Word</h3>
+        <div class="daily-word" id="daily-word">仕事</div>
+        <div class="daily-romaji" id="daily-romaji">shigoto</div>
+        <div class="daily-meaning" id="daily-meaning">work / job</div>
+      </div>
+      <div class="card">
+        <h3>Studying Tips</h3>
+        <p id="studying-tip">Click tiles in the correct order.</p>
+      </div>
+    </aside>
+  </div>
+  <footer><p>Onigiri-giri · Free Japanese Learning site</p></footer>
+  <script src="lessons.js"></script>
+  <script src="learned.js"></script>
+  <script src="sidebar.js?v=9"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+  <script src="auth-guard.js"></script>
+  <script src="progress-sync.js"></script>
+  <script>
+    const sentences = [
+      { jp: ['私', 'は', '学生', 'です'], en: 'I am a student.' },
+      { jp: ['これ', 'は', '本', 'です'], en: 'This is a book.' },
+      { jp: ['今日', 'は', '暑い', 'です'], en: 'Today is hot.' },
+      { jp: ['私', 'は', '日本語', 'を', '勉強', 'します'], en: 'I study Japanese.' },
+      { jp: ['猫', 'が', '好き', 'です'], en: 'I like cats.' },
+      { jp: ['水', 'を', '飲み', 'ます'], en: 'I drink water.' },
+      { jp: ['学校', 'に', '行き', 'ます'], en: 'I go to school.' },
+      { jp: ['友達', 'と', '遊び', 'ます'], en: 'I play with friends.' },
+      { jp: ['ご飯', 'を', '食べ', 'ます'], en: 'I eat a meal.' },
+      { jp: ['東京', 'に', '住んで', 'います'], en: 'I live in Tokyo.' }
+    ];
+
+    let current = null;
+    let selected = [];
+    let correct = 0;
+    let streak = 0;
+
+    function shuffle(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    function next() {
+      current = sentences[Math.floor(Math.random() * sentences.length)];
+      selected = [];
+      document.getElementById('meaning').textContent = current.en;
+      document.getElementById('answer').innerHTML = '';
+      document.getElementById('feedback').textContent = '';
+      document.getElementById('feedback').className = 'feedback';
+      
+      const tiles = document.getElementById('tiles');
+      tiles.innerHTML = '';
+      shuffle(current.jp).forEach((word, i) => {
+        const tile = document.createElement('button');
+        tile.className = 'tile';
+        tile.textContent = word;
+        tile.onclick = () => selectTile(tile, word);
+        tiles.appendChild(tile);
+      });
+    }
+
+    function selectTile(tile, word) {
+      if (tile.classList.contains('used')) return;
+      tile.classList.add('used');
+      selected.push(word);
+      
+      const answer = document.getElementById('answer');
+      const span = document.createElement('span');
+      span.className = 'tile';
+      span.textContent = word;
+      span.onclick = () => {
+        const idx = selected.indexOf(word);
+        if (idx > -1) selected.splice(idx, 1);
+        span.remove();
+        tile.classList.remove('used');
+      };
+      answer.appendChild(span);
+    }
+
+    function reset() {
+      next();
+    }
+
+    function check() {
+      const feedback = document.getElementById('feedback');
+      const isCorrect = selected.join('') === current.jp.join('');
+      
+      if (isCorrect) {
+        feedback.textContent = 'Correct!';
+        feedback.className = 'feedback correct';
+        correct++;
+        streak++;
+        document.getElementById('correct').textContent = correct;
+        document.getElementById('streak-count').textContent = streak;
+        setTimeout(next, 1000);
+      } else {
+        feedback.textContent = 'Try again! Answer: ' + current.jp.join('');
+        feedback.className = 'feedback wrong';
+        streak = 0;
+        document.getElementById('streak-count').textContent = streak;
+        setTimeout(next, 2000);
+      }
+      
+      if (typeof syncToCloud === 'function') syncToCloud();
+    }
+
+    document.querySelector('.menu-toggle').addEventListener('click', () => {
+      document.getElementById('nav').classList.toggle('open');
+    });
+
+    next();
+  </script>
+</body>
+</html>
