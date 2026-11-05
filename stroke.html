@@ -13,6 +13,9 @@
     .stroke-char { font-size: 2rem; margin: 0.5rem 0; }
     .stroke-meaning { color: var(--text-secondary); margin-bottom: 1rem; }
     #canvas { border: 2px solid var(--border); border-radius: 12px; background: var(--surface); touch-action: none; }
+    .feedback { text-align: center; min-height: 1.5rem; margin: 0.5rem 0; font-weight: 500; }
+    .feedback.correct { color: #4caf50; }
+    .feedback.wrong { color: #f44336; }
     .stroke-controls { display: flex; gap: 1rem; justify-content: center; margin-top: 1rem; }
     .stroke-count { margin-top: 0.5rem; color: var(--text-secondary); }
     .desktop-msg { display: none; text-align: center; padding: 2rem; }
@@ -55,9 +58,11 @@
           <div class="stroke-meaning" id="meaning">person (hito)</div>
           <canvas id="canvas" width="280" height="280"></canvas>
           <div class="stroke-count">Strokes: <span id="stroke-count">0</span> / <span id="stroke-target">2</span></div>
+          <div class="feedback" id="feedback"></div>
           <div class="stroke-controls">
             <button class="btn btn-secondary" onclick="clearCanvas()">Clear</button>
-            <button class="btn btn-primary" onclick="next()">Next</button>
+            <button class="btn btn-primary" onclick="check()">Check</button>
+            <button class="btn btn-secondary" onclick="next()">Next</button>
           </div>
         </div>
       </section>
@@ -100,13 +105,24 @@
       document.getElementById('char').textContent = current.c;
       document.getElementById('meaning').textContent = current.m + ' (' + current.r + ')';
       document.getElementById('stroke-target').textContent = current.strokes;
+      document.getElementById('feedback').textContent = '';
       clearCanvas();
+      drawGuide();
+    }
+    
+    function drawGuide() {
+      ctx.font = '200px sans-serif';
+      ctx.fillStyle = 'rgba(255,255,255,0.08)';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(current.c, canvas.width/2, canvas.height/2);
     }
 
     function clearCanvas() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       strokes = 0;
       document.getElementById('stroke-count').textContent = strokes;
+      if (current) drawGuide();
     }
 
     function getPos(e) {
@@ -148,6 +164,20 @@
     canvas.addEventListener('mousemove', draw);
     canvas.addEventListener('mouseup', endDraw);
 
+    function check() {
+      const feedback = document.getElementById('feedback');
+      if (strokes === current.strokes) {
+        feedback.textContent = 'Correct!';
+        feedback.className = 'feedback correct';
+      } else if (strokes < current.strokes) {
+        feedback.textContent = 'Too few strokes';
+        feedback.className = 'feedback wrong';
+      } else {
+        feedback.textContent = 'Too many strokes';
+        feedback.className = 'feedback wrong';
+      }
+    }
+    
     document.querySelector('.menu-toggle').addEventListener('click', () => {
       document.getElementById('nav').classList.toggle('open');
     });
