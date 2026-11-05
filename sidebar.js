@@ -108,3 +108,15 @@
   window.ogStreak = { mark: markPracticed };
 
 })();
+
+document.addEventListener('DOMContentLoaded', () => {
+  const logoutBtn = document.getElementById('logout-btn');
+  if (logoutBtn) {
+    logoutBtn.onclick = async (e) => {
+      e.preventDefault();
+      if (!confirm('Log out?')) return;
+      if (window._supabase) await _supabase.auth.signOut();
+      location.href = 'login.html';
+    };
+  }
+});
